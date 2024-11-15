@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+#
+# Copyright (C) 2016 James Murphy
+# Licensed under the GPL version 2 only
+#
+# A battery indicator blocklet script for i3blocks
+
+from subprocess import check_output
+import os
+import re
+
+# Load environment configuration
+config = dict(os.environ)
+
+try:
+    # Run `acpi` to check battery status
+    status = check_output(['acpi', '-b'], universal_newlines=True)
+except Exception as e:
+    # Handle the case where `acpi` is not found or fails
+    status = ""
+
+# Default display if no battery found
+if not status:
+    color = config.get("color_10", "red")
+    fulltext = "<span color='{}'><span font='FontAwesome'>\uf00d \uf240</span></span>".format(color)
+    percentleft = 100
+else:
+    # Process the battery status for multiple batteries
+    batteries = [battery for battery in status.strip().split("\n") if battery]
+    state_batteries = []
+    percentleft_batteries = []
+    timeleft = ""
+
+    # Parse each battery's information
+    for battery in batteries:
+        state = battery.split(": ")[1].split(", ")[0]
+        percent_str = re.search(r"(\d+)%", battery)
+        percent = int(percent_str.group(1)) if percent_str else 0
+
+        if state == "Discharging":
+            state_batteries.append("Discharging")
+        elif state == "Charging":
+            state_batteries.append("Charging")
+        else:
+            state_batteries.append(state)
+
+        percentleft_batteries.append(percent)
+
+        # Extract time left if available
+        if not timeleft:
+            time_match = re.search(r"(\d+:\d+):\d+", battery)
+            if time_match:
+                timeleft = time_match.group(1)
+
+    # Calculate average battery percentage across all batteries
+    percentleft = int(sum(percentleft_batteries) / len(percentleft_batteries)) if percentleft_batteries else 0
+
+    # Determine icon and color based on battery state
+    if "Discharging" in state_batteries:
+        fulltext = "<span font='FontAwesome'>\uf240</span> "  # Battery icon
+        charging_color = config.get("color_discharging", "#007872")
+    elif "Charging" in state_batteries:
+        fulltext = "<span color='{}'><span font='FontAwesome'>\uf0e7</span></span> ".format(config.get("color_charging", "yellow"))  # Charging icon
+        charging_color = config.get("color_charging", "yellow")
+    else:
+        fulltext = "<span font='FontAwesome'>\uf1e6</span> "  # Plugged in icon
+        charging_color = config.get("color_full", "#FFFFFF")
+
+    # Select color based on percentage left
+    def select_color(percent):
+        if percent < 15:
+            return config.get("color_10", "#FA1E44")  # Low battery color
+        elif percent < 50:
+            return config.get("color_medium", "#FFCC00")  # Medium battery color
+        else:
+            return charging_color  # Default color for good battery level
+
+    color = select_color(percentleft)
+    form = '<span color="{}">{}%</span>'
+    fulltext += form.format(color, percentleft)
+
+    # Append time left if available
+
+# Print full text for i3blocks
+print(fulltext)
+print(fulltext)
+
+# Set exit code for i3blocks background color change if battery is very low
+if percentleft < 10:
+    exit(33)
+
