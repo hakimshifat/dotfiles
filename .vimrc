@@ -30,4 +30,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tomasr/molokai'
 Plug 'searleser97/cpbooster.vim'
 Plug 'preservim/nerdtree'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'ycm-core/YouCompleteMe'
 call plug#end()
