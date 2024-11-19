@@ -2602,7 +2602,7 @@
 
 
 # BEGIN_KITTY_THEME
-# 3024 Day
+# Dimmed Monokai
 include current-theme.conf
 # END_KITTY_THEME
 
