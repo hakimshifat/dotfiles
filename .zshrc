@@ -68,3 +68,6 @@ setopt share_history          # share command history data
 
 # Created by `pipx` on 2024-11-03 18:04:02
 export PATH="$PATH:/home/sifat/.local/bin"
+
+# To customize prompt, run `p10k configure` or edit ~/dotfiles/.p10k.zsh.
+[[ ! -f ~/dotfiles/.p10k.zsh ]] || source ~/dotfiles/.p10k.zsh

@@ -2602,7 +2602,7 @@
 
 
 # BEGIN_KITTY_THEME
-# Monokai Pro (Filter Spectrum)
+# Solarized Dark Higher Contrast
 include current-theme.conf
 # END_KITTY_THEME
 
