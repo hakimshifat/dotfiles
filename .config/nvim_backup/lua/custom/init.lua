@@ -19,4 +19,5 @@ opt.wrap = false
 opt.ignorecase = true -- ignore case when searching
 opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
 opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+vim.cmd("map <C-a> <esc>ggVG<CR>")
 
