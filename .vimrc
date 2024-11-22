@@ -20,7 +20,7 @@ map ; :Files<CR>
 nnoremap <C-S-a> ggVG
 
 "Using CpBoosters RunTestCase
-nnoremap <C-M-b> :Test<CR>
+nnoremap <F9> :Test<CR>
 
 "Setting Leader Key to Space
 let mapleader = " "
