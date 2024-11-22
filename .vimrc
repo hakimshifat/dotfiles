@@ -17,10 +17,10 @@ set clipboard=unnamedplus
 map ; :Files<CR>
 
 "Ctrl+A to Select All
-nnoremap <C-a> ggVG
+nnoremap <C-S-a> ggVG
 
 "Using CpBoosters RunTestCase
-nnoremap <F9> :Test<CR>
+nnoremap <C-M-b> :Test<CR>
 
 "Setting Leader Key to Space
 let mapleader = " "
@@ -28,7 +28,7 @@ nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 
 "For Compiling and Running C and C++ Files
-nnoremap <C-b> :w<CR>:!g++ % -o %:r && ./%:r<CR>
+"nnoremap <C-b> :w<CR>:!g++ % -o %:r && ./%:r<CR>
 
 "NerdTree Management
 nnoremap <leader>ee :NERDTreeToggle<CR>
