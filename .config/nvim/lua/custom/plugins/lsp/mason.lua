@@ -29,7 +29,6 @@ return {
       ensure_installed = {
         "html",
         "cssls",
-        "python",
         "tailwindcss",
         "svelte",
         "lua_ls",
