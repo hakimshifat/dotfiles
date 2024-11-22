@@ -33,7 +33,7 @@ opt.splitright = true
 opt.splitbelow = true
 
 --Personal
-vim.cmd("autocmd BufNewFile *.cpp 0r ~/CP/Template.cpp")
+--vim.cmd("autocmd BufNewFile *.cpp 0r ~/CP/Template.cpp")
 vim.cmd("map <C-a> <esc>ggVG<CR>")
 --vim.cmd("nnoremap <c-c> :!clear; g++ -o %:r.out % -std=c++17<Enter>")
 --vim.cmd("nnoremap <c-x> :!./%:r.out<Enter>")
