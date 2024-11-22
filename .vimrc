@@ -4,23 +4,45 @@ set relativenumber
 set laststatus=2
 set mouse=a
 set autoindent
+set clipboard=unnamedplus
+:autocmd BufNewFile *.cpp 0r ~/cp/template.cpp
+
+"KeyBindings
+
+"Pressing ii or II to exit Visual Mode
 :imap ii <Esc>
 :imap II <Esc>
+
+"Finding Files usint ";" Key
 map ; :Files<CR>
+
+"Ctrl+A to Select All
 nnoremap <C-a> ggVG
+
+"Using CpBoosters RunTestCase
 nnoremap <F9> :Test<CR>
+
+"Setting Leader Key to Space
 let mapleader = " "
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
-set clipboard=unnamedplus
-:autocmd BufNewFile *.cpp 0r ~/cp/template.cpp
+
+"For Compiling and Running C and C++ Files
 nnoremap <C-b> :w<CR>:!g++ % -o %:r && ./%:r<CR>
 
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
+"NerdTree Management
 nnoremap <leader>ee :NERDTreeToggle<CR>
-nnoremap <leader>f :NERDTreeFind<CR>
+nnoremap <leader>ef :NERDTreeFind<CR>
+nnoremap <leader>ec :NERDTreeClose<CR>
+nnoremap <leader>er :NERDTreeToggle<CR>:NERDTreeToggle<CR>
 
+"Split Management
+nnoremap <leader>sv <C-w>v
+nnoremap <leader>sh <C-w>s
+nnoremap <leader>se <C-w>=
+nnoremap <leader>sx :close<CR>
+
+"Plugins
 call plug#begin()
 
 Plug 'junegunn/fzf.vim'
