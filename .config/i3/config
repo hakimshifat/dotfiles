@@ -149,8 +149,9 @@ bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 #bindsym $mod+l exec --no-startup-id i3lock -i  ~/.config/i3/i3-lock-screen.png -p default|win -t
 # lock by blurring the screen:
 
-bindsym $mod+t exec --no-startup-id ~/.config/i3/scripts/blur-lock
-#bindsym $mod+t exec --no-startup-id ~/.config/i3/scripts/blur-lock-fancy
+#bindsym $mod+t exec --no-startup-id ~/.config/i3/scripts/blur-lock
+#bindsym $mod+t exec betterlockscreen -u "~/Pictures/Wall/"
+bindsym $mod+t exec betterlockscreen -l dim
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -349,7 +350,7 @@ exec --no-startup-id ~/.screenlayout/monitor.sh
 exec --no-startup-id ~/.config/i3/scripts/feh-auto.sh
 
 # set powersavings for display:
-exec --no-startup-id xset s 480 dpms 600 600 600
+exec --no-startup-id xset s 1800 dpms 1800 1800 1800
 
 # disable power saving (for example if using xscreensaver)
 #exec --no-startup-id xset -dpms
