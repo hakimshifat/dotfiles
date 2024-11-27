@@ -37,7 +37,7 @@ floating_modifier $mod
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 #i3-presentation-mode shortcuts
-bindsym $mod+Shift+p exec ~/.config/i3/scripts/i3-prsentation-mode
+#bindsym $mod+Shift+p exec ~/.config/i3/scripts/i3-presentation-mode.sh
 
 # switch to workspace
 bindcode $mod+10    workspace  $ws1
@@ -222,13 +222,6 @@ bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%
 # use meta keys showing osc using dunst
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
-# gradular volume control
-#bindsym $mod+XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 1%+ && pkill -RTMIN+1 i3blocks
-#bindsym $mod+XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 1%- && pkill -RTMIN+1 i3blocks
-
-# mute
-#bindsym XF86AudioMute exec --no-startup-id amixer sset Master toggle && killall -USR1 i3blocks
-# use meta keys showing osc using dunst
 bindsym XF86AudioMute exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_mute
 
 # mic mute toggle
@@ -399,10 +392,7 @@ exec --no-startup-id /usr/bin/dunst
 # exec --no-startup-id blueberry-tray
 
 # networkmanager-applet
-#exec --no-startup-id nm-applet
-
-# clipman-applet
-#exec --no-startup-id copyq
+exec --no-startup-id nm-applet
 
 ##################
 # floating rules #
@@ -464,10 +454,9 @@ client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
 # (plus the system information i3status finds out, if available)
 bar {
 		font pango: Hack Nerd Font Mono Regular 12 
-		status_command i3status | python3 ~/.config/i3/scripts/wrapper.py
 		status_command i3blocks -c ~/.config/i3/i3blocks.conf
-	    	position top
-		    tray_padding 0
+    	position top
+		 tray_padding 0
 
 strip_workspace_numbers no
 

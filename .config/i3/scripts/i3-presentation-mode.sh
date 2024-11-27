@@ -3,7 +3,7 @@
 # Without parameters script returns STOPPED_MSG (resp. RUNNING_MSG)
 
 LOCKER_CMD="xautolock"
-RUNNING_MSG=""
+RUNNING_MSG="Presentation mode: Off"
 STOPPED_MSG="Presentation mode: On"
 
 if [ -z $1 ];then
