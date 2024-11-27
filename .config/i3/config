@@ -14,8 +14,8 @@ workspace_layout default
 ##############################
 # extra options for windows: #
 ##############################
-
 #border indicator on windows:
+
 new_window pixel 1
 
 # thin borders
@@ -26,7 +26,6 @@ gaps inner 1
 gaps outer 1
 
 # show window title bars (not officially supported with i3gaps) #default_border normal
-
 # window title alignment
 #title_align center
 
