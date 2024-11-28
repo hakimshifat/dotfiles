@@ -2602,7 +2602,7 @@
 
 
 # BEGIN_KITTY_THEME
-# OneDark-Pro
+# GitHub Dark
 include current-theme.conf
 # END_KITTY_THEME
 
