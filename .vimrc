@@ -4,7 +4,11 @@ set relativenumber
 set laststatus=2
 set mouse=a
 set autoindent
+
+"Copy to clipboard
 set clipboard=unnamedplus
+
+"Custom Template file for cpp files
 :autocmd BufNewFile *.cpp 0r ~/cp/template.cpp
 
 "KeyBindings
