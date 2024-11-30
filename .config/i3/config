@@ -242,7 +242,7 @@ bindsym $mod+Shift+s exec --no-startup-id "maim -s ~/Pictures/screenshot_$(date 
 
 
 # Power Profiles menu switcher (rofi)
-#bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
+#bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/powermenu
 
 ##########################################
 # configuration for workspace behaviour: #
