@@ -274,7 +274,8 @@ set $ws10 "10"
 #assign [class="kitty"] $ws1
 #assign [class="(?i)brave"] $ws2
 #assign [class="Thunar"] $ws3
-#assign [class="thunderbird"] $ws4
+assign [class="spotify"] $ws3
+exec --no-startup-id sleep 3 && spotify
 
 # automatic set focus new window if it opens on another workspace than the current:
 #for_window [class=kitty] focus
