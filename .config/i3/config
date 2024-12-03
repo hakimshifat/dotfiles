@@ -150,6 +150,7 @@ bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 #bindsym $mod+t exec --no-startup-id ~/.config/i3/scripts/blur-lock
 #bindsym $mod+t exec betterlockscreen -u "~/Pictures/Wall/"
 bindsym $mod+t exec betterlockscreen -l dim
+bindsym $mod+c exec feh ~/Pictures/Wall --randomize --bg-fill
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
