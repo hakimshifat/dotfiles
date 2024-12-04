@@ -394,7 +394,7 @@ exec --no-startup-id /usr/bin/dunst
 # exec --no-startup-id blueberry-tray
 
 # networkmanager-applet
-exec --no-startup-id nm-applet
+#exec --no-startup-id nm-applet
 
 ##################
 # floating rules #
@@ -458,8 +458,8 @@ bar {
 		font pango: Hack Nerd Font Mono Regular 12 
 		status_command i3blocks -c ~/.config/i3/i3blocks.conf
     	position top
-	#mode hide
-	#modifier Mod1
+	    mode hide
+    	modifier Mod1
 		 tray_padding 0
 
 strip_workspace_numbers no
