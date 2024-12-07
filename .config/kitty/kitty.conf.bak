@@ -2602,7 +2602,7 @@
 
 
 # BEGIN_KITTY_THEME
-# Hybrid
+# Monokai Pro (Filter Spectrum)
 include current-theme.conf
 # END_KITTY_THEME
 
