@@ -32,6 +32,8 @@ alias cppp="cpb clone"
 alias op="xdg-open"
 alias cgbg="feh ~/Pictures/Wall --randomize --bg-fill"
 alias ydl="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv"
+alias ydl7="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv"
+alias ydl1="yt-dlp -S 'res:1080,fps:60' --merge-output-format mkv"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
