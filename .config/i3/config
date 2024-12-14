@@ -347,22 +347,16 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id ~/.screenlayout/monitor.sh
 
 # set wallpaper
-# exec --no-startup-id sleep 2 && nitrogen --random --restore
-#exec --no-startup-id sleep 1 && watch -n 100 feh --randomize --bg-fill ~/Pictures/Wall/*
 exec --no-startup-id ~/.config/i3/scripts/feh-auto.sh
 
 # set powersavings for display:
-exec --no-startup-id xset s 1800 dpms 1800 1800 1800
-#exec --no-startup-id xset s off -dpms
 
 # disable power saving (for example if using xscreensaver)
-#exec --no-startup-id xset -dpms
 
 # use xautolock to use autosuspend rules for mobile devices
 # https://wiki.archlinux.org/title/Session_lock#xautolock
-exec --no-startup-id xautolock -time 30 -locker "systemctl suspend"
-#exec --no-startup-id xautolock -time 10 -locker "systemctl suspend"
-
+exec --no-startup-id xset s 600 dpms 600 900 1200
+exec --no-startup-id xautolock -time 20 -locker "systemctl suspend"
 
 # xscreensaver
 # https://www.jwz.org/xscreensaver
