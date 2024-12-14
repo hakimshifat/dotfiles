@@ -16,6 +16,8 @@ workspace_layout default
 #border indicator on windows:
 
 new_window pixel 1
+#caffaine-ng
+exec --no-startup-id caffeine-indicator
 
 # thin borders
 # hide_edge_borders both
@@ -351,6 +353,7 @@ exec --no-startup-id ~/.config/i3/scripts/feh-auto.sh
 
 # set powersavings for display:
 exec --no-startup-id xset s 1800 dpms 1800 1800 1800
+#exec --no-startup-id xset s off -dpms
 
 # disable power saving (for example if using xscreensaver)
 #exec --no-startup-id xset -dpms
