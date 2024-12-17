@@ -8,7 +8,7 @@
   "preferredLang": "cpp",
   "hideTestCaseInput": false,
   "maxLinesToShowFromInput": 50,
-  "cloneInCurrentDir": true,
+  "cloneInCurrentDir": false,
   "languages": {
     "cpp": {
       "template": "~/cp/template.cpp",
