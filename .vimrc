@@ -4,6 +4,8 @@ set relativenumber
 set laststatus=2
 set mouse=a
 set autoindent
+" Compile and run Java code
+nnoremap <C-R> :w<CR>:!javac % && java %:r<CR>
 
 "Copy to clipboard
 set clipboard=unnamedplus
@@ -61,5 +63,7 @@ Plug 'searleser97/cpbooster.vim'
 Plug 'preservim/nerdtree'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'ycm-core/YouCompleteMe'
+Plug 'uiiaoo/java-syntax.vim'
+
 
 call plug#end()
