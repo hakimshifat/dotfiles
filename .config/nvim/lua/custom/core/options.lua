@@ -36,11 +36,7 @@ opt.splitbelow = true
 --Personal
 --vim.cmd("autocmd BufNewFile *.cpp 0r ~/CP/Template.cpp")
 vim.cmd("map <C-a> <esc>ggVG<CR>")
---vim.cmd("nnoremap <c-c> :!clear; g++ -o %:r.out % -std=c++17<Enter>")
---vim.cmd("nnoremap <c-x> :!./%:r.out<Enter>")
 vim.api.nvim_set_keymap("n", "<C-c>", ":!clear && g++ -o %:r.out % -std=c++17<CR>", { noremap = true, silent = true })
---vim.api.nvim_set_keymap("n", "<C-x>", ":!./%:r.out<CR>", { noremap = true, silent = true })
---vim.api.nvim_set_keymap("n", "<C-x>", ":term ./%:r.out<CR>i", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-x>", ":vsplit | term ./%:r.out<CR>i", { noremap = true, silent = true })
--- Map Ctrl+Alt+B to run a command (e.g., echo 'Hello, World!')
 vim.api.nvim_set_keymap("n", "<C-M-b>", ":Test<CR>", { noremap = true, silent = true })
+vim.cmd("nnoremap <C-R> :w<CR>:!java % && java %:r<CR>")
