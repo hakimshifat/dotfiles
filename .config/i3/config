@@ -1,4 +1,5 @@
 font pango:JetBrains Mono Nerd Regular 12 
+#include ~/.config/i3/i3status/statusbar.conf
 
 # set the mod key to the winkey:
 set $mod Mod1
@@ -411,6 +412,8 @@ for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
 for_window [class="Bluetooth-sendto" instance="bluetooth-sendto"] floating enable
 for_window [class="Pamac-manager"] floating enable
 for_window [window_role="About"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
 
 # set border of floating window
 for_window [class="urxvt"] border pixel 1
@@ -456,19 +459,18 @@ bar {
 		font pango: Hack Nerd Font Mono Regular 12 
 		status_command i3blocks -c ~/.config/i3/i3blocks.conf
     	position top
-	    #mode hide
-    #	modifier Mod1
-		 tray_padding 0
+	   # mode hide
+    	modifier Mod1
+#		 tray_padding 0
 
 strip_workspace_numbers no
 
 		    colors {
-		    separator          $purple
+	    separator          $purple
 		    background         $darkgrey
 		    statusline         $white
-#                          		border 		        bg		txt		indicator
 		focused_workspace	$mediumgrey	   	$grey		$darkgrey	$purple
-		active_workspace	$lightblue      	$mediumgrey	$darkgrey	$purple
+  	active_workspace	$lightblue      	$mediumgrey	$darkgrey	$purple
 		inactive_workspace	$darkgrey   		$darkgrey	$grey		$purple
 		urgent_workspace	$urgentred	    	$urgentred	$white		$purple
 	}
