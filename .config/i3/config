@@ -142,16 +142,10 @@ bindsym $mod+Return exec --no-startup-id kitty
 # kill focused window
 bindsym $mod+q kill
 
-# exit-menu
+# Poer-menu
 bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 
-# Lock the system
-# lock with a picture:
-#bindsym $mod+l exec --no-startup-id i3lock -i  ~/.config/i3/i3-lock-screen.png -p default|win -t
-# lock by blurring the screen:
 
-#bindsym $mod+t exec --no-startup-id ~/.config/i3/scripts/blur-lock
-#bindsym $mod+t exec betterlockscreen -u "~/Pictures/Wall/"
 bindsym $mod+t exec betterlockscreen -l dim
 bindsym $mod+c exec feh ~/Pictures/Wall --randomize --bg-fill
 #bindsym $mod+c exec feh ~/Pictures/Wall/Familymode --randomize --bg-fill
@@ -164,9 +158,7 @@ bindsym $mod+Shift+r restart
 
 # keybinding in fancy rofi (automated):
 bindsym F1 exec --no-startup-id ~/.config/i3/scripts/keyhint-2
-# alternative
 # keybinding list in editor:
-# bindsym $mod+F1 exec --no-startup-id xed ~/.config/i3/keybindings
 
 # change focus
 bindsym $mod+j focus down
@@ -192,8 +184,6 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
-#bindsym $mod+Shift+h split :
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -266,35 +256,7 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-# use workspaces on different displays:
-# where you have to replace VGA-0/HDMI-0 with the names for your displays
-# you can get from xrandr command
-#workspace $ws1 output VGA-0
-#workspace $ws2 output VGA-0
-#workspace $ws3 output HDMI-0
-#workspace $ws4 output HDMI-0
-#workspace $ws5 output HDMI-0
 
-# bind program to workspace and focus to them on startup:
-#assign [class="kitty"] $ws1
-#assign [class="(?i)brave"] $ws2
-#assign [class="Thunar"] $ws3
-#assign [class="spotify"] $ws3
-
-# automatic set focus new window if it opens on another workspace than the current:
-#for_window [class=kitty] focus
-#for_window [class=(?i)brave] focus
-#for_window [class=Thunar] focus
-#for_window [class=Thunderbird] focus
-
-##############
-# compositor #
-##############
-
-# transparency
-# uncomment one of them to be used
-# options could need changes, related to used GPU and drivers.
-# to find the right setting consult the archwiki or ask at the forum.
 #
 # xcompmgr: https://wiki.archlinux.org/title/Xcompmgr
 # manpage: https://man.archlinux.org/man/xcompmgr.1.en
@@ -403,7 +365,6 @@ exec --no-startup-id /usr/bin/dunst
 for_window [class="Yad" instance="yad"] floating enable
 for_window [class="Galculator" instance="galculator"] floating enable
 for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
-
 # set floating (nontiling) for special apps
 for_window [class="Xsane" instance="xsane"] floating enable
 for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
