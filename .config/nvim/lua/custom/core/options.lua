@@ -38,5 +38,5 @@ opt.splitbelow = true
 vim.cmd("map <C-a> <esc>ggVG<CR>")
 vim.api.nvim_set_keymap("n", "<C-c>", ":!clear && g++ -o %:r.out % -std=c++17<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-x>", ":vsplit | term ./%:r.out<CR>i", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-M-b>", ":Test<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<F9>", ":Test<CR>", { noremap = true, silent = true })
 vim.cmd("nnoremap <C-R> :w<CR>:!java % && java %:r<CR>")
