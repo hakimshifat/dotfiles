@@ -355,7 +355,7 @@ exec --no-startup-id /usr/bin/dunst
 # exec --no-startup-id blueberry-tray
 
 # networkmanager-applet
-exec --no-startup-id nm-applet
+#exec --no-startup-id nm-applet
 
 ##################
 # floating rules #
