@@ -9,7 +9,8 @@ export ZSH="$HOME/.oh-my-zsh"
 
 #THEMES=("bira" "darkblood" "fox" "rkj-repos")
 
-ZSH_THEME="fox"
+#ZSH_THEME="bira"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 
 plugins=(
@@ -67,7 +68,7 @@ SAVEHIST=10000
 
 ## History command configuration
 
-# History file and size
+# History file and size
 [ -z "$HISTFILE" ] && HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh_history"
 HISTSIZE=50000
 SAVEHIST=10000
