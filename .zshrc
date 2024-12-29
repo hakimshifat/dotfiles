@@ -9,7 +9,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 #THEMES=("bira" "darkblood" "fox" "rkj-repos")
 
-ZSH_THEME="darkblood"
+ZSH_THEME="fox"
 
 
 plugins=(
@@ -66,17 +66,34 @@ HISTSIZE=50000
 SAVEHIST=10000
 
 ## History command configuration
-setopt extended_history       # record timestamp of command in HISTFILE
-setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
-setopt hist_ignore_dups       # ignore duplicated commands history list
-setopt hist_ignore_space      # ignore commands that start with space
-setopt hist_verify            # show command with history expansion to user before running it
-setopt inc_append_history     # add commands to HISTFILE in order of execution
-setopt share_history          # share command history data
+
+# History file and size
+[ -z "$HISTFILE" ] && HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh_history"
+HISTSIZE=50000
+SAVEHIST=10000
+
+# History behavior options
+setopt extended_history       # Record timestamps of commands
+setopt hist_expire_dups_first # Delete duplicates first when history exceeds HISTSIZE
+setopt hist_ignore_dups       # Ignore duplicate commands in the same session
+setopt hist_ignore_space      # Ignore commands that start with a space
+setopt hist_reduce_blanks     # Remove superfluous blanks before saving commands
+setopt hist_verify            # Show expanded history commands before execution
+setopt inc_append_history     # Append commands to history immediately
+setopt append_history         # Append rather than overwrite history
+setopt share_history          # Share history between all sessions
+
+# History formatting
+export HISTTIMEFORMAT="%F %T "
+
+# Ignore specific commands in history
+export HISTIGNORE="ls:cd:exit:pwd:bg:fg:clear"
+
+
 #History Settings=======================================
 
 # Created by `pipx` on 2024-11-03 18:04:02
-export PATH="$PATH:/home/sifat/.local/bin"
+export PATH="$PATH:&HOME/.local/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/dotfiles/.p10k.zsh.
 [[ ! -f ~/dotfiles/.p10k.zsh ]] || source ~/dotfiles/.p10k.zsh
