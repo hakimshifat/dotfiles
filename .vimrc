@@ -4,8 +4,6 @@ set relativenumber
 set laststatus=2
 set mouse=a
 set autoindent
-" Compile and run Java code
-nnoremap <C-R> :w<CR>:!javac % && java %:r<CR>
 
 "Copy to clipboard
 set clipboard=unnamedplus
@@ -35,9 +33,6 @@ nnoremap <leader>q :q<CR>
 
 "For Compiling and Running C and C++ Files
 nnoremap <C-b> :w<CR>:!g++ % -o %:r && ./%:r<CR>
-"nnoremap <C-b> :vertical terminal g++ % -o %:r && ./%:r<CR>
-
-"nnoremap <C-b> :w<CR>:if exists("t:cpp_term") && win_gotoid(t:cpp_term) <Bar> bwipeout! <Bar> endif<CR>:vertical terminal bash -c "g++ -o %:r.out % && ./%:r.out"<CR>:let t:cpp_term = win_getid()<CR>
 
 "NerdTree Management
 nnoremap <leader>ee :NERDTreeToggle<CR>
