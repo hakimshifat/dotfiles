@@ -1,5 +1,4 @@
 font pango:JetBrains Mono Nerd Regular 12 
-#include ~/.config/i3/i3status/statusbar.conf
 
 # set the mod key to the winkey:
 set $mod Mod1
@@ -323,7 +322,8 @@ exec --no-startup-id ~/.config/i3/scripts/feh-auto.sh
 
 # use xautolock to use autosuspend rules for mobile devices
 # https://wiki.archlinux.org/title/Session_lock#xautolock
-exec --no-startup-id xset s 600 dpms 600 900 1200
+#exec --no-startup-id xset s 600 dpms 600 900 1200
+exec --no-startup-id xset dpms 300 600 900
 exec --no-startup-id xautolock -time 20 -locker "systemctl suspend"
 
 # xscreensaver
@@ -384,12 +384,7 @@ for_window [window_role="task_dialog"] floating enable
 # set border of floating window
 for_window [class="urxvt"] border pixel 1
 
-# set size of floating window
-#for_window [window_role="(?i)GtkFileChooserDialog"] resize set 640 480 #to set size of file choose dialog
-#for_window [class=".*"] resize set 640 480 #to change size of all floating windows 
 
-# set position of floating window
-#for_window [class=".*"] move position center
 
 ######################################
 # color settings for bar and windows #
@@ -443,30 +438,6 @@ strip_workspace_numbers no
 }
 
 
-# bar {
-#	font pango: Noto Sans Regular 10
-#	status_command i3blocks -c ~/.config/i3/i3blocks-2.conf
-#	i3bar_command i3bar --transparency
-#	output HDMI-0
-#	position bottom
-#
-# When strip_workspace_numbers is set to yes,
-# any workspace that has a name of the form
-# “[n][:][NAME]” will display only the name.
-#strip_workspace_numbers yes
-##strip_workspace_name no
-#
-#	colors {
-#		separator          $purple
-#		background         $darkbluetrans
-#        	statusline         $white
-#					border		bg		txt		indicator
-#		focused_workspace	$lighterblue	$lighterblue	$darkblue	$purple
-#		active_workspace	$lightdblue	$lightdblue	$darkblue	$purple
-#		inactive_workspace	$darkblue	$darkblue	$lightdblue	$purple
-#		urgent_workspace	$urgentred	$urgentred	$white		$purple
-#	}
-#}
 
 #####################################
 # Application menu handled by rofi: #
