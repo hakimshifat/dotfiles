@@ -26,7 +26,6 @@ opt.signcolumn = "yes"
 --backspace
 opt.backspace = "indent,eol,start"
 --clipBoard
---opt.clipboard:append("unnamedplus")
 vim.cmd("set clipboard+=unnamedplus")
 
 --splitting
@@ -34,9 +33,7 @@ opt.splitright = true
 opt.splitbelow = true
 
 --Personal
---vim.cmd("autocmd BufNewFile *.cpp 0r ~/CP/Template.cpp")
 vim.cmd("map <C-a> <esc>ggVG<CR>")
 vim.api.nvim_set_keymap("n", "<C-c>", ":!clear && g++ -o %:r.out % -std=c++17<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-x>", ":vsplit | term ./%:r.out<CR>i", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<F9>", ":Test<CR>", { noremap = true, silent = true })
-vim.cmd("nnoremap <C-R> :w<CR>:!java % && java %:r<CR>")
