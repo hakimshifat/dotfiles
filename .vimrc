@@ -49,6 +49,7 @@ nnoremap <leader>sx :close<CR>
 "Plugins
 call plug#begin()
 
+
 Plug 'junegunn/fzf.vim'
 Plug 'preservim/nerdtree'
 Plug 'christoomey/vim-tmux-navigator'
