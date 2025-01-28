@@ -1,4 +1,5 @@
 nerdfetch
+#neofetch
 
 #only for p10k
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -39,6 +40,7 @@ alias cgbg="feh ~/Pictures/Wall --randomize --bg-fill"
 alias ydl="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv"
 alias ydl7="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv"
 alias ydl1="yt-dlp -S 'res:1080,fps:60' --merge-output-format mkv"
+alias ytp="~/Git/ytp/ytp"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -118,3 +120,4 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+export PATH=$HOME/.local/bin:$PATH

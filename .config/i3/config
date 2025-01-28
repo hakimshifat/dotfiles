@@ -1,5 +1,7 @@
 font pango:JetBrains Mono Nerd Regular 12 
 
+#exec --no-startup-id oneko
+
 # set the mod key to the winkey:
 set $mod Mod1
 set $mod1 Mod4
@@ -22,7 +24,7 @@ workspace_layout default
 
 new_window pixel 1
 #caffaine-ng
-exec --no-startup-id caffeine
+#exec --no-startup-id caffeine
 
 # thin borders
 # hide_edge_borders both
@@ -323,8 +325,9 @@ exec --no-startup-id ~/.config/i3/scripts/feh-auto.sh
 # use xautolock to use autosuspend rules for mobile devices
 # https://wiki.archlinux.org/title/Session_lock#xautolock
 #exec --no-startup-id xset s 600 dpms 600 900 1200
-exec --no-startup-id xset dpms 300 600 900
-exec --no-startup-id xautolock -time 20 -locker "systemctl suspend"
+#exec --no-startup-id xset dpms 300 600 900
+exec --no-startup-id xset dpms 9999999 9999999 99999999
+#exec --no-startup-id xautolock -time 20 -locker "systemctl suspend"
 
 # xscreensaver
 # https://www.jwz.org/xscreensaver
