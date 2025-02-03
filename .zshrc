@@ -40,10 +40,6 @@ alias cgbg="feh ~/Pictures/Wall --randomize --bg-fill"
 alias ydl="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv"
 alias ydl7="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv"
 alias ydl1="yt-dlp -S 'res:1080,fps:60' --merge-output-format mkv"
-alias ytp="~/Git/ytp/ytp"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 #fzf setting===============================
 source <(fzf --zsh)
@@ -98,26 +94,6 @@ export HISTIGNORE="ls:cd:exit:pwd:bg:fg:clear"
 # Created by `pipx` on 2024-11-03 18:04:02
 export PATH="$PATH:&HOME/.local/bin"
 
-# To customize prompt, run `p10k configure` or edit ~/dotfiles/.p10k.zsh.
-[[ ! -f ~/dotfiles/.p10k.zsh ]] || source ~/dotfiles/.p10k.zsh
-#for miniConda
-#[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
-#export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
-# source ~/miniconda3/bin/activate  # commented out by conda initialize
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/sifat/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/sifat/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/sifat/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/sifat/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 export PATH=$HOME/.local/bin:$PATH
