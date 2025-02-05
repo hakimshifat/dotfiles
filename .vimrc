@@ -8,11 +8,6 @@ set autoindent
 "Copy to clipboard
 set clipboard=unnamedplus
 
-"Custom Template file for cpp files
-:autocmd BufNewFile *.cpp 0r ~/cp/template.cpp
-
-"KeyBindings
-
 "Pressing ii or II to exit Visual Mode
 :imap ii <Esc>
 :imap II <Esc>
@@ -52,6 +47,8 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
+
 "Plugins
 call plug#begin()
 
@@ -64,7 +61,6 @@ Plug 'tomasr/molokai'
 Plug 'searleser97/cpbooster.vim'
 Plug 'preservim/nerdtree'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'ycm-core/YouCompleteMe'
 Plug 'uiiaoo/java-syntax.vim'
 
 
