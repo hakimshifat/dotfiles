@@ -1,0 +1,21 @@
+bar {
+		font pango:JetBrains Mono Nerd Regular 12
+		status_command i3blocks -c ~/.config/i3/i3blocks.conf
+	    	position top
+#	    	i3bar_command i3bar --transparency
+		    tray_padding 0
+
+strip_workspace_numbers yes
+##strip_workspace_name no
+
+		    colors {
+		    separator          $purple
+		    background         $darkgrey
+		    statusline         $white
+#                  		border 		        bg		txt		indicator
+		focused_workspace	$mediumgrey	   	$grey		$darkgrey	$purple
+		active_workspace	$lightblue      	$mediumgrey	$darkgrey	$purple
+		inactive_workspace	$darkgrey   		$darkgrey	$grey		$purple
+		urgent_workspace	$urgentred	    	$urgentred	$white		$purple
+	}
+}
