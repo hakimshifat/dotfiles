@@ -33,12 +33,12 @@ set $ws9 "9"
 set $ws10 "10"
 
 # bind program to workspace and focus to them on startup:
-assign [class="Xfce4-terminal"] $ws1
-assign [class="Thunar"] $ws3
+#assign [class="Xfce4-terminal"] $ws1
+#assign [class="Thunar"] $ws3
 
 # automatic set focus new window if it opens on another workspace than the current:
-for_window [class=Xfce4-terminal] focus
-for_window [class=Thunar] focus
+#for_window [class=Xfce4-terminal] focus
+#for_window [class=Thunar] focus
 
 #floating rules
 for_window [class="Yad" instance="yad"] floating enable
