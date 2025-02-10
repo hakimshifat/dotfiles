@@ -102,3 +102,11 @@ export PATH=$HOME/.local/bin:$PATH
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
+
+#===========================================================================
+if ! pgrep -u "$USER" ssh-agent > /dev/null 2>&1; then
+  eval "$(ssh-agent -s)" > /dev/null
+fi
+ssh-add -l > /dev/null 2>&1 || ssh-add ~/.ssh/id_ed25519 > /dev/null 2>&1
+
+#============================================================================
