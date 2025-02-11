@@ -1,106 +1,139 @@
 #!/usr/bin/env python3
-#
-# Copyright (C) 2016 James Murphy
-# Licensed under the GPL version 2 only
-#
-# A battery indicator blocklet script for i3blocks
+"""
+A battery indicator blocklet script for i3blocks,
+improved to display different battery icons based on charge percentage.
+FontAwesome battery icons used:
+    (U+F244): empty
+    (U+F243): quarter
+    (U+F242): half
+    (U+F241): three-quarters
+    (U+F240): full
+"""
 
-from subprocess import check_output
 import os
 import re
+from subprocess import check_output
 
-config = dict(os.environ)
-status = check_output(['acpi'], universal_newlines=True)
 
-if not status:
-    # stands for no battery found
-    color = config.get("color_10", "red")
-    fulltext = "<span color='{}'><span font='FontAwesome'>\uf00d \uf240</span></span>".format(color)
-    percentleft = 100
-else:
-    # if there is more than one battery in one laptop, the percentage left is
-    # available for each battery separately, although state and remaining
-    # time for overall block is shown in the status of the first battery
-    batteries = status.split("\n")
-    state_batteries=[]
-    commasplitstatus_batteries=[]
-    percentleft_batteries=[]
-    time = ""
-    for battery in batteries:
-        if battery!='':
-            state_batteries.append(battery.split(": ")[1].split(", ")[0])
-            commasplitstatus = battery.split(", ")
-            if not time:
-                time = commasplitstatus[-1].strip()
-                # check if it matches a time
-                time = re.match(r"(\d+):(\d+)", time)
-                if time:
-                    time = ":".join(time.groups())
-                    timeleft = " ({})".format(time)
-                else:
-                    timeleft = ""
-
-            p = int(commasplitstatus[1].rstrip("%\n"))
-            if p>0:
-                percentleft_batteries.append(p)
-            commasplitstatus_batteries.append(commasplitstatus)
-    state = state_batteries[0]
-    commasplitstatus = commasplitstatus_batteries[0]
-    if percentleft_batteries:
-        percentleft = int(sum(percentleft_batteries)/len(percentleft_batteries))
+def get_battery_icon(percent):
+    """Return a FontAwesome battery icon based on the charge percentage."""
+    if percent < 10:
+        return "<span font='FontAwesome'>\uf244</span>"  # empty
+    elif percent < 30:
+        return "<span font='FontAwesome'>\uf243</span>"  # quarter
+    elif percent < 50:
+        return "<span font='FontAwesome'>\uf242</span>"  # half
+    elif percent < 80:
+        return "<span font='FontAwesome'>\uf241</span>"  # three-quarters
     else:
-        percentleft = 0
-
-    # stands for charging
-    color = config.get("color_charging", "yellow")
-    FA_LIGHTNING = "<span color='{}'><span font='FontAwesome'>\uf0e7</span></span>".format(color)
-
-    # stands for plugged in
-    FA_PLUG = "<span font='FontAwesome'>\uf1e6</span>"
-
-    # stands for using battery
-    FA_BATTERY = "<span font='FontAwesome'>\uf240</span>"
-
-    # stands for unknown status of battery
-    FA_QUESTION = "<span font='FontAwesome'>\uf128</span>"
+        return "<span font='FontAwesome'>\uf240</span>"  # full
 
 
-    if state == "Discharging":
-        fulltext = FA_BATTERY + " "
-    elif state == "Full":
-        fulltext = FA_PLUG + " "
-        timeleft = ""
-    elif state == "Unknown":
-        fulltext = FA_QUESTION + " " + FA_BATTERY + " "
-        timeleft = ""
+def get_color(percent, config):
+    """Return a color based on the current battery percentage using environment overrides."""
+    if percent < 10:
+        return config.get("color_10", "#FFFFFF")
+    elif percent < 20:
+        return config.get("color_20", "#FF3300")
+    elif percent < 30:
+        return config.get("color_30", "#FF6600")
+    elif percent < 40:
+        return config.get("color_40", "#FF9900")
+    elif percent < 50:
+        return config.get("color_50", "#FFCC00")
+    elif percent < 60:
+        return config.get("color_60", "#FFFF00")
+    elif percent < 70:
+        return config.get("color_70", "#FFFF33")
+    elif percent < 80:
+        return config.get("color_80", "#FFFF66")
     else:
-        fulltext = FA_LIGHTNING + " " + FA_PLUG + " "
-
-    def color(percent):
-        if percent < 10:
-            # exit code 33 will turn background red
-            return config.get("color_10", "#FFFFFF")
-        if percent < 20:
-            return config.get("color_20", "#FF3300")
-        if percent < 30:
-            return config.get("color_30", "#FF6600")
-        if percent < 40:
-            return config.get("color_40", "#FF9900")
-        if percent < 50:
-            return config.get("color_50", "#FFCC00")
-        if percent < 60:
-            return config.get("color_60", "#FFFF00")
-        if percent < 70:
-            return config.get("color_70", "#FFFF33")
-        if percent < 80:
-            return config.get("color_80", "#FFFF66")
         return config.get("color_full", "#FFFFFF")
 
-    form =  '<span color="{}">{}%</span>'
-    fulltext += form.format(color(percentleft), percentleft)
-    #fulltext += timeleft
 
-print(fulltext)
-print(fulltext)
-if percentleft < 10:
-    exit(33)
+def main():
+    config = dict(os.environ)
+    try:
+        status = check_output(["acpi"], universal_newlines=True)
+    except Exception:
+        status = ""
+
+    if not status.strip():
+        # No battery found
+        fallback_color = config.get("color_10", "red")
+        fulltext = "<span color='{}'><span font='FontAwesome'>\uf00d \uf240</span></span>".format(
+            fallback_color
+        )
+        percentleft = 100
+    else:
+        batteries = status.strip().split("\n")
+        state_list = []
+        percent_list = []
+        timeleft = ""
+        for battery in batteries:
+            if battery:
+                # Example acpi output:
+                # "Battery 0: Discharging, 42%, 01:23 remaining"
+                parts = battery.split(": ")
+                if len(parts) < 2:
+                    continue
+                segments = parts[1].split(", ")
+                state_list.append(segments[0])
+                try:
+                    p = int(segments[1].rstrip("%\n"))
+                except ValueError:
+                    p = 0
+                percent_list.append(p)
+                # Try to extract time (if available)
+                if not timeleft:
+                    match = re.search(r"(\d+):(\d+)", segments[-1])
+                    if match:
+                        time_formatted = ":".join(match.groups())
+                        timeleft = " ({})".format(time_formatted)
+        state = state_list[0] if state_list else "Unknown"
+        percentleft = int(sum(percent_list) / len(percent_list)) if percent_list else 0
+
+        # Predefined icons for charging and plugged states
+        FA_LIGHTNING = (
+            "<span color='{}'><span font='FontAwesome'>\uf0e7</span></span>".format(
+                config.get("color_charging", "yellow")
+            )
+        )
+        FA_PLUG = "<span font='FontAwesome'>\uf1e6</span>"
+        FA_QUESTION = "<span font='FontAwesome'>\uf128</span>"
+
+        # Select icon based on battery state and charge percentage
+        if state == "Discharging":
+            icon = get_battery_icon(percentleft)
+            fulltext = icon + " "
+        elif state == "Full":
+            fulltext = FA_PLUG + " "
+            timeleft = ""
+        elif state == "Unknown":
+            icon = get_battery_icon(percentleft)
+            fulltext = FA_QUESTION + " " + icon + " "
+        elif state == "Charging":
+            icon = get_battery_icon(percentleft)
+            fulltext = FA_LIGHTNING + " " + icon + " "
+        else:
+            # Default if state is not recognized
+            fulltext = FA_LIGHTNING + " " + FA_PLUG + " "
+
+    # Append percentage text with appropriate color
+    text_format = '<span color="{}">{}%</span>'
+    percentage_color = get_color(percentleft, config)
+    fulltext += text_format.format(percentage_color, percentleft)
+    # Optionally, add timeleft information (currently commented out)
+    # fulltext += timeleft
+
+    # Print twice (first line for full_text, second for short_text)
+    print(fulltext)
+    print(fulltext)
+
+    # Exit with code 33 if battery is critically low
+    if percentleft < 10:
+        exit(33)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,3 +1,8 @@
+#compositor
+exec_always picom -b
+#exec_always --no-startup-id picom -b
+
+exec_always --no-startup-id picom --config  ~/.config/picom.conf
 include ~/.config/i3/workspace
 include ~/.config/i3/keybindings
 include ~/.config/i3/bar
@@ -77,7 +82,6 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym $mod+p exec --no-startup-id /usr/local/bin/switch-audio-port
 
 ## App shortcuts
-bindsym $mod+w exec --no-startup-id /usr/bin/firefox
 bindsym $mod+n exec --no-startup-id /usr/bin/thunar
 
 # Power Profiles menu switcher (rofi)
@@ -85,13 +89,8 @@ bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/power-profiles
 
 
 # automatic set focus new window if it opens on another workspace than the current:
-for_window [class=Xfce4-terminal] focus
 for_window [class=Thunar] focus
 
-#compositor
-exec_always picom -b
-#exec_always --no-startup-id picom -b
-exec_always --no-startup-id picom --config  ~/.config/picom.conf
 
 #get auth work with polkit-gnome
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
