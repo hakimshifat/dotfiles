@@ -41,6 +41,7 @@ alias ydl="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv"
 alias ydl7="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv"
 alias ydl1="yt-dlp -S 'res:1080,fps:60' --merge-output-format mkv"
 alias mpa="mpv --no-video"
+alias autopsy="autopsy --nosplash"
 
 #fzf setting===============================
 source <(fzf --zsh)

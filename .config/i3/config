@@ -1,11 +1,11 @@
+include ~/.config/i3/workspace
+include ~/.config/i3/keybindings
+include ~/.config/i3/bar
 #compositor
 exec_always picom -b
 #exec_always --no-startup-id picom -b
 
 exec_always --no-startup-id picom --config  ~/.config/picom.conf
-include ~/.config/i3/workspace
-include ~/.config/i3/keybindings
-include ~/.config/i3/bar
 
 font pango:JetBrains Mono Nerd Regular 15
 
@@ -100,7 +100,8 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # uncomment the next line, use arandr to setup displays and save the file as monitor:
 exec --no-startup-id ~/.screenlayout/monitor.sh
 
-exec --no-startup-id sleep 1 && feh --bg-fill ~/Pictures/1385817.png
+exec --no-startup-id ~/.config/i3/scripts/randomWallpaper.sh
+#exec --no-startup-id sleep 1 && feh --bg-fill ~/Pictures/1385817.png
 
 # set powersavings for display:
 exec --no-startup-id xset s 3600 dpms 600 600 600
