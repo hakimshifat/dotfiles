@@ -87,7 +87,7 @@ setopt share_history          # Share history between all sessions
 export HISTTIMEFORMAT="%F %T "
 
 # Ignore specific commands in history
-export HISTIGNORE="ls:cd:exit:pwd:bg:fg:clear"
+export HISTIGNORE="ls:cd:exit:pwd:bg:fg:clear:e"
 
 
 #History Settings=======================================
@@ -101,6 +101,7 @@ export PATH=$HOME/.local/bin:$PATH
 
 #================== sothat conda is available for every session
 [ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
+
 export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
 
 #===========================================================================
