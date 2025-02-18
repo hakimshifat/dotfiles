@@ -26,13 +26,21 @@ bindsym $mod+Shift+Tab workspace prev
 # resize window (you can also use the mouse for that):
 mode "resize" {
         bindsym h resize shrink width 1 px or 1 ppt
+        bindsym shift+h resize shrink width 5 px or 5 ppt
         bindsym j resize grow height 1 px or 1 ppt
+        bindsym shift+j resize grow height 5 px or 5 ppt
         bindsym k resize shrink height 1 px or 1 ppt
+        bindsym shift+k resize shrink height 5 px or 5 ppt
         bindsym l resize grow width 1 px or 1 ppt
+        bindsym shift+l resize grow width 5 px or 5 ppt
         bindsym Left resize shrink width 1 px or 1 ppt
+        bindsym shift+Left resize shrink width 5 px or 5 ppt
         bindsym Down resize grow height 1 px or 1 ppt
+        bindsym shift+Down resize grow height 5 px or 5 ppt
         bindsym Up resize shrink height 1 px or 1 ppt
+        bindsym shift+Up resize shrink height 5 px or 5 ppt
         bindsym Right resize grow width 1 px or 1 ppt
+        bindsym shift+Right resize grow width 5 px or 5 ppt
 	     bindsym Return mode "default"
         bindsym Escape mode "default"
 }
@@ -49,6 +57,7 @@ bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 
 #lock
 bindsym $mod+t exec betterlockscreen -l dim
+bindsym $mod+Shift+t exec ~/.config/i3/scripts/blur-lock
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
