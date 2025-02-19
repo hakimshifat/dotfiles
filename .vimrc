@@ -4,6 +4,7 @@ set relativenumber
 set laststatus=2
 set mouse=a
 set autoindent
+set showmode
 
 "Copy to clipboard
 set clipboard=unnamedplus

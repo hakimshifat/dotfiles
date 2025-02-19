@@ -1,11 +1,13 @@
 include ~/.config/i3/workspace
 include ~/.config/i3/keybindings
 include ~/.config/i3/bar
+# set the mod key to the Alt Key:
+set $mod Mod1
 #compositor
 exec_always picom -b
 #exec_always --no-startup-id picom -b
 
-exec_always --no-startup-id picom --config  ~/.config/picom.conf
+exec_always --no-startup-id picom --config  ~/.config/picom/picom.conf
 
 font pango:JetBrains Mono Nerd Regular 15
 
@@ -13,8 +15,6 @@ font pango:JetBrains Mono Nerd Regular 15
 bindsym Print exec --no-startup-id scrot ~/Pictures/%Y-%m-%d-%T-screenshot.png 
 bindsym $mod+Shift+s exec --no-startup-id "maim -s | tee ~/Pictures/screenshot_$(date +'%Y-%m-%d_%H-%M-%S').png | xclip -selection clipboard -t image/png"
 
-# set the mod key to the winkey:
-set $mod Mod1
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -107,7 +107,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # start a script to setup displays
 # uncomment the next line, use arandr to setup displays and save the file as monitor:
-exec --no-startup-id ~/.screenlayout/monitor.sh
+#exec --no-startup-id ~/.screenlayout/monitor.sh
 
 exec --no-startup-id ~/.config/i3/scripts/randomWallpaper.sh
 #bindsym $mod+c exec --no-startup-id ~/.config/i3/scripts/randomWallpaper.sh
