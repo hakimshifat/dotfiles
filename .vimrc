@@ -10,8 +10,8 @@ set showmode
 set clipboard=unnamedplus
 
 "Pressing ii or II to exit Visual Mode
-:imap ii <Esc>
-:imap II <Esc>
+:imap jj <Esc>
+:imap JJ <Esc>
 
 "Finding Files usint ";" Key
 map ; :Files<CR>

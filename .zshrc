@@ -1,5 +1,5 @@
-nerdfetch
-#neofetch
+fastfetch
+#nerdfetch
 
 #only for p10k
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -60,18 +60,12 @@ function yy() {
 
 
 #History Settings=======================================
+# History Settings
 
-## History file configuration
-[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
-HISTSIZE=50000
-SAVEHIST=10000
-
-## History command configuration
-
-# History file and size
+## History file and size
 [ -z "$HISTFILE" ] && HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh_history"
 HISTSIZE=50000
-SAVEHIST=10000
+SAVEHIST=50000
 
 # History behavior options
 setopt extended_history       # Record timestamps of commands
@@ -81,7 +75,6 @@ setopt hist_ignore_space      # Ignore commands that start with a space
 setopt hist_reduce_blanks     # Remove superfluous blanks before saving commands
 setopt hist_verify            # Show expanded history commands before execution
 setopt inc_append_history     # Append commands to history immediately
-setopt append_history         # Append rather than overwrite history
 setopt share_history          # Share history between all sessions
 
 # History formatting
@@ -89,9 +82,8 @@ export HISTTIMEFORMAT="%F %T "
 
 # Ignore specific commands in history
 export HISTIGNORE="ls:cd:exit:pwd:bg:fg:clear:e"
-
-
 #History Settings=======================================
+
 
 # Created by `pipx` on 2024-11-03 18:04:02
 export PATH="$PATH:&HOME/.local/bin"
