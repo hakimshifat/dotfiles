@@ -1,3 +1,4 @@
+#neofetch --ascii_distro BlackArch
 fastfetch
 #nerdfetch
 
@@ -31,10 +32,11 @@ source $ZSH/oh-my-zsh.sh
 
 # export ARCHFLAGS="-arch $(uname -m)"
 
+alias timer="termdown"
 alias le="ls -la"
 alias e="exit"
-alias gpt="tgpt"
-alias cppp="cpb clone"
+alias gpt="tgpt -m"
+alias cc="cpb clone"
 alias op="xdg-open"
 alias cgbg="feh ~/Pictures/Wall --randomize --bg-fill"
 alias ydl="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv"

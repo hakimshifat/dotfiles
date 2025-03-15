@@ -8,6 +8,10 @@ exec_always picom -b
 #exec_always --no-startup-id picom -b
 
 exec_always --no-startup-id picom --config  ~/.config/picom/picom.conf
+#exec_always --no-startup-id caffeine
+#exec_always killall redshift
+#exec_always --no-startup-id redshift
+
 
 font pango:JetBrains Mono Nerd Regular 15
 
@@ -56,7 +60,7 @@ bindsym $mod+q kill
 bindsym $mod+Shift+e exec --no-startup-id ~/.config/i3/scripts/powermenu
 
 #lock
-bindsym $mod+t exec betterlockscreen -l dim
+bindsym $mod+t exec betterlockscreen -l
 bindsym $mod+Shift+t exec ~/.config/i3/scripts/blur-lock
 
 # reload the configuration file
