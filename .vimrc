@@ -64,5 +64,11 @@ Plug 'preservim/nerdtree'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'uiiaoo/java-syntax.vim'
 
+Plug 'vim-airline/vim-airline'
+Plug 'psliwka/vim-smoothie'
+Plug 'tpope/vim-commentary'
+Plug 'ycm-core/YouCompleteMe'
+Plug 'dense-analysis/ale'
+
 
 call plug#end()
