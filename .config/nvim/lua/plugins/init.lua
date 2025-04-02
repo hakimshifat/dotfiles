@@ -21,10 +21,10 @@ local default_plugins = {
   {
     "NvChad/nvterm",
     init = function()
-      require("core.utils").load_mappings "nvterm"
+      require("core.utils").load_mappings("nvterm")
     end,
     config = function(_, opts)
-      require "base46.term"
+      require("base46.term")
       require("nvterm").setup(opts)
     end,
   },
@@ -32,7 +32,7 @@ local default_plugins = {
   {
     "NvChad/nvim-colorizer.lua",
     init = function()
-      require("core.utils").lazy_load "nvim-colorizer.lua"
+      require("core.utils").lazy_load("nvim-colorizer.lua")
     end,
     config = function(_, opts)
       require("colorizer").setup(opts)
@@ -47,7 +47,7 @@ local default_plugins = {
   {
     "nvim-tree/nvim-web-devicons",
     opts = function()
-      return { override = require "nvchad.icons.devicons" }
+      return { override = require("nvchad.icons.devicons") }
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "devicons")
@@ -59,13 +59,13 @@ local default_plugins = {
     "lukas-reineke/indent-blankline.nvim",
     version = "2.20.7",
     init = function()
-      require("core.utils").lazy_load "indent-blankline.nvim"
+      require("core.utils").lazy_load("indent-blankline.nvim")
     end,
     opts = function()
       return require("plugins.configs.others").blankline
     end,
     config = function(_, opts)
-      require("core.utils").load_mappings "blankline"
+      require("core.utils").load_mappings("blankline")
       dofile(vim.g.base46_cache .. "blankline")
       require("indent_blankline").setup(opts)
     end,
@@ -74,12 +74,12 @@ local default_plugins = {
   {
     "nvim-treesitter/nvim-treesitter",
     init = function()
-      require("core.utils").lazy_load "nvim-treesitter"
+      require("core.utils").lazy_load("nvim-treesitter")
     end,
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     opts = function()
-      return require "plugins.configs.treesitter"
+      return require("plugins.configs.treesitter")
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "syntax")
@@ -96,11 +96,11 @@ local default_plugins = {
       vim.api.nvim_create_autocmd({ "BufRead" }, {
         group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
         callback = function()
-          vim.fn.system("git -C " .. '"' .. vim.fn.expand "%:p:h" .. '"' .. " rev-parse")
+          vim.fn.system("git -C " .. '"' .. vim.fn.expand("%:p:h") .. '"' .. " rev-parse")
           if vim.v.shell_error == 0 then
-            vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
+            vim.api.nvim_del_augroup_by_name("GitSignsLazyLoad")
             vim.schedule(function()
-              require("lazy").load { plugins = { "gitsigns.nvim" } }
+              require("lazy").load({ plugins = { "gitsigns.nvim" } })
             end)
           end
         end,
@@ -120,7 +120,7 @@ local default_plugins = {
     "williamboman/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
     opts = function()
-      return require "plugins.configs.mason"
+      return require("plugins.configs.mason")
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "mason")
@@ -138,10 +138,10 @@ local default_plugins = {
   {
     "neovim/nvim-lspconfig",
     init = function()
-      require("core.utils").lazy_load "nvim-lspconfig"
+      require("core.utils").lazy_load("nvim-lspconfig")
     end,
     config = function()
-      require "plugins.configs.lspconfig"
+      require("plugins.configs.lspconfig")
     end,
   },
 
@@ -171,7 +171,7 @@ local default_plugins = {
           require("nvim-autopairs").setup(opts)
 
           -- setup cmp for autopairs
-          local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+          local cmp_autopairs = require("nvim-autopairs.completion.cmp")
           require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
         end,
       },
@@ -186,7 +186,7 @@ local default_plugins = {
       },
     },
     opts = function()
-      return require "plugins.configs.cmp"
+      return require("plugins.configs.cmp")
     end,
     config = function(_, opts)
       require("cmp").setup(opts)
@@ -204,7 +204,7 @@ local default_plugins = {
       { "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
     },
     init = function()
-      require("core.utils").load_mappings "comment"
+      require("core.utils").load_mappings("comment")
     end,
     config = function(_, opts)
       require("Comment").setup(opts)
@@ -216,10 +216,10 @@ local default_plugins = {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     init = function()
-      require("core.utils").load_mappings "nvimtree"
+      require("core.utils").load_mappings("nvimtree")
     end,
     opts = function()
-      return require "plugins.configs.nvimtree"
+      return require("plugins.configs.nvimtree")
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "nvimtree")
@@ -232,14 +232,14 @@ local default_plugins = {
     dependencies = { "nvim-treesitter/nvim-treesitter", { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
     cmd = "Telescope",
     init = function()
-      require("core.utils").load_mappings "telescope"
+      require("core.utils").load_mappings("telescope")
     end,
     opts = function()
-      return require "plugins.configs.telescope"
+      return require("plugins.configs.telescope")
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "telescope")
-      local telescope = require "telescope"
+      local telescope = require("telescope")
       telescope.setup(opts)
 
       -- load extensions
@@ -254,7 +254,7 @@ local default_plugins = {
     "folke/which-key.nvim",
     keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
     init = function()
-      require("core.utils").load_mappings "whichkey"
+      require("core.utils").load_mappings("whichkey")
     end,
     cmd = "WhichKey",
     config = function(_, opts)
