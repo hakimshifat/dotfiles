@@ -1,6 +1,3 @@
-#neofetch --ascii_distro BlackArch
-fastfetch
-#nerdfetch
 
 #only for p10k
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -31,7 +28,6 @@ source $ZSH/oh-my-zsh.sh
  fi
 
 # export ARCHFLAGS="-arch $(uname -m)"
-
 alias timer="termdown"
 alias le="ls -la"
 alias e="exit"
