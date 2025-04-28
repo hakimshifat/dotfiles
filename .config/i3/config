@@ -1,6 +1,3 @@
-include ~/.config/i3/workspace
-include ~/.config/i3/keybindings
-include ~/.config/i3/bar
 # set the mod key to the Alt Key:
 set $mod Mod1
 #compositor
@@ -148,3 +145,209 @@ client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
 
 bindsym $mod+space exec --no-startup-id rofi -modi drun -show drun \
 		-config ~/.config/rofi/rofidmenu.rasi
+#=========================================================bar
+# bindsym $mod+Shift+b exec --no-startup-id i3-msg 'bar mode toggle'
+exec_always --no-startup-id ~/.config/i3/scripts/polybarLaunch.sh
+# bar {
+# 		font pango:JetBrains Mono Nerd Regular 12
+#     # status_command py3status
+# 		status_command i3blocks -c ~/.config/i3/i3blocks.conf
+# 	    	position top
+#         # hidden_state hide
+#         #i3bar_command i3bar --transparency
+# 		    tray_padding 0
+#
+# strip_workspace_numbers yes
+# ##strip_workspace_name no
+#
+# 		    colors {
+# 		    separator          $purple
+# 		    background         $darkgrey
+# 		    statusline         $white
+# #                  		border 		        bg		txt		indicator
+# 		focused_workspace	$mediumgrey	   	$grey		$darkgrey	$purple
+# 		active_workspace	$lightblue      	$mediumgrey	$darkgrey	$purple
+# 		inactive_workspace	$darkgrey   		$darkgrey	$grey		$purple
+# 		urgent_workspace	$urgentred	    	$urgentred	$white		$purple
+# 	}
+# }
+
+#==========================================================workspaces
+
+# default i3 tiling mode:
+workspace_layout default
+
+# i3 stacking layout:
+# Each window will be fullscreen and tabbed top to bottom.
+#workspace_layout stacking
+
+# i3 tabbed layout:
+# Each new window will open fullscreen as a tab (left to right)
+#workspace_layout tabbed
+
+#border indicator on windows:
+new_window pixel 2
+
+# thin borders
+# hide_edge_borders both
+
+# Set inner/outer gaps
+gaps inner 6
+gaps outer 3
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "  1 "
+set $ws2 "  2 "
+set $ws3 "  3 "
+set $ws4 "  4 "
+set $ws5 "  5 "
+set $ws6 "  6 "
+set $ws7 "  7 "
+set $ws8 "  8 "
+set $ws9 "  9 "
+set $ws10 " 10  "
+
+# bind program to workspace and focus to them on startup:
+#assign [class="Xfce4-terminal"] $ws1
+#assign [class="Thunar"] $ws3
+
+# automatic set focus new window if it opens on another workspace than the current:
+#for_window [class=Xfce4-terminal] focus
+#for_window [class=Thunar] focus
+
+#floating rules
+for_window [class="Yad" instance="yad"] floating enable
+for_window [class="Galculator" instance="galculator"] floating enable
+for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
+
+# set floating (nontiling) for special apps
+for_window [class="Xsane" instance="xsane"] floating enable
+for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
+for_window [class="qt5ct" instance="qt5ct"] floating enable
+for_window [class="Blueberry.py" instance="blueberry.py"] floating enable
+for_window [class="Bluetooth-sendto" instance="bluetooth-sendto"] floating enable
+for_window [class="Pamac-manager"] floating enable
+for_window [window_role="About"] floating enable
+
+# set border of floating window
+for_window [class="urxvt"] border pixel 1
+
+#============================================================keybindings
+
+#workspaces shortcut
+
+# switch to workspace
+bindcode $mod+10    workspace  $ws1
+bindcode $mod+11    workspace  $ws2
+bindcode $mod+12    workspace  $ws3
+bindcode $mod+13    workspace  $ws4
+bindcode $mod+14    workspace  $ws5
+bindcode $mod+15    workspace  $ws6
+bindcode $mod+16    workspace  $ws7
+bindcode $mod+17    workspace  $ws8
+bindcode $mod+18    workspace  $ws9
+bindcode $mod+19    workspace  $ws10
+
+# switch to workspace with numpad keys
+bindcode $mod+87 workspace $ws1
+bindcode $mod+88 workspace $ws2
+bindcode $mod+89 workspace $ws3
+bindcode $mod+83 workspace $ws4
+bindcode $mod+84 workspace $ws5
+bindcode $mod+85 workspace $ws6
+bindcode $mod+79 workspace $ws7
+bindcode $mod+80 workspace $ws8
+bindcode $mod+81 workspace $ws9
+bindcode $mod+90 workspace $ws10
+
+# switch to workspace with numlock numpad keys
+bindcode $mod+Mod2+87 workspace $ws1
+bindcode $mod+Mod2+88 workspace $ws2
+bindcode $mod+Mod2+89 workspace $ws3
+bindcode $mod+Mod2+83 workspace $ws4
+bindcode $mod+Mod2+84 workspace $ws5
+bindcode $mod+Mod2+85 workspace $ws6
+bindcode $mod+Mod2+79 workspace $ws7
+bindcode $mod+Mod2+80 workspace $ws8
+bindcode $mod+Mod2+81 workspace $ws9
+bindcode $mod+Mod2+90 workspace $ws10
+
+# move focused container to workspace
+bindcode $mod+Shift+10    move container to workspace  $ws1
+bindcode $mod+Shift+11    move container to workspace  $ws2
+bindcode $mod+Shift+12    move container to workspace  $ws3
+bindcode $mod+Shift+13    move container to workspace  $ws4
+bindcode $mod+Shift+14    move container to workspace  $ws5
+bindcode $mod+Shift+15    move container to workspace  $ws6
+bindcode $mod+Shift+16    move container to workspace  $ws7
+bindcode $mod+Shift+17    move container to workspace  $ws8
+bindcode $mod+Shift+18    move container to workspace  $ws9
+bindcode $mod+Shift+19    move container to workspace  $ws10
+
+# move focused container to workspace with numpad keys
+bindcode $mod+Shift+Mod2+87 	move container to workspace  $ws1
+bindcode $mod+Shift+Mod2+88 	move container to workspace  $ws2
+bindcode $mod+Shift+Mod2+89 	move container to workspace  $ws3
+bindcode $mod+Shift+Mod2+83 	move container to workspace  $ws4
+bindcode $mod+Shift+Mod2+84 	move container to workspace  $ws5
+bindcode $mod+Shift+Mod2+85 	move container to workspace  $ws6
+bindcode $mod+Shift+Mod2+79 	move container to workspace  $ws7
+bindcode $mod+Shift+Mod2+80 	move container to workspace  $ws8
+bindcode $mod+Shift+Mod2+81 	move container to workspace  $ws9
+bindcode $mod+Shift+Mod2+90 	move container to workspace  $ws10
+
+# move focused container to workspace with numpad keys
+bindcode $mod+Shift+87 	 move container to workspace  $ws1
+bindcode $mod+Shift+88 	 move container to workspace  $ws2
+bindcode $mod+Shift+89 	 move container to workspace  $ws3
+bindcode $mod+Shift+83 	 move container to workspace  $ws4
+bindcode $mod+Shift+84 	 move container to workspace  $ws5
+bindcode $mod+Shift+85 	 move container to workspace  $ws6
+bindcode $mod+Shift+79 	 move container to workspace  $ws7
+bindcode $mod+Shift+80 	 move container to workspace  $ws8
+bindcode $mod+Shift+81 	 move container to workspace  $ws9
+bindcode $mod+Shift+90 	 move container to workspace  $ws10
+
+
+
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+#brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +2%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 2%-
+
+#audio
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_up
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_down
+bindsym $mod+XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 1%+ && pkill -RTMIN+1 i3blocks
+bindsym $mod+XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 1%- && pkill -RTMIN+1 i3blocks
+
+#mute mic
+bindsym XF86AudioMute exec --no-startup-id ~/.config/i3/scripts/volume_brightness.sh volume_mute
+bindsym $mod+m exec amixer sset Capture toggle
+

@@ -1,4 +1,3 @@
-
 #only for p10k
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -54,6 +53,7 @@ function yy() {
 	fi
 	rm -f -- "$tmp"
 }
+
 #Yazi Settings============================
 
 
@@ -74,7 +74,6 @@ setopt hist_reduce_blanks     # Remove superfluous blanks before saving commands
 setopt hist_verify            # Show expanded history commands before execution
 setopt inc_append_history     # Append commands to history immediately
 setopt share_history          # Share history between all sessions
-
 # History formatting
 export HISTTIMEFORMAT="%F %T "
 
@@ -102,6 +101,7 @@ export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
 #ssh-add -l > /dev/null 2>&1 || ssh-add ~/.ssh/id_ed25519 > /dev/null 2>&1
 
 #============================================================================
+
 if command -v zoxide > /dev/null; then
   eval "$(zoxide init zsh)"
 fi
