@@ -16,7 +16,7 @@ mic_status=$(amixer get Capture | grep -o "\[off\]" | head -n 1)
 
 # If the microphone is muted
 if [ "$mic_status" == "[off]" ]; then
-  echo " Mic Muted"
+  echo ""
 else
-  echo " Mic On"
+  echo ""
 fi

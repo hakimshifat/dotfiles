@@ -38,4 +38,7 @@ bgcolor=000000ff
 
 # Expert Options
 # Uncomment to enable suspend after locking
-# suspend_command="systemctl suspend"
+ suspend_command="systemctl suspend"
+
+~/.config/betterlockscreenrc
+

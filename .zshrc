@@ -5,6 +5,14 @@ fi
 
 export ZSH="$HOME/.oh-my-zsh"
 
+#============================================================================
+#for firefox acceleartion
+
+export MOZ_X11_EGL=1
+export MOZ_WEBRENDER=1
+
+#============================================================================
+
 #THEMES=("bira" "darkblood" "fox" "rkj-repos")
 
 #ZSH_THEME="bira"
