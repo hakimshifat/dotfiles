@@ -1,0 +1,108 @@
+//  *
+//  * Author   : gonka79
+//  * Mail     : gonka79@protonmail.com
+//  * Github   : @gonka79
+//  * Twitter  : @gonka79
+//  *
+//  */
+
+configuration {
+    font:                       "JetBrainsMono Nerd Font 10"; /* Updated Font */
+    show-icons:                 true;
+    icon-theme:                 "Papirus"; /* Confirmed installed from system report */
+}
+
+@import "colors.rasi" /* Imports the color definitions previously provided */
+
+window {
+    transparency:               "real";
+    background-color:           @bg;
+    text-color:                 @fg;
+    border:                     0px;
+    border-color:               @ac; /* No effect with border: 0px */
+    border-radius:              12px;
+    width:                      300px;
+    location:                   center;
+    x-offset:                   0;
+    y-offset:                   0;
+}
+
+listview {
+    background-color:           @al;
+    padding:                    10px 10px 10px 10px;
+    columns:                    1;
+    lines:                      10;
+    spacing:                    5px;
+    cycle:                      true;
+    dynamic:                    true;
+    layout:                     vertical;
+}
+
+element {
+    background-color:           @al;
+    text-color:                 @fg;
+    orientation:                horizontal;
+    border-radius:              0px;
+    padding:                    6px 6px 6px -20px;
+}
+
+element-icon {
+    background-color:           transparent;
+    text-color:                 inherit;
+    size:                       24px;
+    border:                     0px;
+}
+
+element-text {
+    background-color:           transparent;
+    text-color:                 inherit;
+    expand:                     true;
+    horizontal-align:           0;
+    vertical-align:             0.5;
+    margin:                     0px 2.5px 0px 2.5px;
+}
+
+element selected {
+    background-color:           @bg3; /* Mapped to polybar-secondary via colors.rasi */
+    text-color:                 @bg;  /* Mapped to polybar-background for good contrast via colors.rasi */
+    border:                     0px 0px 0px 0px;
+    border-radius:              12px;
+    border-color:               @bg1; /* Mapped to polybar-disabled via colors.rasi */
+}
+
+inputbar {
+    children:                   [ prompt ];
+    background-color:           @bg2; /* Mapped to polybar-background-alt via colors.rasi */
+    text-color:                 @fg;  /* Updated to use theme foreground */
+    expand:                     false;
+    border:                     0px;
+    border-radius:              12px;
+    border-color:               @ac; /* No effect with border: 0px */
+    spacing:                    0px;
+}
+
+prompt {
+    enabled:                    true;
+    padding:                    10px 15px 10px 15px;
+    background-color:           @bg2; /* Mapped to polybar-background-alt via colors.rasi */
+    text-color:                 @fg;  /* Updated to use theme foreground */
+    font:                       "JetBrainsMono Nerd Font 10"; /* Updated Font */
+}
+
+mainbox {
+    background-color:           @al;
+    border:                     0px;
+    border-radius:              0px;
+    border-color:               @bg4; /* No effect with border: 0px */
+    children:                   [ inputbar, listview ];
+    spacing:                    0px;
+    padding:                    0px;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ""; /* Nerd font icon */
+    font:                       "JetBrainsMono Nerd Font 10"; /* Updated Font */
+    background-color:           @bg1; /* Mapped to polybar-disabled via colors.rasi */
+    text-color:                 @fg;  /* Updated to use theme foreground */
+}
