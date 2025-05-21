@@ -15,7 +15,7 @@ export MOZ_WEBRENDER=1
 
 #THEMES=("bira" "darkblood" "fox" "rkj-repos")
 
-#ZSH_THEME="bira"
+# ZSH_THEME="bira"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 
@@ -47,6 +47,8 @@ alias ydl7="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv"
 alias ydl1="yt-dlp -S 'res:1080,fps:60' --merge-output-format mkv"
 alias mpa="mpv --no-video"
 alias autopsy="autopsy --nosplash"
+alias asml="/usr/include/asm"
+alias stariac="aria2c --conf-path=/home/sifat/.config/aria2/aria2.conf --daemon"
 
 #fzf setting===============================
 source <(fzf --zsh)
@@ -73,6 +75,8 @@ function yy() {
 HISTSIZE=50000
 SAVEHIST=50000
 
+# Ignore specific commands in history
+export HISTIGNORE="ls:cd:exit:pwd:bg:fg:clear:e"
 # History behavior options
 setopt extended_history       # Record timestamps of commands
 setopt hist_expire_dups_first # Delete duplicates first when history exceeds HISTSIZE
@@ -85,8 +89,6 @@ setopt share_history          # Share history between all sessions
 # History formatting
 export HISTTIMEFORMAT="%F %T "
 
-# Ignore specific commands in history
-export HISTIGNORE="ls:cd:exit:pwd:bg:fg:clear:e"
 #History Settings=======================================
 
 
@@ -123,3 +125,5 @@ export NVM_DIR="$HOME/.nvm"
 # Source the Lazyman .nvimsbind for nvims key binding
 # shellcheck source=.config/nvim-Lazyman/.nvimsbind
 [ -f ~/.config/nvim-Lazyman/.nvimsbind ] && source ~/.config/nvim-Lazyman/.nvimsbind
+export PATH="$HOME/.cargo/bin:$PATH"
+
