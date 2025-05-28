@@ -27,8 +27,8 @@ let mapleader = " "
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 
-"For Compiling and Running C and C++ Files
-nnoremap <C-b> :w<CR>:!g++ % -o %:r && ./%:r<CR>
+""For Compiling and Running C and C++ Files
+"nnoremap <C-b> :w<CR>:!g++ % -o %:r && ./%:r<CR>
 
 "NerdTree Management
 nnoremap <leader>ee :NERDTreeToggle<CR>
@@ -62,13 +62,10 @@ Plug 'tomasr/molokai'
 Plug 'searleser97/cpbooster.vim'
 Plug 'preservim/nerdtree'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'uiiaoo/java-syntax.vim'
 
 Plug 'vim-airline/vim-airline'
 Plug 'psliwka/vim-smoothie'
 Plug 'tpope/vim-commentary'
-Plug 'ycm-core/YouCompleteMe'
-Plug 'dense-analysis/ale'
 
 
 call plug#end()
