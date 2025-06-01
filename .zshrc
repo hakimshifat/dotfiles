@@ -49,7 +49,7 @@ alias mpa="mpv --no-video"
 alias autopsy="autopsy --nosplash"
 alias asml="/usr/include/asm"
 alias stariac="aria2c --conf-path=/home/sifat/.config/aria2/aria2.conf --daemon"
-
+alias ypl="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv --yes-playlist --no-part --output '%(playlist_index)s - %(title)s.%(ext)s'"
 #fzf setting===============================
 source <(fzf --zsh)
 #fzf setting===============================
