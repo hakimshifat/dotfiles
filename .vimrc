@@ -27,9 +27,6 @@ let mapleader = " "
 nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 
-""For Compiling and Running C and C++ Files
-"nnoremap <C-b> :w<CR>:!g++ % -o %:r && ./%:r<CR>
-
 "NerdTree Management
 nnoremap <leader>ee :NERDTreeToggle<CR>
 nnoremap <leader>ef :NERDTreeFind<CR>

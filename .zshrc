@@ -50,6 +50,7 @@ alias autopsy="autopsy --nosplash"
 alias asml="/usr/include/asm"
 alias stariac="aria2c --conf-path=/home/sifat/.config/aria2/aria2.conf --daemon"
 alias ypl="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv --yes-playlist --no-part --output '%(playlist_index)s - %(title)s.%(ext)s'"
+alias ga='python /home/sifat/workstation/ghidra_auto.py'
 #fzf setting===============================
 source <(fzf --zsh)
 #fzf setting===============================
@@ -63,7 +64,6 @@ function yy() {
 	fi
 	rm -f -- "$tmp"
 }
-
 #Yazi Settings============================
 
 
@@ -95,6 +95,8 @@ export HISTTIMEFORMAT="%F %T "
 # Created by `pipx` on 2024-11-03 18:04:02
 export PATH="$PATH:&HOME/.local/bin"
 export PATH=$HOME/.local/bin:$PATH
+export PATH="$HOME/.cargo/bin:$PATH"
+export NVM_DIR="$HOME/.nvm"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -116,7 +118,6 @@ if command -v zoxide > /dev/null; then
   eval "$(zoxide init zsh)"
 fi
 
-export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 # Source the Lazyman shell initialization for aliases and nvims selector
@@ -125,5 +126,4 @@ export NVM_DIR="$HOME/.nvm"
 # Source the Lazyman .nvimsbind for nvims key binding
 # shellcheck source=.config/nvim-Lazyman/.nvimsbind
 [ -f ~/.config/nvim-Lazyman/.nvimsbind ] && source ~/.config/nvim-Lazyman/.nvimsbind
-export PATH="$HOME/.cargo/bin:$PATH"
 
