@@ -15,6 +15,7 @@
 - Kitty
 - Rofi
 - Cron
+- Sublime Text Vintage Mode
 
 ### Setting Up Git On Linux
 
@@ -48,5 +49,6 @@ Test if its working
 ssh -T git@github.com
 
 ```
+
 
 
