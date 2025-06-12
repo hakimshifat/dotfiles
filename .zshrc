@@ -93,18 +93,18 @@ export HISTTIMEFORMAT="%F %T "
 
 
 # Created by `pipx` on 2024-11-03 18:04:02
-export PATH="$PATH:&HOME/.local/bin"
-export PATH=$HOME/.local/bin:$PATH
-export PATH="$HOME/.cargo/bin:$PATH"
-export NVM_DIR="$HOME/.nvm"
+# export PATH="$PATH:&HOME/.local/bin"
+# export PATH=$HOME/.local/bin:$PATH
+# export PATH="$HOME/.cargo/bin:$PATH"
+# export NVM_DIR="$HOME/.nvm"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 #================== sothat conda is available for every session
-[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
-
-export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
+# [ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
+#
+# export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
 
 #===========================================================================
 #if ! pgrep -u "$USER" ssh-agent > /dev/null 2>&1; then
@@ -114,16 +114,16 @@ export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
 
 #============================================================================
 
-if command -v zoxide > /dev/null; then
-  eval "$(zoxide init zsh)"
-fi
+# if command -v zoxide > /dev/null; then
+#   eval "$(zoxide init zsh)"
+# fi
 
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 # Source the Lazyman shell initialization for aliases and nvims selector
 # shellcheck source=.config/nvim-Lazyman/.lazymanrc
-[ -f ~/.config/nvim-Lazyman/.lazymanrc ] && source ~/.config/nvim-Lazyman/.lazymanrc
+# [ -f ~/.config/nvim-Lazyman/.lazymanrc ] && source ~/.config/nvim-Lazyman/.lazymanrc
 # Source the Lazyman .nvimsbind for nvims key binding
 # shellcheck source=.config/nvim-Lazyman/.nvimsbind
-[ -f ~/.config/nvim-Lazyman/.nvimsbind ] && source ~/.config/nvim-Lazyman/.nvimsbind
-
+# [ -f ~/.config/nvim-Lazyman/.nvimsbind ] && source ~/.config/nvim-Lazyman/.nvimsbind
+source ~/.venvs/base/bin/activate
