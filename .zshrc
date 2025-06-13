@@ -67,29 +67,37 @@ function yy() {
 #Yazi Settings============================
 
 
-#History Settings=======================================
-# History Settings
+# ───────────────────────────────────────────────────────────────
 
-## History file and size
-[ -z "$HISTFILE" ] && HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh_history"
-HISTSIZE=50000
-SAVEHIST=50000
+# ➤ Where to store the history file
+HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh_history"
 
-# Ignore specific commands in history
-export HISTIGNORE="ls:cd:exit:pwd:bg:fg:clear:e"
-# History behavior options
-setopt extended_history       # Record timestamps of commands
-setopt hist_expire_dups_first # Delete duplicates first when history exceeds HISTSIZE
-setopt hist_ignore_dups       # Ignore duplicate commands in the same session
-setopt hist_ignore_space      # Ignore commands that start with a space
-setopt hist_reduce_blanks     # Remove superfluous blanks before saving commands
-setopt hist_verify            # Show expanded history commands before execution
-setopt inc_append_history     # Append commands to history immediately
-setopt share_history          # Share history between all sessions
-# History formatting
+# ➤ How many lines to keep in memory and on disk
+HISTSIZE=1000000
+SAVEHIST=$HISTSIZE
+
+# ➤ Ignore certain commands — zsh uses HISTORY_IGNORE, not HISTIGNORE
+HISTORY_IGNORE="(ls|cd|pwd|exit|clear|bg|fg)"
+
+# ➤ History behavior
+setopt APPEND_HISTORY           # Append history instead of overwriting
+setopt EXTENDED_HISTORY         # Save timestamps
+setopt INC_APPEND_HISTORY       # Save immediately instead of waiting to exit
+setopt SHARE_HISTORY           # Share history across all shell sessions
+
+# ➤ Deduplicate and clean-up behavior
+setopt HIST_IGNORE_DUPS         # Don't add duplicate lines in the same session
+setopt HIST_IGNORE_ALL_DUPS     # Remove older duplicates from disk history
+setopt HIST_EXPIRE_DUPS_FIRST   # Remove oldest duplicates when trimming history
+setopt HIST_SAVE_NO_DUPS        # Don't write duplicates to history file
+setopt HIST_IGNORE_SPACE        # Ignore commands that start with a space
+setopt HIST_REDUCE_BLANKS       # Strip extra blanks before saving
+setopt HIST_VERIFY              # Require confirmation before executing !history entries
+
+# ➤ Format timestamps
 export HISTTIMEFORMAT="%F %T "
 
-#History Settings=======================================
+# ───────────────────────────────────────────────────────────────
 
 
 # Created by `pipx` on 2024-11-03 18:04:02

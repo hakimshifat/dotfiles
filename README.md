@@ -52,3 +52,7 @@ ssh -T git@github.com
 
 
 
+#### FastOlympicCode
+1. Competitive Companion Port : 12345
+2. If test cases are downloading to a file but not being run
+    sublime, match the filename of the file that its running
