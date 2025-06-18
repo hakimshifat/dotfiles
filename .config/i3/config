@@ -143,11 +143,14 @@ client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
 
 
 
+# bindsym $mod+space exec --no-startup-id rofi -modi drun -show drun \
+# 		-config ~/.config/rofi/rofidmenu.rasi
 bindsym $mod+space exec --no-startup-id rofi -modi drun -show drun \
-		-config ~/.config/rofi/rofidmenu.rasi
+		-config ~/.config/polybar/cuts/scripts/rofi/launcher.rasi
 #=========================================================bar
 # bindsym $mod+Shift+b exec --no-startup-id i3-msg 'bar mode toggle'
-exec_always --no-startup-id ~/.config/i3/scripts/polybarLaunch.sh
+# exec_always --no-startup-id ~/.config/i3/scripts/polybarLaunch.sh
+ exec_always --no-startup-id ~/.config/polybar/launch.sh --cuts
 # bar {
 # 		font pango:JetBrains Mono Nerd Regular 12
 #     # status_command py3status

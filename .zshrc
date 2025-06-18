@@ -36,6 +36,7 @@ source $ZSH/oh-my-zsh.sh
 
 # export ARCHFLAGS="-arch $(uname -m)"
 alias timer="termdown"
+alias ls="lsd"
 alias le="ls -la"
 alias e="exit"
 alias gpt="tgpt -m"
