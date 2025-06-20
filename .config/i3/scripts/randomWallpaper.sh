@@ -1,1 +1,1 @@
-  feh --bg-fill --randomize ~/Pictures/wall/*
+feh --bg-fill --randomize ~/Pictures/wall/*
