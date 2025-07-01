@@ -1,40 +1,32 @@
-#only for p10k
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# Track zsh startup time (optional)
+# zsh_start_time=$EPOCHREALTIME
+
+# Load zcomet
+source ~/.zcomet/zcomet.zsh
+
+# Enable zcomet cache for faster startup (optional)
+# zcomet enable_cache
+
+# Load your plugins via zcomet
+zcomet load zsh-users/zsh-autosuggestions
+zcomet load zsh-users/zsh-syntax-highlighting
+zcomet load romkatv/powerlevel10k
+
+# Source powerlevel10k config if exists
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+# Editor based on SSH connection
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='nvim'
+else
+  export EDITOR='vim'
 fi
 
-export ZSH="$HOME/.oh-my-zsh"
-
-#============================================================================
-#for firefox acceleartion
-
+# Environment variables for Firefox acceleration
 export MOZ_X11_EGL=1
 export MOZ_WEBRENDER=1
 
-#============================================================================
-
-#THEMES=("bira" "darkblood" "fox" "rkj-repos")
-
-# ZSH_THEME="bira"
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-
-plugins=(
-	zsh-syntax-highlighting
-	zsh-autosuggestions
-	git)
-
-source $ZSH/oh-my-zsh.sh
-
-# export LANG=en_US.UTF-8
-
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='nvim'
- else
-   export EDITOR='vim'
- fi
-
-# export ARCHFLAGS="-arch $(uname -m)"
+# Aliases (from your old config)
 alias timer="termdown"
 alias ls="lsd"
 alias le="ls -la"
@@ -52,87 +44,47 @@ alias asml="/usr/include/asm"
 alias stariac="aria2c --conf-path=/home/sifat/.config/aria2/aria2.conf --daemon"
 alias ypl="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv --yes-playlist --no-part --output '%(playlist_index)s - %(title)s.%(ext)s'"
 alias ga='python /home/sifat/workstation/ghidra_auto.py'
-#fzf setting===============================
+
+# fzf integration
 source <(fzf --zsh)
-#fzf setting===============================
 
-#Yazi Settings============================
+# Yazi function (your custom)
 function yy() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
 }
-#Yazi Settings============================
 
-
-# ───────────────────────────────────────────────────────────────
-
-# ➤ Where to store the history file
+# History settings
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh_history"
-
-# ➤ How many lines to keep in memory and on disk
 HISTSIZE=1000000
 SAVEHIST=$HISTSIZE
-
-# ➤ Ignore certain commands — zsh uses HISTORY_IGNORE, not HISTIGNORE
 HISTORY_IGNORE="(ls|cd|pwd|exit|clear|bg|fg)"
 
-# ➤ History behavior
-setopt APPEND_HISTORY           # Append history instead of overwriting
-setopt EXTENDED_HISTORY         # Save timestamps
-setopt INC_APPEND_HISTORY       # Save immediately instead of waiting to exit
-setopt SHARE_HISTORY           # Share history across all shell sessions
+setopt APPEND_HISTORY
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
 
-# ➤ Deduplicate and clean-up behavior
-setopt HIST_IGNORE_DUPS         # Don't add duplicate lines in the same session
-setopt HIST_IGNORE_ALL_DUPS     # Remove older duplicates from disk history
-setopt HIST_EXPIRE_DUPS_FIRST   # Remove oldest duplicates when trimming history
-setopt HIST_SAVE_NO_DUPS        # Don't write duplicates to history file
-setopt HIST_IGNORE_SPACE        # Ignore commands that start with a space
-setopt HIST_REDUCE_BLANKS       # Strip extra blanks before saving
-setopt HIST_VERIFY              # Require confirmation before executing !history entries
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY
 
-# ➤ Format timestamps
 export HISTTIMEFORMAT="%F %T "
 
-# ───────────────────────────────────────────────────────────────
+# Activate your python virtualenv automatically if present
+[[ -f ~/.venvs/base/bin/activate ]] && source ~/.venvs/base/bin/activate
+
+# Track zsh startup time and show it (optional)
+# zsh_end_time=$EPOCHREALTIME
+# zsh_elapsed_time=$(awk "BEGIN {print $zsh_end_time - $zsh_start_time}")
+# echo "⏱️ Zsh startup time: ${zsh_elapsed_time}s"
 
 
-# Created by `pipx` on 2024-11-03 18:04:02
-# export PATH="$PATH:&HOME/.local/bin"
-# export PATH=$HOME/.local/bin:$PATH
-# export PATH="$HOME/.cargo/bin:$PATH"
-# export NVM_DIR="$HOME/.nvm"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-#================== sothat conda is available for every session
-# [ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
-#
-# export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
-
-#===========================================================================
-#if ! pgrep -u "$USER" ssh-agent > /dev/null 2>&1; then
-#  eval "$(ssh-agent -s)" > /dev/null
-#fi
-#ssh-add -l > /dev/null 2>&1 || ssh-add ~/.ssh/id_ed25519 > /dev/null 2>&1
-
-#============================================================================
-
-# if command -v zoxide > /dev/null; then
-#   eval "$(zoxide init zsh)"
-# fi
-
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# Source the Lazyman shell initialization for aliases and nvims selector
-# shellcheck source=.config/nvim-Lazyman/.lazymanrc
-# [ -f ~/.config/nvim-Lazyman/.lazymanrc ] && source ~/.config/nvim-Lazyman/.lazymanrc
-# Source the Lazyman .nvimsbind for nvims key binding
-# shellcheck source=.config/nvim-Lazyman/.nvimsbind
-# [ -f ~/.config/nvim-Lazyman/.nvimsbind ] && source ~/.config/nvim-Lazyman/.nvimsbind
-source ~/.venvs/base/bin/activate

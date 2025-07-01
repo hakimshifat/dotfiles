@@ -1,0 +1,44 @@
+# ~/.config/betterlockscreenrc
+
+# General Options
+display_on=0
+span_image=true
+lock_timeout=300
+fx_list=(dim blur dimblur color)  # Removed pixel/dimpixel due to unsupported status
+dim_level=40
+blur_level=1
+solid_color=333333
+wallpaper_cmd="feh --bg-fill"
+quiet=true  # Set to true for cleaner output unless debugging
+
+# Theme
+loginbox=00000066
+loginshadow=00000000
+locktext="Type password to unlock..."
+font="DejaVu Sans"  # Specific font for consistency
+ringcolor=ffffffff
+insidecolor=00000000
+separatorcolor=00000000
+ringvercolor=ffffffff
+insidevercolor=00000000
+ringwrongcolor=ffffffff
+insidewrongcolor=d23c3dff
+timecolor=ffffffff
+time_format="%I:%M:%S %p"  # Added %p for AM/PM
+greetercolor=ffffffff
+layoutcolor=ffffffff
+keyhlcolor=d23c3dff
+bshlcolor=d23c3dff
+veriftext="Verifying..."
+verifcolor=ffffffff
+wrongtext="Failure!"
+wrongcolor=d23c3dff
+modifcolor=d23c3dff
+bgcolor=000000ff
+
+# Expert Options
+# Uncomment to enable suspend after locking
+ suspend_command="systemctl suspend"
+
+~/.config/betterlockscreen/betterlockscreenrc
+
