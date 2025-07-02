@@ -1,0 +1,127 @@
+{
+  "modules-left": [
+    "sway/workspaces"
+  ],
+  "modules-center": [
+    "sway/window",
+    "tray"
+    // "clock#date"
+  ],
+  "modules-right": [
+    "custom/mic",
+    "custom/volume",
+    "network",
+    "network#speed",
+    "battery",
+    "clock",
+    "custom/power"
+  ],
+  "tray": {
+    "icon-size": 18,
+    "spacing": 10
+  },
+  "sway/workspaces": {
+    "on-click": "activate",
+    "format": "{name}",
+    "all-outputs": true,
+    "disable-scroll": false,
+    "active-only": false,
+    "format-icons": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "urgent": "",
+      "focused": "",
+      "default": ""
+    }
+  },
+  "sway/window": {
+    "format": "{}",
+    "rewrite": {
+      "(.{42}).*": "$1.."
+    },
+    "max-length": 50,
+    "tooltip": true
+  },
+  "network": {
+    "interface": "wlan0", // Adjust if your interface name is different
+    "format-wifi": "  {essid} ", // ({signalStrength}%)",
+    "format-ethernet": "  {ifname}",
+    "format-disconnected": "󰌙 Disconnected",
+    "tooltip-format": "IP: {ipaddr}\nGateway: {gwaddr}\nSignal: {signalStrength}%",
+    "on-click": "nm-connection-editor"
+  },
+  "network#speed": {
+    "interval": 1,
+    "format": " {bandwidthDownBytes}  {bandwidthUpBytes}",
+    "format-wifi": " {bandwidthDownBytes}  {bandwidthUpBytes}",
+    "format-ethernet": " {bandwidthDownBytes}  {bandwidthUpBytes}",
+    "format-disconnected": "",
+    "tooltip-format": "Down: {bandwidthDownBytes}/s\nUp: {bandwidthUpBytes}/s",
+    "max-length": 25,
+    "min-length": 20, // Added to ensure static space
+    "justify": "center" // Optional: helps center the text within the static space
+  },
+  "battery": {
+    "bat": "BAT0",
+    "adapter": "AC0",
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-discharging": " {capacity}%",
+    "format-full": " Full",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "tooltip": true
+  },
+  "clock": {
+    "tooltip": false,
+    "format": " {:%I:%M %p}"
+  },
+  "clock#date": {
+    "format": " {:%a %d %b}",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "on-click-right": "mode",
+      "format": {
+        "months": "<span color='#f5e0dc'><b>{}</b></span>",
+        "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
+        "today": "<span color='#f38ba8'><b>{}</b></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode"
+    }
+  },
+  "custom/power": {
+    "tooltip": "Power Menu",
+    "format": "⏻",
+    "on-click": "~/.config/rofi/scripts/powermenu.sh"
+  },
+  "custom/mic": {
+    "exec": "~/.config/waybar/scripts/mic.sh",
+    "interval": 2,
+    "return-type": "json",
+    "format": "{}",
+    "on-click": "~/.config/waybar/scripts/mic.sh --toggle-mic",
+    "tooltip": "Microphone"
+  },
+  "custom/volume": {
+    "exec": "~/.config/waybar/scripts/volume.sh",
+    "interval": 2,
+    "format": "{}",
+    "return-type": "json",
+    "on-click": "~/.config/waybar/scripts/volume.sh --toggle-mute",
+    "on-scroll-up": "~/.config/waybar/scripts/volume.sh --increase",
+    "on-scroll-down": "~/.config/waybar/scripts/volume.sh --decrease",
+    "tooltip": "Volume"
+  }
+}
