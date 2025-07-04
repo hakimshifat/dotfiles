@@ -12,6 +12,18 @@ exec_always autotiling
 
 gaps inner 4px
 gaps outer 4px
+smart_gaps on
+tiling_drag modifier
+# swap_modifier Control
+#
+
+# Full-screen screenshot (save to file)
+# bindsym Print exec grim ~/Pictures/$(date +'%Y-%m-%d_%H-%M-%S').png
+
+# Select region and copy to clipboard
+
+
+
 
 # Logo key. Use Mod1 for Alt.
 set $mod Mod1
@@ -32,7 +44,14 @@ bindsym $mod+Shift+Tab exec swaymsg workspace prev
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/sifat/Pictures/wall/1078143.png fill
+
+bindsym $mod+Shift+s exec sh -c 'grim -g "$(slurp)" - | tee ~/Pictures/$(date +"%Y-%m-%d_%H-%M-%S").png | wl-copy -t image/png'
+# bindsym $mod+Shift+s exec sh -c 'grim -g "$(slurp)" ~/Pictures/$(date +"%Y-%m-%d_%H-%M-%S").png | wl-copy -t image/png'
+
+
+# Set wallpaper
+exec_always ~/.config/scripts/randomWallpaper.sh
+
 #
 # Example configuration:
 #
@@ -59,13 +78,11 @@ bindsym $mod+t exec swaylock --clock --indicator -C \
 #   before-sleep 'swaylock -f -c 000000'
 
 exec swayidle -w \
-  timeout 300 'swaylock --clock indicator -C \
-  "$HOME/.config/swaylock/themes/mocha.conf" \
-  -i $HOME/Pictures/wall/lock' \
-  timeout 600 'swaymsg "output * dpms off"' \
-  timeout 1200 'systemctl suspend' \
-  resume 'swaymsg "output * dpms on"' \
-  before-sleep 'swaylock -f -c 000000'
+timeout 300 'swaylock --clock --indicator -C "/home/sifat/.config/swaylock/themes/mocha.conf" -i "/home/sifat/Pictures/wall/lockscreen.png"' \
+timeout 600 'swaymsg "output * dpms off"' \
+timeout 1200 'systemctl suspend' \
+resume 'swaymsg "output * dpms on"' \
+before-sleep 'swaylock -f -c 000000'
 # exec swayidle -w \
 #          timeout 300 'swaylock -f -c 000000' \
 #          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
@@ -79,12 +96,14 @@ exec swayidle -w \
 #
 # Example configuration:
 #
-  input type:touchpad {
-      dwt enabled
-      tap enabled
-      # natural_scroll enabled
-      middle_emulation enabled
-  }
+input "1267:12375:ELAN1300:00_04F3:3057_Touchpad" {
+    # Enable tap to click.
+    tap enabled
+    # Enable natural scrolling (scrolling content moves in the same direction as your fingers).
+    # natural_scroll enabled
+    # Enable middle click emulation.
+    middle_emulation enabled
+}
 #
 #   input type:keyboard {
 #       xkb_layout "eu"
@@ -136,6 +155,13 @@ exec_always mako
 
 # Window rules
 for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="blueman-manager"] floating enable
+for_window [app_id="nm-connection-editor"] floating enable
+for_window [app_id="qalculate-gtk"] floating enable
+for_window [app_id="gnome-calculator"] floating enable
+for_window [app_id="lxappearance"] floating enable
+for_window [app_id="feh"] floating enable
+for_window [window_role="pop-up"] floating enable
 
 # Moving around:
 #
@@ -193,8 +219,8 @@ for_window [app_id="pavucontrol"] floating enable
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
-    bindsym $mod+b splith
-    bindsym $mod+v splitv
+    # bindsym $mod+b splith
+    # bindsym $mod+v splitv
 
     # Switch the current container between different layout styles
     # bindsym $mod+s layout stacking
@@ -285,6 +311,8 @@ bar {
     #     inactive_workspace #32323200 #32323200 #5c5c5c
     # }
 }
+
+# bindsym $mod+v exec wl-paste | wl-copy
 
 # shadow_enable true
 # fade_enable true

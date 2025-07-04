@@ -3,7 +3,8 @@
     "sway/workspaces"
   ],
   "modules-center": [
-    "sway/window",
+    // "sway/window",
+    // "custom/hostname",
     "tray"
     // "clock#date"
   ],
@@ -13,8 +14,8 @@
     "network",
     "network#speed",
     "battery",
-    "clock",
-    "custom/power"
+    "clock"
+    // "custom/power"
   ],
   "tray": {
     "icon-size": 18,
@@ -22,7 +23,7 @@
   },
   "sway/workspaces": {
     "on-click": "activate",
-    "format": "{name}",
+    "format": "{name} {icon}",
     "all-outputs": true,
     "disable-scroll": false,
     "active-only": false,
@@ -33,7 +34,7 @@
       "4": "",
       "5": "",
       "urgent": "",
-      "focused": "",
+      "focused": "",
       "default": ""
     }
   },
@@ -44,6 +45,12 @@
     },
     "max-length": 50,
     "tooltip": true
+  },
+  "custom/hostname": {
+    "format": " {}",
+    "exec": "hostname",
+    "interval": "once",
+    "tooltip": false
   },
   "network": {
     "interface": "wlan0", // Adjust if your interface name is different

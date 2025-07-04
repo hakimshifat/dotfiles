@@ -122,6 +122,14 @@ window#waybar.empty #window {
     color: #a6e3a1;
 }
 
+#custom-hostname {
+    padding: 2px 10px;
+    border-radius: 8px;
+    margin: 4px 4px;
+    background-color: #181825;
+    color: #f5c2e7;
+}
+
 #pulseaudio {
     color: #b4befe;
 }
