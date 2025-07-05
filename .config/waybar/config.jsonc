@@ -46,12 +46,6 @@
     "max-length": 50,
     "tooltip": true
   },
-  "custom/hostname": {
-    "format": " {}",
-    "exec": "hostname",
-    "interval": "once",
-    "tooltip": false
-  },
   "network": {
     "interface": "wlan0", // Adjust if your interface name is different
     "format-wifi": "  {essid} ", // ({signalStrength}%)",
@@ -68,7 +62,7 @@
     "format-disconnected": "",
     "tooltip-format": "Down: {bandwidthDownBytes}/s\nUp: {bandwidthUpBytes}/s",
     "max-length": 25,
-    "min-length": 20, // Added to ensure static space
+    "min-length": 15, // Added to ensure static space
     "justify": "center" // Optional: helps center the text within the static space
   },
   "battery": {
