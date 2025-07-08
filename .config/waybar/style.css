@@ -33,6 +33,14 @@ window#waybar.hidden {
     background-color: #181825;
     color: #cdd6f4;
 }
+#custom-bluetooth-headset.connected {
+    color: #00ff88;
+}
+
+#custom-bluetooth-headset.disconnected {
+    color: #ff4444;
+}
+
 
 #workspaces button:hover {
     box-shadow: inherit;

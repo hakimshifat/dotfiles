@@ -44,6 +44,7 @@ alias asml="/usr/include/asm"
 alias stariac="aria2c --conf-path=/home/sifat/.config/aria2/aria2.conf --daemon"
 alias ypl="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv --yes-playlist --no-part --output '%(playlist_index)s - %(title)s.%(ext)s'"
 alias ga='python /home/sifat/workstation/ghidra_auto.py'
+alias ..="cd .."
 
 # fzf integration
 source <(fzf --zsh)
@@ -86,5 +87,6 @@ export HISTTIMEFORMAT="%F %T "
 # zsh_end_time=$EPOCHREALTIME
 # zsh_elapsed_time=$(awk "BEGIN {print $zsh_end_time - $zsh_start_time}")
 # echo "⏱️ Zsh startup time: ${zsh_elapsed_time}s"
+
 
 

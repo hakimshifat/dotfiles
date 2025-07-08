@@ -1,5 +1,5 @@
 # Default config for sway
-#
+
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
 # Read `man 5 sway` for a complete reference.
@@ -48,9 +48,11 @@ bindsym $mod+Shift+Tab exec swaymsg workspace prev
 bindsym $mod+Shift+s exec sh -c 'grim -g "$(slurp)" - | tee ~/Pictures/$(date +"%Y-%m-%d_%H-%M-%S").png | wl-copy -t image/png'
 # bindsym $mod+Shift+s exec sh -c 'grim -g "$(slurp)" ~/Pictures/$(date +"%Y-%m-%d_%H-%M-%S").png | wl-copy -t image/png'
 
+bindsym $mod+m exec "/home/sifat/.config/waybar/scripts/mic.sh --toggle-mic"
+
 
 # Set wallpaper
-exec_always ~/.config/scripts/randomWallpaper.sh
+exec ~/.config/scripts/randomWallpaper.sh
 
 #
 # Example configuration:
@@ -77,13 +79,29 @@ bindsym $mod+t exec swaylock --clock --indicator -C \
 #   resume 'swaymsg "output * dpms on"' \
 #   before-sleep 'swaylock -f -c 000000'
 
-exec_always swayidle -w \
-timeout 300 'swaylock --clock --indicator -C "/home/sifat/.config/swaylock/themes/mocha.conf" -i "/home/sifat/Pictures/wall/lockscreen.png"' \
-timeout 600 'swaymsg "output * dpms off"' \
-timeout 1200 'systemctl suspend' \
-resume 'swaymsg "output * dpms on"' \
-before-sleep 'swaylock -f -c 000000'\
-inhibit_idle open
+# exec_always swayidle -w \
+# timeout 300 'swaylock --clock --indicator -C "/home/sifat/.config/swaylock/themes/mocha.conf" -i "/home/sifat/Pictures/wall/lockscreen.png"' \
+# timeout 600 'swaymsg "output * dpms off"' \
+# timeout 1200 'systemctl suspend' \
+# resume 'swaymsg "output * dpms on"' \
+# before-sleep 'swaylock -f -c 000000'\
+# inhibit_idle open
+
+# exec swayidle -w \
+#   timeout 300 'swaylock --clock --indicator -C "$HOME/.config/swaylock/themes/mocha.conf" -i "$HOME/Pictures/wall/lockscreen.png"' \
+#   timeout 600 'swaymsg "output * dpms off"' \
+#   timeout 1200 'systemctl suspend' \
+#   resume 'swaymsg "output * dpms on"' \
+#   before-sleep 'swaylock -f -c 000000'
+  exec swayidle -w \
+  timeout 300 'loginctl lock-session $XDG_SESSION_ID' \
+  timeout 600 'swaymsg "output * power off"' \
+  resume 'swaymsg "output * power on"' \
+  before-sleep 'loginctl lock-session $XDG_SESSION_ID'
+
+
+
+#
 # exec swayidle -w \
 #          timeout 300 'swaylock -f -c 000000' \
 #          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
@@ -126,7 +144,7 @@ input "1267:12375:ELAN1300:00_04F3:3057_Touchpad" {
     bindsym $mod+n exec thunar
 
     # Start your launcher
-    bindsym $mod+space exec --no-startup-id rofi -modi drun -show drun \
+    bindsym $mod+space exec --no-startup-id $menu -modi drun -show drun \
 		-config ~/.config/rofi/launcher.rasi
 
     # bindsym $mod+space exec $menu
@@ -164,6 +182,12 @@ for_window [app_id="lxappearance"] floating enable
 for_window [app_id="feh"] floating enable
 for_window [window_role="pop-up"] floating enable
 for_window [app_id=".*"] inhibit_idle fullscreen
+for_window [app_id="mpv"]   inhibit_idle
+for_window [app_id="vlc"]   inhibit_idle
+for_window [app_id="ibus-ui-gtk3"] floating enable
+for_window [app_id="ibus-ui-gtk3"] border none
+
+
 for_window [title=".*Picture-in-Picture.*"] sticky enable, floating enable
 
 
@@ -328,6 +352,12 @@ bar {
 # fade_out_step 0.03
 # layer_surface_stacking true
 
+#SwayFX Config   
+# bindgesture --invert fluid_swipe:3:horizontal workspace_switch
+# bindworkspacegesture 4:horizontal
+# bindworkspacegesture --inverted 4:horizontal
+# bindworkspacegesture 4:vertical
+# bindworkspacegesture --inverted 4:vertical
 smart_corner_radius on
 corner_radius 10
 default_dim_inactive 0.05
@@ -335,9 +365,278 @@ default_dim_inactive 0.05
 blur enable
 blur_passes 1
 blur_radius 1
-layer_effects "waybar" "blur enable"; shadows enable
-# shadows on
-# shadow_blur_radius 20
+layer_effects "waybar" "blur enable";
+shadows enable
+ shadows on
+ shadow_blur_radius 20
 
 
 include /etc/sway/config.d/*
+
+# Improved Sway Configuration
+# # Performance and workflow optimized for programming, productivity, gaming, and CTF
+#
+# # Font and basic settings
+# font pango: JetBrains Mono 12
+# exec_always autotiling
+#
+# ### Performance Optimizations
+# # Reduce compositor overhead
+# # max_render_time 1
+# # Optimize for gaming/CTF work
+# focus_follows_mouse no
+# mouse_warping container
+#
+# ### Variables
+# set $mod Mod4
+# set $alt Mod1
+# set $left h
+# set $down j
+# set $up k
+# set $right l
+# set $term kitty
+# set $menu rofi -show drun
+#
+# ### Gaps and Appearance
+# gaps inner 6
+# gaps outer 4
+# smart_gaps on
+# smart_borders on
+# default_border pixel 2
+# default_floating_border pixel 2
+# hide_edge_borders smart
+#
+# # Modern corner radius and effects
+# smart_corner_radius on
+# corner_radius 8
+# default_dim_inactive 0.1
+# blur enable
+# blur_passes 2
+# blur_radius 3
+#
+# ### Colors (Catppuccin Mocha theme)
+# # class                 border  bground text    indicator child_border
+# client.focused          #89b4fa #89b4fa #1e1e2e #89b4fa   #89b4fa
+# client.focused_inactive #6c7086 #6c7086 #cdd6f4 #6c7086   #6c7086
+# client.unfocused        #313244 #313244 #bac2de #313244   #313244
+# client.urgent           #f38ba8 #f38ba8 #1e1e2e #f38ba8   #f38ba8
+# client.placeholder      #313244 #313244 #bac2de #313244   #313244
+#
+# ### Improved Lock and Sleep Configuration
+# # Fix swayidle issues
+# exec swayidle -w \
+#   timeout 300 'loginctl lock-session $XDG_SESSION_ID' \
+#   timeout 600 'swaymsg "output * power off"' \
+#   resume 'swaymsg "output * power on"' \
+#   before-sleep 'loginctl lock-session $XDG_SESSION_ID'
+#
+# # Better lock screen handling
+# exec --no-startup-id swayidle -w \
+#   lock 'swaylock --daemonize --clock --indicator \
+#     --image ~/Pictures/wall/lockscreen.png \
+#     --scaling fill \
+#     --effect-blur 7x5 \
+#     --effect-vignette 0.5:0.5 \
+#     --ring-color 89b4fa \
+#     --key-hl-color cba6f7 \
+#     --line-color 00000000 \
+#     --inside-color 00000088 \
+#     --separator-color 00000000'
+#
+# ### Input Configuration
+# input "type:touchpad" {
+#     tap enabled
+#     natural_scroll enabled
+#     dwt enabled
+#     accel_profile adaptive
+#     click_method clickfinger
+#     middle_emulation enabled
+# }
+#
+# input "type:keyboard" {
+#     xkb_options caps:escape
+#     repeat_delay 200
+#     repeat_rate 50
+# }
+#
+# ### Screenshot Improvements
+# # Full screenshot
+# bindsym Print exec grim ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png && \
+#     notify-send "Screenshot saved" "Full screen captured"
+#
+# # Region screenshot with preview
+# bindsym $mod+Print exec grim -g "$(slurp)" - | \
+#     tee ~/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png | \
+#     wl-copy -t image/png && \
+#     notify-send "Screenshot saved" "Region copied to clipboard"
+#
+# # OCR screenshot for CTF work
+# bindsym $mod+Shift+o exec grim -g "$(slurp)" - | \
+#     tesseract stdin stdout | wl-copy && \
+#     notify-send "OCR Complete" "Text copied to clipboard"
+#
+# ### Enhanced Keybindings
+# # Basic window management
+# bindsym $mod+Return exec $term
+# bindsym $mod+q kill
+# bindsym $mod+space exec $menu
+# bindsym $mod+n exec thunar
+# bindsym $mod+b exec firefox
+# bindsym $mod+c exec code
+#
+# # Lock screen
+# bindsym $mod+l exec loginctl lock-session $XDG_SESSION_ID
+#
+# # Workspace navigation (for productivity)
+# bindsym $mod+Tab workspace next
+# bindsym $mod+Shift+Tab workspace prev
+# bindsym $alt+Tab exec rofi -show window
+#
+# # Quick workspace switching
+# bindsym $mod+grave workspace back_and_forth
+#
+# # Volume and brightness (with notification)
+# bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle && \
+#     pkill -RTMIN+1 waybar
+# bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && \
+#     pkill -RTMIN+1 waybar
+# bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && \
+#     pkill -RTMIN+1 waybar
+# bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%- && \
+#     notify-send "Brightness" "$(brightnessctl get)"
+# bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+ && \
+#     notify-send "Brightness" "$(brightnessctl get)"
+#
+# # Gaming mode toggle
+# bindsym $mod+g exec ~/.config/sway/scripts/gaming_mode.sh
+#
+# # CTF/Security tools quick access
+# bindsym $mod+Shift+w exec wireshark
+# bindsym $mod+Shift+v exec code ~/ctf/
+# bindsym $mod+Shift+t exec $term -e tmux new-session -A -s ctf
+#
+# ### Movement and Focus
+# bindsym $mod+$left focus left
+# bindsym $mod+$down focus down
+# bindsym $mod+$up focus up
+# bindsym $mod+$right focus right
+# bindsym $mod+Left focus left
+# bindsym $mod+Down focus down
+# bindsym $mod+Up focus up
+# bindsym $mod+Right focus right
+#
+# # Move windows
+# bindsym $mod+Shift+$left move left
+# bindsym $mod+Shift+$down move down
+# bindsym $mod+Shift+$up move up
+# bindsym $mod+Shift+$right move right
+# bindsym $mod+Shift+Left move left
+# bindsym $mod+Shift+Down move down
+# bindsym $mod+Shift+Up move up
+# bindsym $mod+Shift+Right move right
+#
+# # Workspace bindings
+# bindsym $mod+1 workspace number 1
+# bindsym $mod+2 workspace number 2
+# bindsym $mod+3 workspace number 3
+# bindsym $mod+4 workspace number 4
+# bindsym $mod+5 workspace number 5
+# bindsym $mod+6 workspace number 6
+# bindsym $mod+7 workspace number 7
+# bindsym $mod+8 workspace number 8
+# bindsym $mod+9 workspace number 9
+# bindsym $mod+0 workspace number 10
+#
+# bindsym $mod+Shift+1 move container to workspace number 1
+# bindsym $mod+Shift+2 move container to workspace number 2
+# bindsym $mod+Shift+3 move container to workspace number 3
+# bindsym $mod+Shift+4 move container to workspace number 4
+# bindsym $mod+Shift+5 move container to workspace number 5
+# bindsym $mod+Shift+6 move container to workspace number 6
+# bindsym $mod+Shift+7 move container to workspace number 7
+# bindsym $mod+Shift+8 move container to workspace number 8
+# bindsym $mod+Shift+9 move container to workspace number 9
+# bindsym $mod+Shift+0 move container to workspace number 10
+#
+# ### Layout Management
+# bindsym $mod+f fullscreen
+# bindsym $mod+Shift+space floating toggle
+# bindsym $mod+a focus parent
+# bindsym $mod+s layout stacking
+# bindsym $mod+w layout tabbed
+# bindsym $mod+e layout toggle split
+# bindsym $mod+v splitv
+# bindsym $mod+Shift+v splith
+#
+# # Scratchpad
+# bindsym $mod+Shift+minus move scratchpad
+# bindsym $mod+minus scratchpad show
+#
+# ### Resize Mode
+# mode "resize" {
+#     bindsym $left resize shrink width 10px
+#     bindsym $down resize grow height 10px
+#     bindsym $up resize shrink height 10px
+#     bindsym $right resize grow width 10px
+#     bindsym Left resize shrink width 10px
+#     bindsym Down resize grow height 10px
+#     bindsym Up resize shrink height 10px
+#     bindsym Right resize grow width 10px
+#     bindsym Return mode "default"
+#     bindsym Escape mode "default"
+#     bindsym $mod+r mode "default"
+# }
+# bindsym $mod+r mode "resize"
+#
+# ### Window Rules
+# # Floating windows
+# for_window [app_id="pavucontrol"] floating enable, resize set 800 600
+# for_window [app_id="blueman-manager"] floating enable
+# for_window [app_id="nm-connection-editor"] floating enable
+# for_window [app_id="qalculate-gtk"] floating enable
+# for_window [app_id="gnome-calculator"] floating enable
+# for_window [app_id="lxappearance"] floating enable
+# for_window [app_id="feh"] floating enable
+# for_window [window_role="pop-up"] floating enable
+# for_window [title=".*Picture-in-Picture.*"] sticky enable, floating enable
+# for_window [app_id="ibus-ui-gtk3"] floating enable, border none
+#
+# # Gaming optimizations
+# for_window [class=".*"] inhibit_idle fullscreen
+# for_window [app_id="steam"] inhibit_idle focus
+# for_window [class="Steam"] inhibit_idle focus
+# for_window [app_id="mpv"] inhibit_idle visible
+# for_window [app_id="vlc"] inhibit_idle visible
+#
+# # CTF and security tools
+# for_window [app_id="wireshark"] move to workspace 9
+# for_window [class="Burp"] move to workspace 9
+# for_window [title=".*Ghidra.*"] move to workspace 8
+#
+# # Productivity
+# for_window [app_id="code"] move to workspace 2
+# for_window [app_id="firefox"] move to workspace 3
+# for_window [app_id="discord"] move to workspace 10, layout tabbed
+#
+# ### Startup Applications
+# exec_always ~/.config/scripts/randomWallpaper.sh
+# exec_always --no-startup-id mako
+# exec_always --no-startup-id wl-paste --type text --watch clipman store
+# exec_always --no-startup-id wl-paste --type image --watch clipman store
+# exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# exec --no-startup-id dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+#
+# # Blue light filter
+# exec_always --no-startup-id gammastep -P -O 4000
+#
+# ### Power Management
+# bindsym $mod+Shift+e exec ~/.config/rofi/scripts/powermenu.sh
+# bindsym $mod+Shift+r reload
+#
+# ### Status Bar
+# bar {
+#     swaybar_command waybar
+# }
+#
+# # Include additional configurations
+# include /etc/sway/config.d/*

@@ -9,9 +9,10 @@
     // "clock#date"
   ],
   "modules-right": [
+    "custom/bluetooth-headset",
     "custom/mic",
     "custom/volume",
-    "network",
+    // "network",
     "network#speed",
     "battery",
     "clock"
@@ -59,27 +60,32 @@
     "format": " {bandwidthDownBytes}  {bandwidthUpBytes}",
     "format-wifi": " {bandwidthDownBytes}  {bandwidthUpBytes}",
     "format-ethernet": " {bandwidthDownBytes}  {bandwidthUpBytes}",
-    "format-disconnected": "",
+    "format-disconnected": "󰖪 Disconnected", // Optional: show fallback icon
     "tooltip-format": "Down: {bandwidthDownBytes}/s\nUp: {bandwidthUpBytes}/s",
-    "max-length": 25,
-    "min-length": 15, // Added to ensure static space
-    "justify": "center" // Optional: helps center the text within the static space
+    "min-length": 20, // Reserve space to prevent shifting
+    "max-length": 20, // Lock space to same size
+    "justify": "center"
   },
   "battery": {
     "bat": "BAT0",
     "adapter": "AC0",
     "format": "{icon} {capacity}%",
     "format-charging": " {capacity}%",
-    "format-discharging": " {capacity}%",
+    "format-discharging": "{icon} {capacity}%",
     "format-full": " Full",
     "format-icons": [
-      "",
-      "",
-      "",
-      "",
-      ""
+      "", // 0-19%
+      "", // 20-39%
+      "", // 40-59%
+      "", // 60-79%
+      "" // 80-100%
     ],
-    "tooltip": true
+    "tooltip-format": "Battery: {capacity}%",
+    "tooltip": true,
+    "interval": 30, // optional: update every 30 seconds
+    "max-length": 10, // optional: fixes width
+    "min-length": 8, // optional: ensures static size
+    "justify": "center" // optional: aligns icon and text neatly
   },
   "clock": {
     "tooltip": false,
@@ -124,5 +130,13 @@
     "on-scroll-up": "~/.config/waybar/scripts/volume.sh --increase",
     "on-scroll-down": "~/.config/waybar/scripts/volume.sh --decrease",
     "tooltip": "Volume"
+  },
+  "custom/bluetooth-headset": {
+    "format": "{}",
+    "exec": "~/.config/waybar/scripts/bluetooth-status.sh",
+    "interval": 5,
+    "on-click": "~/.config/scripts/bluetooth.sh",
+    "return-type": "json",
+    "tooltip": true
   }
 }
