@@ -6,7 +6,7 @@
 dir="$HOME/.config/rofi"
 uptime=$(uptime -p | sed -e 's/up //g')
 
-rofi_command="rofi -no-config -theme $dir/power-menu.rasi"
+rofi_command="rofi -no-config -theme $dir/config.rasi"
 
 # Options
 shutdown=" Shutdown"
@@ -32,7 +32,7 @@ $reboot)
   ;;
 $lock)
   if command -v swaylock >/dev/null 2>&1; then
-   swaylock --clock --indicator -C "$HOME/.config/swaylock/themes/mocha.conf" -i "$HOME/Pictures/wall/lockscreen.png"
+    swaylock --clock --indicator -C "$HOME/.config/swaylock/themes/mocha.conf" -i "$HOME/Pictures/wall/lockscreen.png"
   else
     echo "swaylock not found!"
   fi

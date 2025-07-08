@@ -1,7 +1,0 @@
-* {
-  fg:            #ffffff;
-  bg:            #1d1f21;
-  ac:            #8be9fd;
-  bga:           rgba(29, 31, 33, 0.85);
-}
-
