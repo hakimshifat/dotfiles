@@ -23,8 +23,8 @@ else
 fi
 
 # Environment variables for Firefox acceleration
-export MOZ_X11_EGL=1
-export MOZ_WEBRENDER=1
+# export MOZ_X11_EGL=1
+# export MOZ_WEBRENDER=1
 
 # Aliases (from your old config)
 alias timer="termdown"
@@ -34,7 +34,7 @@ alias e="exit"
 alias gpt="tgpt -m"
 alias cc="cpb clone"
 alias op="xdg-open"
-alias cgbg="feh ~/Pictures/Wall --randomize --bg-fill"
+# alias cgbg="feh ~/Pictures/Wall --randomize --bg-fill"
 alias ydl="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv"
 alias ydl7="yt-dlp -S 'res:720,fps:60' --merge-output-format mkv"
 alias ydl1="yt-dlp -S 'res:1080,fps:60' --merge-output-format mkv"
@@ -81,12 +81,17 @@ setopt HIST_VERIFY
 export HISTTIMEFORMAT="%F %T "
 
 # Activate your python virtualenv automatically if present
-[[ -f ~/.venvs/base/bin/activate ]] && source ~/.venvs/base/bin/activate
+# [[ -f ~/.venvs/base/bin/activate ]] && source ~/.venvs/base/bin/activate
 
 # Track zsh startup time and show it (optional)
 # zsh_end_time=$EPOCHREALTIME
 # zsh_elapsed_time=$(awk "BEGIN {print $zsh_end_time - $zsh_start_time}")
 # echo "⏱️ Zsh startup time: ${zsh_elapsed_time}s"
+
+# pyenv init
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 
 

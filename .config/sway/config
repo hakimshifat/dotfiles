@@ -9,12 +9,15 @@ exec_always autotiling
 exec swww-daemon
 exec bash -c 'swww img "$(find ~/Pictures/wall/ -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp" \) | shuf -n1)" -t none'
 
+# exec "eww daemon"
+# exec ~/.config/eww/launch_bar
+
 
 
 ### Variables
 
-gaps inner 4px
-gaps outer 4px
+gaps inner 1px
+gaps outer 1px
 smart_gaps on
 tiling_drag modifier
 # swap_modifier Control
@@ -173,7 +176,13 @@ bindsym $mod+Shift+e exec --no-startup-id ~/.config/scripts/powermenu.sh
 # Clipboard manager (requires clipman and wl-paste)
 exec wl-paste --type text --watch cliphist store &
 exec wl-paste --type image --watch cliphist store &
- bindsym $mod+v exec cliphist list | rofi -dmenu -p "Clipboard" -theme ~/.config/rofi/clipboard.rasi | cliphist decode | wl-copy
+bindsym $mod+v exec cliphist list | rofi -dmenu -p "Clipboard" -theme ~/.config/rofi/clipboard.rasi | cliphist decode | wl-copy
+ # bindsym $mod+Shift+d exec cliphist list | rofi -dmenu | cliphist delete
+# bindsym $mod+Shift+d exec cliphist list | wofi -multi-select -p "Delete clipboard entries?" | xargs -r -d '\n' cliphist delete
+
+
+
+
 # exec_always wl-paste --type text --watch clipman store
 
 # Notification daemon (requires mako)
@@ -187,10 +196,7 @@ exec swaymsg "workspace 3; exec kitty"
 for_window [app_id="pavucontrol"] floating enable
 for_window [app_id="blueman-manager"] floating enable
 for_window [app_id="nm-connection-editor"] floating enable
-for_window [app_id="qalculate-gtk"] floating enable
-for_window [app_id="gnome-calculator"] floating enable
 for_window [app_id="lxappearance"] floating enable
-for_window [app_id="feh"] floating enable
 for_window [window_role="pop-up"] floating enable
 for_window [app_id=".*"] inhibit_idle fullscreen
 for_window [app_id="mpv"]   inhibit_idle
@@ -336,6 +342,9 @@ bindsym $mod+r mode "resize"
 #     tap enabled
 # }
 
+# exec "eww daemon"
+# exec /home/sifat/.config/eww/launch.sh
+
 
 #
 # Status Bar:
@@ -343,6 +352,7 @@ bindsym $mod+r mode "resize"
 # Read `man 5 sway-bar` for more information about this section.
 bar {
   swaybar_command waybar
+  }
     # position top
     #
     # # When the status_command prints a new line to stdout, swaybar updates.
@@ -354,7 +364,7 @@ bar {
     #     background #323232
     #     inactive_workspace #32323200 #32323200 #5c5c5c
     # }
-}
+# }
 
 # bindsym $mod+v exec wl-paste | wl-copy
 
@@ -382,6 +392,8 @@ layer_effects "waybar" "blur enable";
 # shadows enable
 # shadows on
 # shadow_blur_radius 20
+
+exec /usr/lib/polkit-kde-authentication-agent-1
 
 
 include /etc/sway/config.d/*

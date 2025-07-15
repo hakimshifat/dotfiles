@@ -1,20 +1,22 @@
 {
   "modules-left": [
-    "sway/workspaces"
+    "custom/mic",
+    "custom/volume",
+    "tray"
   ],
   "modules-center": [
+    "sway/workspaces"
     // "sway/window",
     // "custom/hostname",
-    "tray"
     // "clock#date"
   ],
   "modules-right": [
-    "custom/bluetooth-headset",
-    "custom/mic",
-    "custom/volume",
+    // "custom/playerctl",
+    // "custom/bluetooth-headset",
     // "network",
     "network#speed",
     "battery",
+    "clock#date",
     "clock"
     // "custom/power"
   ],
@@ -62,8 +64,8 @@
     "format-ethernet": " {bandwidthDownBytes}  {bandwidthUpBytes}",
     "format-disconnected": "󰖪 Disconnected", // Optional: show fallback icon
     "tooltip-format": "Down: {bandwidthDownBytes}/s\nUp: {bandwidthUpBytes}/s",
-    "min-length": 20, // Reserve space to prevent shifting
-    "max-length": 20, // Lock space to same size
+    "min-length": 22, // Reserve space to prevent shifting
+    "max-length": 22, // Lock space to same size
     "justify": "center"
   },
   "battery": {
@@ -83,8 +85,8 @@
     "tooltip-format": "Battery: {capacity}%",
     "tooltip": true,
     "interval": 30, // optional: update every 30 seconds
-    "max-length": 8, // optional: fixes width
-    "min-length": 8, // optional: ensures static size
+    "max-length": 5, // optional: fixes width
+    "min-length": 5, // optional: ensures static size
     "justify": "center" // optional: aligns icon and text neatly
   },
   "clock": {
@@ -138,5 +140,13 @@
     "on-click": "~/.config/scripts/bluetooth.sh",
     "return-type": "json",
     "tooltip": true
+  },
+  "custom/playerctl": {
+    "format": " 󰐊 {}",
+    "return-type": "json",
+    "max-length": 40,
+    "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{artist}} - {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next"
   }
 }
