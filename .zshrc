@@ -46,14 +46,25 @@ setopt HIST_VERIFY
 export HISTTIMEFORMAT="%F %T "
 #=====================================================================
 
+#For Ida and Ghidra to work
+export QT_QPA_PLATFORM=xcb
+# export _JAVA_AWT_WM_NONREPARENTING=1                                                   11:52:02 PM
+# export GDK_BACKEND=x11
 #=====================================================================
 alias timer="termdown"
 alias ..="cd .."
 alias b="~/.config/waybar/scripts/bluetooth.sh"
 alias e="exit"
-alias b="~/.config/waybar/scripts/bluetooth.sh"
+alias history="history 1"
+alias ar="aria2c --conf-path=/home/sifat/.config/aria2/aria2.conf --enable-rpc --daemon=true &"
+alias pp="source ~/ctf/bin/activate"
 #=====================================================================
- # source ctf/bin/activate
+ # source ~/ctf/bin/activate
 # ---- Powerlevel10k theme ----
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+#=====================================================================
+#jadx -d hacker_app_java hacker_app.apk
+#=====================================================================
+
+
 
