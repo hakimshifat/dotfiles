@@ -58,7 +58,9 @@ alias e="exit"
 alias history="history 1"
 alias ar="aria2c --conf-path=/home/sifat/.config/aria2/aria2.conf --enable-rpc --daemon=true &"
 alias pp="source ~/ctf/bin/activate"
+alias ga="/home/sifat/.config/scripts/ghidra.py"
 #=====================================================================
+# ./adb shell sh /storage/emulated/0/Android/data/moe.shizuku.privileged.api/start.sh
  # source ~/ctf/bin/activate
 # ---- Powerlevel10k theme ----
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
