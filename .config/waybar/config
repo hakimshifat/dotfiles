@@ -9,7 +9,7 @@
 // Configuration - modules-left
 
     "modules-left": [
-        "custom/launcher",
+ //       "custom/launcher",
         "sway/workspaces",
         "sway/mode",
         "sway/window"

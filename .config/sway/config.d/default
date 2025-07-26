@@ -52,7 +52,6 @@ set $powermenu ~/.config/sway/scripts/power_menu.sh
     # Resize them with right mouse button + $mod.
     # Change "normal" to "inverse" to switch left and right
     floating_modifier $mod normal
-    for_window [class="ghidra-Ghidra"] floating enable, move position center
 
 
     # Reload the configuration file
