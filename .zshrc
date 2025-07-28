@@ -74,6 +74,7 @@ alias ar='aria2c --conf-path="$HOME/.config/aria2/aria2.conf" --enable-rpc --dae
 
 # -------------------- Powerlevel10k Theme -----------------------------
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+# MOZ_ENABLE_WAYLAND=1
 
 #------------------------ android
 # source /etc/profile

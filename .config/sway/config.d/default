@@ -199,8 +199,8 @@ set $powermenu ~/.config/sway/scripts/power_menu.sh
         XF86AudioPrev exec playerctl previous
 
         # Backlight
-        XF86MonBrightnessUp exec brightnessctl -c backlight set +5%
-        XF86MonBrightnessDown exec brightnessctl -c backlight set 5%-
+        XF86MonBrightnessUp exec brightnessctl -c backlight set +1%
+        XF86MonBrightnessDown exec brightnessctl -c backlight set 1%-
     }
 
 #
@@ -222,7 +222,7 @@ set $powermenu ~/.config/sway/scripts/power_menu.sh
 # Screenshots
 #
     # Snip a selection and pipe to swappy
-    bindsym print exec grim -g "$(slurp)" - | swappy -f -
+    bindsym print exec grim -g "$(slurp)" #- | swappy -f -
     # Screenshot a window and pipe to swappy
     bindsym Ctrl+Print exec ~/.config/sway/scripts/screenshot_window.sh
     # Screenshot the current display and pipe to swappy
