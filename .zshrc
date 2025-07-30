@@ -12,11 +12,13 @@ source "$ZSH_ANTIDOTE/antidote.zsh"
 # Initialize Zsh completion system (required before plugins using compdef)
 autoload -Uz compinit
 compinit
+#after chaning .zsh_plugins file
+#antidote bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.zsh
 
 # Load plugins
 # Either precompiled .zsh or dynamic load
-# source ~/.zsh_plugins.zsh
-antidote load < ~/.zsh_plugins.txt
+source ~/.zsh_plugins.zsh
+# antidote load < ~/.zsh_plugins.txt
 
 # -------------------- Function: Yazi Directory Return -----------------
 function yy() {
@@ -64,6 +66,7 @@ alias timer="termdown"
 alias b="$HOME/.config/scripts/bluetooth.sh"
 alias pp="source ~/ctf/bin/activate"
 alias ga="$HOME/.config/scripts/ghidra.py"
+alias cc="cpb clone"
 
 # yt-dlp shortcuts
 alias ydl7='yt-dlp -f "bv[height=720]+ba/b[height=720]" -o "%(title)s.%(ext)s" --ignore-errors'

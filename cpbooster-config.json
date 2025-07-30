@@ -1,8 +1,8 @@
 {
-  "contestsDirectory": "/home/sifat/Contests/",
+  "contestsDirectory": "/home/sifat/workstation/cp/",
   "port": 1327,
-  "editor": "kitty",
-  "closeAfterClone": true,
+  "editor": "nvim",
+  "closeAfterClone": false,
   "showStatusPageOnSubmit": true,
   "useUserDefaultBrowser": true,
   "preferredLang": "cpp",
