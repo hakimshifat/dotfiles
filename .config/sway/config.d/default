@@ -21,6 +21,7 @@ set $menu nwg-drawer
 
 # Power Menu
 set $powermenu ~/.config/sway/scripts/power_menu.sh
+# set $powermenu ~/.config/sway/scripts/powermenu_gnome.sh
 
 ### Key bindings
 #
@@ -47,6 +48,10 @@ set $powermenu ~/.config/sway/scripts/power_menu.sh
 
     # Activities
     bindsym $mod+p exec ~/.config/sway/scripts/window_switcher.sh
+
+    #mic toggle
+    bindsym $mod+m exec /home/sifat/.config/waybar/scripts/micstatus.sh --toggle-mic
+
 
     # Move windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -217,6 +222,17 @@ set $powermenu ~/.config/sway/scripts/power_menu.sh
     # Delete an entry from the clipboard manager
     bindsym $mod+Ctrl+x exec cliphist list | fuzzel -d -w 90 -l 30 -t cc9393ff -S cc9393ff -p "Select an entry to delete it from cliphist:"| cliphist delete
     # Note: you can clear all cliphist entries by running `cliphist wipe`
+    
+
+    #touchpad gesture control 
+    bindgesture swipe:right workspace prev
+    bindgesture swipe:left workspace next
+    # corner_radius 8
+
+    # bindworkspacegesture 4:horizontal
+    # bindworkspacegesture --inverted 4:horizontal
+    # bindworkspacegesture 4:vertical
+    # bindworkspacegesture --inverted 4:vertical
 
 #
 # Screenshots

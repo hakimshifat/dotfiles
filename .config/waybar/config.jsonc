@@ -1,22 +1,16 @@
 {
-    "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    // "height": 30, // Auto-height is used when commented
-    // "width": 1280, // Full screen width when commented
-    "spacing": 16, // Gaps between modules (in px)
-    // See `man waybar` for more configuration options
-
-// Configuration - modules-left
+    "layer": "top",
+    "position": "top",
+    "spacing": 16,
 
     "modules-left": [
- //       "custom/launcher",
+//        "custom/launcher",
         "sway/workspaces",
-        "sway/mode",
-        "sway/window"
+        "sway/mode"
     ],
 
     "custom/launcher": {
-        "format":"<span size='x-large'></span>",
+        "format": "<span size='x-large'></span>",
         "on-click": "exec nwg-drawer",
         "tooltip": false
     },
@@ -26,6 +20,8 @@
         "all-outputs": true,
         "format": "{icon}",
         "format-icons": {
+            "1": "1",
+            "2": "2",
             "3": "3",
             "4": "4",
             "5": "5",
@@ -44,15 +40,12 @@
 
     "sway/window": {
         "format": "{}",
-        //"all-outputs": true, // Active window shows only on active display when commented
         "max-length": 120
     },
 
-// Configuration - modules-center
-    
-    "modules-center": [
-        "network"
-    ],
+//    "modules-center": [
+ //       "network"
+ //   ],
 
     "network": {
         "format-disabled": " Disabled",
@@ -65,30 +58,34 @@
         "interval": 2
     },
 
-// Configuration - modules-right
-
     "modules-right": [
-//        "custom/keyboard-layout",
+        "custom/blueberry",
         "custom/mic",
         "idle_inhibitor",
-        "cpu",
-        "memory",
-        "backlight",
         "pulseaudio",
         "battery",
         "clock",
-        "tray",
-        "custom/power"
+        "tray"
+//        "custom/power"
     ],
 
-    "custom/keyboard-layout": {
-      	"exec": "i=$(swaymsg -t get_inputs); echo \"\"; echo \"$i\" | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4",
-        "format": "",
-        // Interval set only as a fallback; use signal to update the module more immediately
-        "interval": 30,
-        // See example config for sending signal to Waybar in ~/.config/sway/config.d/input
-        "signal": 1,
-        "on-click": "~/.config/waybar/scripts/keyhint.sh"
+    "custom/mic": {
+        "exec": "~/.config/waybar/scripts/micstatus.sh",
+        "interval": 2,
+        "return-type": "json",
+        "format": "{}",
+        "on-click": "~/.config/waybar/scripts/micstatus.sh --toggle-mic",
+        "tooltip": "Microphone"
+    },
+
+    "custom/blueberry": {
+        "exec": "~/.config/waybar/scripts/blueberry.sh",
+        "interval": 2,
+        "return-type": "json",
+        "format": "{}",
+        "on-click": "~/.config/waybar/scripts/blueberry.sh --launch-blueberry",
+        "on-click-right": "~/.config/waybar/scripts/blueberry.sh --toggle-connection",
+        "tooltip": "Bluetooth"
     },
 
     "idle_inhibitor": {
@@ -101,38 +98,10 @@
         "tooltip-format-deactivated": "Idle Inhibitor Deactivated"
     },
 
-    "cpu": {
-        "interval": 5,
-        "format": "{usage:>3}%",
-        "states": {
-            "warning": 70,
-            "critical": 90,
-        },
-        "on-click": "footclient -T waybar_btop -e btop"
-    },
-    
-    "memory": {
-        "interval": 5,
-        "format": "{:>3}%",
-        "on-click": "footclient -T waybar_btop -e btop", 
-        "states": {
-            "warning": 70,
-            "critical": 90
-        }
-    },
-
-    "backlight": {
-        "format": "{icon} {percent}%",
-        "format-icons": ["󰄰", "󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"],
-        "tooltip-format": "Backlight (Scroll): {percent:}%",
-        "on-scroll-down": "brightnessctl -c backlight set 5%-",
-        "on-scroll-up": "brightnessctl -c backlight set +5%"
-    },
-
     "pulseaudio": {
         "scroll-step": 2,
         "format": "{icon} {volume}%",
-        "format-muted":"󰝟 muted",
+        "format-muted": "󰝟 muted",
         "format-icons": {
             "headphones": "",
             "handsfree": "",
@@ -161,36 +130,28 @@
         "calendar": {
             "on-scroll": 1,
             "format": {
-                "months":     "<span color='#ffead3'><b>{}</b></span>",
-                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
-                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
-                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
-                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
-            },
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "days": "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
         },
         "actions": {
             "on-scroll-up": "shift_up",
             "on-scroll-down": "shift_down"
-        },
+        }
     },
 
     "tray": {
         "icon-size": 16,
-        "spacing":10
-     },
+        "spacing": 8
+    },
 
     "custom/power": {
-        "format":"⏻",
+        "format": "⏻",
         "on-click": "exec ~/.config/sway/scripts/power_menu.sh",
         "tooltip": false
-    },
-      "custom/mic": {
-    "exec": "~/.config/waybar/scripts/micstatus.sh",
-    "interval": 2,
-    "return-type": "json",
-    "format": "{}",
-    "on-click": "~/.config/waybar/scripts/micstatus.sh --toggle-mic",
-    "tooltip": "Microphone"
-  }
-
+    }
 }
+

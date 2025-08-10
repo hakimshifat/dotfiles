@@ -1,13 +1,12 @@
 #!/bin/bash
 
 if [ "$1" == "--toggle-mic" ]; then
-  amixer set Capture toggle >/dev/null 2>&1
+  pactl set-source-mute @DEFAULT_SOURCE@ toggle
   exit 0
 fi
 
-if amixer get Capture | grep -q "\[off\]"; then
+if pactl get-source-mute @DEFAULT_SOURCE@ | grep -q "yes"; then
   echo '{"text": "", "class": "muted"}'
 else
   echo '{"text": "", "class": "active"}'
 fi
-

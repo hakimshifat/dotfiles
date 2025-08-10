@@ -1,11 +1,7 @@
 # General UX enhancements
+zdharma-continuum/fast-syntax-highlighting 
 zsh-users/zsh-autosuggestions
-# zsh-users/zsh-syntax-highlighting
-# zsh-users/zsh-completions
-zdharma-continuum/fast-syntax-highlighting  # Faster alternative (use instead of zsh-syntax-highlighting)
-
 # Git tools
-ohmyzsh/ohmyzsh path:plugins/git
 ohmyzsh/ohmyzsh path:plugins/gitfast
 
 # Directory navigation
@@ -14,8 +10,6 @@ rupa/z path:z.sh  # `z` command for jumping to frequently used directories
 # Command history, clipboard, etc.
 djui/alias-tips  # shows suggestions if you use a command that has an alias
 marlonrichert/zsh-autocomplete  # smart completions (more powerful but heavier)
-# wfxr/forgit  # interactive git (requires fzf)
-# ptavares/zsh-direnv  # auto-load `.env` files for dev projects
 
 # Prompt theme (optional but nice)
 romkatv/powerlevel10k  # fast & powerful prompt theme

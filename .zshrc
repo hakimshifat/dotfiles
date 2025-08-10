@@ -4,7 +4,6 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
 # -------------------- Antidote Plugin Manager -------------------------
 ZSH_ANTIDOTE="/usr/share/zsh-antidote"
 source "$ZSH_ANTIDOTE/antidote.zsh"
@@ -17,8 +16,8 @@ compinit
 
 # Load plugins
 # Either precompiled .zsh or dynamic load
-source ~/.zsh_plugins.zsh
-# antidote load < ~/.zsh_plugins.txt
+# source ~/.zsh_plugins.zsh
+antidote load < ~/.zsh_plugins.txt
 
 # -------------------- Function: Yazi Directory Return -----------------
 function yy() {
@@ -67,6 +66,7 @@ alias b="$HOME/.config/scripts/bluetooth.sh"
 alias pp="source ~/ctf/bin/activate"
 alias ga="$HOME/.config/scripts/ghidra.py"
 alias cc="cpb clone"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # yt-dlp shortcuts
 alias ydl7='yt-dlp -f "bv[height=720]+ba/b[height=720]" -o "%(title)s.%(ext)s" --ignore-errors'
@@ -77,7 +77,7 @@ alias ar='aria2c --conf-path="$HOME/.config/aria2/aria2.conf" --enable-rpc --dae
 
 # -------------------- Powerlevel10k Theme -----------------------------
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-# MOZ_ENABLE_WAYLAND=1
+MOZ_ENABLE_WAYLAND=1
 
 #------------------------ android
 # source /etc/profile

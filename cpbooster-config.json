@@ -1,7 +1,7 @@
 {
   "contestsDirectory": "/home/sifat/workstation/cp/",
   "port": 1327,
-  "editor": "nvim",
+  "editor": "footclient",
   "closeAfterClone": false,
   "showStatusPageOnSubmit": true,
   "useUserDefaultBrowser": true,
