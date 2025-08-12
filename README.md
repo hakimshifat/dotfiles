@@ -4,18 +4,20 @@
 
 - Zsh
 - Tmux
-- i3
-- i3Blocks
-- i3Blocks_Scripts
+<!-- - i3 -->
+<!-- - i3Blocks -->
+<!-- - i3Blocks_Scripts -->
 - Polybar
 - oh-my-zsh
 - Vim
 - NeoVim
 - CpBooster
 - Kitty
+- foot
 - Rofi
 - Cron
 - Sublime Text Vintage Mode
+- Sway
 
 ### Setting Up Git On Linux
 
