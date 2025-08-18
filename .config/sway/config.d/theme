@@ -2,8 +2,8 @@
 exec_always ~/.config/sway/scripts/import-gsettings
 
 # Set inner/outer gaps
-gaps inner 3
-gaps outer 3
+gaps inner 4
+gaps outer 4
 # corner_radius 10 
 # layer_effects "waybar" blur enable
 

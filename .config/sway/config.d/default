@@ -230,7 +230,11 @@ set $powermenu ~/.config/sway/scripts/power_menu.sh
     #touchpad gesture control 
     bindgesture swipe:right workspace prev
     bindgesture swipe:left workspace next
+     # bindgesture swipe:left exec ~/.config/sway/scripts/dynamic_was.sh
     # corner_radius 8
+    
+    #dynamic workspace icon
+    exec_always --no-startup-id workstyle &> /tmp/workstyle.log
 
     # bindworkspacegesture 4:horizontal
     # bindworkspacegesture --inverted 4:horizontal

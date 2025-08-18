@@ -19,6 +19,10 @@ for_window [title="waybar_nmtui"] floating enable
 for_window [title="Save File"] floating enable
 for_window [app_id="firefox" title="Firefox — Sharing Indicator"] kill
 for_window [class="ghidra-Ghidra"] floating enable, move position center
+# for_window [app_id="firefox" title="Picture-in-Picture"] floating enable, move position 90% 90%
+for_window [app_id="firefox" title="Picture-in-Picture"] floating enable, sticky enable, resize set 480 270
+
+
 
 
 # Inhibit idle
