@@ -234,7 +234,8 @@ set $powermenu ~/.config/sway/scripts/power_menu.sh
     # corner_radius 8
     
     #dynamic workspace icon
-    exec_always --no-startup-id workstyle &> /tmp/workstyle.log
+    exec_always --no-startup-id sworkstyle &> /tmp/workstyle.log
+    # exec sworkstyle &> /tmp/workstyle.log
 
     # bindworkspacegesture 4:horizontal
     # bindworkspacegesture --inverted 4:horizontal
