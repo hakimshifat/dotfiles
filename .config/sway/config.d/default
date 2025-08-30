@@ -1,5 +1,6 @@
 # Logo key. Use Mod1 for Alt.
 set $mod Mod1
+set $supr Mod4
 
 # Add Vim key support
 set $left h
@@ -230,6 +231,9 @@ set $powermenu ~/.config/sway/scripts/power_menu.sh
     #touchpad gesture control 
     bindgesture swipe:right workspace prev
     bindgesture swipe:left workspace next
+    bindsym --whole-window $supr+button4 workspace prev
+    bindsym --whole-window $supr+button5 workspace next
+
      # bindgesture swipe:left exec ~/.config/sway/scripts/dynamic_was.sh
     # corner_radius 8
     

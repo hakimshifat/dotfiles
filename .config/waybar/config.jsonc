@@ -59,15 +59,26 @@
     },
 
     "modules-right": [
+        "custom/warp",
         "custom/blueberry",
         "custom/mic",
         "idle_inhibitor",
         "pulseaudio",
         "battery",
         "clock",
-        "tray"
+        "tray",
+        "custom/notification"
 //        "custom/power"
     ],
+"custom/warp": {
+    "exec": "~/.config/waybar/scripts/warp.sh",
+    "interval": 3,
+    "return-type":"json",
+    "format":"{}",
+    "on-click": "~/.config/waybar/scripts/warp.sh click-left",
+    "on-click-right": "~/.config/waybar/scripts/warp.sh click-right",
+    "tooltip": false
+},
 
     "custom/mic": {
         "exec": "~/.config/waybar/scripts/micstatus.sh",
@@ -98,21 +109,22 @@
         "tooltip-format-deactivated": "Idle Inhibitor Deactivated"
     },
 
-    "pulseaudio": {
-        "scroll-step": 2,
-        "format": "{icon} {volume}%",
-        "format-muted": "󰝟 muted",
-        "format-icons": {
-            "headphones": "",
-            "handsfree": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["󰕿", "󰖀", "󰕾"]
-        },
-        "on-click": "pavucontrol"
+"pulseaudio": {
+    "scroll-step": 2,
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 muted",
+    "format-icons": {
+        "headphones": "",
+        "handsfree": "",
+        "headset": "",
+        "phone": "",
+        "portable": "",
+        "car": "",
+        "default": ["󰕿", "󰖀", "󰕾"]
     },
+    "on-click": "pavucontrol",
+    "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+},
 
     "battery": {
         "states": {
@@ -152,6 +164,26 @@
         "format": "⏻",
         "on-click": "exec ~/.config/sway/scripts/power_menu.sh",
         "tooltip": false
-    }
+    },
+    "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "<span foreground='red'><sup></sup></span>",
+      "none": "",
+      "dnd-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-none": "",
+      "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  }
 }
 

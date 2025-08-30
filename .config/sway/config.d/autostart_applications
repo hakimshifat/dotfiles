@@ -14,7 +14,8 @@ exec swayidle idlehint 1
 exec_always swayidle -w before-sleep "gtklock -d"
 
 # Desktop notifications
-exec mako
+# exec mako
+exec swaync
 
 # Start foot server
 exec_always --no-startup-id foot --server
