@@ -152,6 +152,7 @@ alias pp="source ~/ctf/bin/activate"
 alias ga="$HOME/.config/scripts/ghidra.py"
 alias cc="cpb clone"
 export PATH="$HOME/.cargo/bin:$PATH"
+alias op="xdg-open"
 
 # yt-dlp shortcuts
 alias ydl7='yt-dlp -f "bv[height=720]+ba/b[height=720]" -o "%(title)s.%(ext)s" --ignore-errors'

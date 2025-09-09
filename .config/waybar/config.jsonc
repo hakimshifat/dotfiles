@@ -43,9 +43,9 @@
         "max-length": 120
     },
 
-//    "modules-center": [
- //       "network"
- //   ],
+    "modules-center": [
+        "network"
+    ],
 
     "network": {
         "format-disabled": " Disabled",
@@ -59,7 +59,7 @@
     },
 
     "modules-right": [
-        "custom/warp",
+//        "custom/warp",
         "custom/blueberry",
         "custom/mic",
         "idle_inhibitor",
