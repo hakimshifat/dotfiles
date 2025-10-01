@@ -9,8 +9,8 @@ SCRIPTSDIR="~/.config/hypr/scripts"
 # wallpaper_current="~/github/Hyprland-Dots/config/hypr/wallpaper_effects/.wallpaper_current"
 
 # Directory for swaync
-iDIR="$HOME/.config/swaync/images"
-iDIRi="$HOME/.config/swaync/icons"
+# iDIR="$HOME/.config/swaync/images"
+# iDIRi="$HOME/.config/swaync/icons"
 
 # swww transition config
 FPS=60
@@ -193,39 +193,46 @@ apply_video_wallpaper() {
 
 # Main function
 main() {
-	choice=$(menu | $rofi_command)
-	choice=$(echo "$choice" | xargs)
-	RANDOM_PIC_NAME=$(echo "$RANDOM_PIC_NAME" | xargs)
+	# choice=$(menu | $rofi_command)
+	# choice=$(echo "$choice" | xargs)
+	# RANDOM_PIC_NAME=$(echo "$RANDOM_PIC_NAME" | xargs)
+	#
+	# if [[ -z "$choice" ]]; then
+	# 	echo "No choice selected. Exiting."
+	# 	exit 0
+	# fi
+	#
+	# # Handle random selection correctly
+	# if [[ "$choice" == "$RANDOM_PIC_NAME" ]]; then
+	# 	choice=$(basename "$RANDOM_PIC")
+	# fi
+	#
+	# choice_basename=$(basename "$choice" | sed 's/\(.*\)\.[^.]*$/\1/')
+	#
+	# # Search for the selected file in the wallpapers directory, including subdirectories
+	# selected_file=$(find "$wallDIR" -iname "$choice_basename.*" -print -quit)
+	#
+	# if [[ -z "$selected_file" ]]; then
+	# 	echo "File not found. Selected choice: $choice"
+	# 	exit 1
+	# fi
+	#
+	# # Modify the Startup_Apps.conf file based on wallpaper type
+	# # modify_startup_config "$selected_file"
+	#
+	# # **CHECK FIRST** if it's a video or an image **before calling any function**
+	# if [[ "$selected_file" =~ \.(mp4|mkv|mov|webm|MP4|MKV|MOV|WEBM)$ ]]; then
+	# 	apply_video_wallpaper "$selected_file"
+	# else
+	# 	apply_image_wallpaper "$selected_file"
+	# fi
+	
+	 RANDOM_PIC_NAME=$(echo "$RANDOM_PIC_NAME" | xargs)
+	 	choice=$(basename "$RANDOM_PIC")
+	 choice_basename=$(basename "$choice" | sed 's/\(.*\)\.[^.]*$/\1/')
+	 selected_file=$(find "$wallDIR" -iname "$choice_basename.*" -print -quit)
+	 	apply_image_wallpaper "$selected_file"
 
-	if [[ -z "$choice" ]]; then
-		echo "No choice selected. Exiting."
-		exit 0
-	fi
-
-	# Handle random selection correctly
-	if [[ "$choice" == "$RANDOM_PIC_NAME" ]]; then
-		choice=$(basename "$RANDOM_PIC")
-	fi
-
-	choice_basename=$(basename "$choice" | sed 's/\(.*\)\.[^.]*$/\1/')
-
-	# Search for the selected file in the wallpapers directory, including subdirectories
-	selected_file=$(find "$wallDIR" -iname "$choice_basename.*" -print -quit)
-
-	if [[ -z "$selected_file" ]]; then
-		echo "File not found. Selected choice: $choice"
-		exit 1
-	fi
-
-	# Modify the Startup_Apps.conf file based on wallpaper type
-	# modify_startup_config "$selected_file"
-
-	# **CHECK FIRST** if it's a video or an image **before calling any function**
-	if [[ "$selected_file" =~ \.(mp4|mkv|mov|webm|MP4|MKV|MOV|WEBM)$ ]]; then
-		apply_video_wallpaper "$selected_file"
-	else
-		apply_image_wallpaper "$selected_file"
-	fi
 }
 
 # Check if rofi is already running

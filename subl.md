@@ -1,48 +1,4 @@
-
-### Setting Up Git On Linux
-
-```
-git config --global user.name "username"
-
-```
-
-```
-git config --global user.email "email"
-
-```
-
-```
-ssh-keygen -t ed25519 -C "email"
-
-```
-
-```
-eval "$(ssh-agent -s)"
-
-```
-
-```
-ssh-add ~/.ssh/theprivatekey
-
-```
-
-Test if its working
-```
-ssh -T git@github.com
-
-```
-
-
-
-#### FastOlympicCode
-1. Competitive Companion Port : 12345
-2. If test cases are downloading to a file but not being run
-    sublime, match the filename of the file that its running.
-
-
-    ## Normal Setup
-
-    1. cpp.sublime-build
+1. cpp.sublime-build
 
 ```
 
@@ -81,4 +37,3 @@ ssh -T git@github.com
 sudo g++ -std=c++17 -O2 -x c++-header /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/stdc++.h -o /usr/include/c++/15.2.1/x86_64-pc-linux-gnu/bits/stdc++.h.gch
 
 ```
-
