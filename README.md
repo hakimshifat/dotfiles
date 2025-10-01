@@ -1,4 +1,8 @@
-
+Dotfiles Contains
+- hyprland
+- aria2
+- SDDMtheme
+- Yazi
 ### Setting Up Git On Linux
 
 ```
