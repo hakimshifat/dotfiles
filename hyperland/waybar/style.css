@@ -1,3 +1,4 @@
+@import url("/home/sifat/.cache/wal/colors-waybar.css");
 * {
   border: none;
   border-radius: 0;
@@ -10,8 +11,9 @@
 }
 
 window#waybar {
-  background: rgba(21, 18, 27, 0);
-  color: #cdd6f4;
+  /* background: rgba(21, 18, 27, 0); */
+  background-color:transparent;
+  color: @background;
 }
 
 #workspaces button {
@@ -118,8 +120,8 @@ window#waybar {
 }
 
 #idle_inhibitor {
-  background: #1e1e2e;
-  color: #a6adc8;
+  background: @background;
+  color: @color7;
   border-radius: 10px;
   padding: 0px 10px;
   margin: 3px 0px;
