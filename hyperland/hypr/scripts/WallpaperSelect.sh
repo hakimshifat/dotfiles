@@ -259,8 +259,8 @@ export PATH="${PATH}:${HOME}/.local/bin/"
     RANDOMPICS=${PICS[ $RANDOM % ${#PICS[@]} ]}
 
     swww img ${DIR}/${RANDOMPICS} --transition-type grow --transition-fps 60 --transition-duration 1.0 --transition-pos 0.810,0.972 --transition-bezier 0.65,0,0.35,1 --transition-step 255
-    wal -i ${DIR}/${RANDOMPICS} #--cols16
-    killall -SIGUSR2 waybar
+    # wal -i ${DIR}/${RANDOMPICS} #--cols16
+    # killall -SIGUSR2 waybar
 
     # echo "Successfully set a new wallpaper and generated colors from it."
 # fi
