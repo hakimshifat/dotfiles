@@ -139,6 +139,15 @@ window#waybar {
     color: #fe8019;  /* weak = orange */
     border-bottom: 2px solid #fe8019;
 }
+#idle_inhibitor {
+  /* border-radius: 10px; */
+  padding: 5px 10px;
+  /* margin: 3px 0px; */
+  /* margin-right: 5px; */
+  color: #a6adc8;
+  border-bottom: 2px solid #a6adc8;;
+}
+
 
 /* limited connectivity (connected but no internet) */
 #network.wifi-limited {
