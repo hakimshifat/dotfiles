@@ -11,16 +11,31 @@ window#waybar {
     color: #ebdbb2;  /* gruvbox fg */
 }
 
+/* ~/.config/waybar/style.css */
+
+/* base look */
 #workspaces button {
-    padding: 0 5px;
-    background: transparent;
-    color: #a89984;  /* gruvbox fg4 */
-    border-bottom: 3px solid transparent;
+  padding: 0 5px;
+  background: transparent;
+  color: #a89984;              /* gruvbox fg4 */
+  border-bottom: 3px solid transparent;
 }
 
-#workspaces button.active {
-    background: #504945;  /* gruvbox bg2 */
-    border-bottom: 3px solid #fabd2f;  /* gruvbox dark yellow */
+/* underline the focused workspace */
+#workspaces button.focused {
+  background: #504945;         /* gruvbox bg2 */
+  border-bottom: 3px solid #fabd2f; /* underline */
+}
+
+/* (optional) only underline when focused **on this monitor** */
+#workspaces button.current_output.focused {
+  background: #504945;
+  border-bottom: 3px solid #fabd2f;
+}
+
+/* urgent hint (optional) */
+#workspaces button.urgent {
+  border-bottom: 3px solid #fb4934;
 }
 
 #clock,
