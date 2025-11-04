@@ -163,6 +163,18 @@ window#waybar {
   border-bottom: 2px solid #a6adc8;;
 }
 
+#custom-powerprofile {
+  padding: 0 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* Color by class */
+#custom-powerprofile.performance { color: #ff5757; }  /* red-ish */
+#custom-powerprofile.balanced    { color: #e8d26d; }  /* amber */
+#custom-powerprofile.power-saver { color: #70d090; }  /* green */
+
+
 
 /* limited connectivity (connected but no internet) */
 #network.wifi-limited {

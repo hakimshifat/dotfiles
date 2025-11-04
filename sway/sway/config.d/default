@@ -17,7 +17,7 @@ set $term footclient
 # Application menu
 # Power Menset
 set $menu tofi-drun -c ~/.config/tofi/configA --drun-launch=true
-set $powermenu ~/.config/sway/scripts/power_menu.sh
+# set $powermenu ~/.config/sway/scripts/power_menu.sh
 focus_follows_mouse yes
 
 ### Key bindings
@@ -28,7 +28,7 @@ focus_follows_mouse yes
     bindsym $mod+Return exec $term
 
     # Open the power menu
-    bindsym $mod+Shift+e exec $powermenu
+    # bindsym $mod+Shift+e exec $powermenu
 
     # Kill focused window
     bindsym $mod+q kill
@@ -40,7 +40,8 @@ focus_follows_mouse yes
     bindsym $mod+space exec $menu
 
     # Lock screen
-    bindsym $mod+f1 exec gtklock
+    # bindsym $mod+f1 exec gtklock
+      bindsym SUPER+L exec pamixer --toggle-mute && hyprlock
 
     # Activities
     # bindsym $mod+p exec ~/.config/sway/scripts/window_switcher.sh
@@ -218,6 +219,7 @@ focus_follows_mouse yes
     # bindsym Ctrl+Escape exec pkill -USR1 waybar
 
     bindsym $mod+w exec '/home/sifat/.config/sway/scripts/WallpaperSelect.sh'  # keep your script path
+    bindsym $mod+p exec '/home/sifat/.config/sway/scripts/WallpaperSelectVideo.sh'
     bindsym Ctrl+Alt+v exec 'cliphist list | tofi -c ~/.config/tofi/configV | cliphist decode | wl-copy'
     bindsym $mod+m exec 'pamixer --default-source -t && if [ "$(pamixer --default-source --get-mute)" = true ]; then notify-send "Microphone: Muted" -i mic-off -h string:x-canonical-private-synchronous:mic; else notify-send "Microphone: On" -i mic-on -h string:x-canonical-private-synchronous:mic; fi'
 
@@ -231,7 +233,7 @@ set $shot_dir /home/sifat/Pictures/
 set $ts $(date +'%Y-%m-%d_%H-%M-%S')
 
 # Print = full screen: save + copy + notify
-bindsym --release Print exec grim "$shot_dir/screenshot_$ts.png" && notify-send "Screenshot captured"
+bindsym --release Print exec grim "$shot_dir/screenshot_$ts.png" # && notify-send "Screenshot captured"
 # Ctrl+Print = region select: save + copy + notify
 bindsym --release Ctrl+Print exec grim -g "$(slurp)" "$shot_dir/screenshot_$ts.png" && wl-copy < "$shot_dir/screenshot_$ts.png" && notify-send "ScreenCUT captured"
 

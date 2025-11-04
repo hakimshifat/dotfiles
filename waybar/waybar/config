@@ -5,7 +5,7 @@
     "spacing": 4,
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock"],
-    "modules-right": ["tray","idle_inhibitor","pulseaudio", "pulseaudio#microphone",  "network", "battery",],
+    "modules-right": ["tray","idle_inhibitor","pulseaudio", "pulseaudio#microphone",  "network","custom/powerprofile","battery"],
     
        "sway/workspaces": {
         "disable-scroll": true,
@@ -27,6 +27,23 @@
         "format": "<span style=\"italic\">{}</span>",
         "tooltip": false
     },
+
+  "custom/powerprofile": {
+    "format": "{}",
+    "return-type": "json",
+    "exec": "~/.config/waybar/scripts/powerprofile.sh",
+    "interval": 5,
+
+     "on-click": "~/.config/waybar/scripts/powerprofile.sh menu",
+   // "on-click-right": "~/.config/waybar/scripts/powerprofile.sh menu",
+
+    // Optional scroll actions:
+    // "on-scroll-up": "~/.config/waybar/scripts/powerprofile.sh toggle",
+    // "on-scroll-down": "~/.config/waybar/scripts/powerprofile.sh toggle",
+
+    "tooltip": true
+  },
+
 
  
     "clock": {
@@ -112,7 +129,7 @@
     "custom/notifications": {
         "format": "🔔",
         "tooltip": false,
-        "on-click": "makoctl invoke"
+        "on-click": "makoctl history"
     },
     
     "tray": {

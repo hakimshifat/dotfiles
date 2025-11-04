@@ -4,12 +4,11 @@ exec /usr/lib/polkit-kde-authentication-agent-1
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
 # Update dbus environments with display variables
-exec hash dbus-update-activation-environment 2>/dev/null && \
-     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+# exec hash dbus-update-activation-environment 2>/dev/null && \
+#      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
-# Idle configuration
-exec swayidle idlehint 1
-exec_always swayidle -w before-sleep "gtklock -d"
+#swayidle
+exec_always --no-startup-id swayidle -w -C ~/.config/sway/swayidle.conf
 
 # Desktop notifications
 exec mako
