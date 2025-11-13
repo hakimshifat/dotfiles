@@ -41,7 +41,7 @@ focus_follows_mouse yes
 
     # Lock screen
     # bindsym $mod+f1 exec gtklock
-      bindsym SUPER+L exec pamixer --toggle-mute && hyprlock
+      bindsym SUPER+L exec pamixer --toggle-mute && swaylock -C ~/.config/swaylock/config -d
 
     # Activities
     # bindsym $mod+p exec ~/.config/sway/scripts/window_switcher.sh

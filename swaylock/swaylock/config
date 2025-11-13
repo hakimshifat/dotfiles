@@ -1,0 +1,24 @@
+indicator
+grace=0
+fade-in=-1
+
+image=/home/sifat/.config/swaylock/lock.jpg
+clock
+timestr= %I:%M %p 
+datestr=%-d %B %Y
+
+indicator-thickness=7
+inside-color=00000088
+separator-color=00000000
+line-color=00000000
+ring-color=ffffff33
+key-hl-color=ffffffff
+text-color=ffffffff
+text-wrong-color=ff6b6bff
+ring-wrong-color=ff6b6bff
+inside-wrong-color=33000088
+
+effect-blur=2x2
+
+indicator-radius=150
+

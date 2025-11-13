@@ -26,4 +26,7 @@ for_window [app_id=".*"] inhibit_idle fullscreen
 for_window [class="emu8086.exe"] floating enable
 for_window [app_id="com.usebottles.bottles"] floating enable
 for_window [title="^emu8086"] floating enable
+for_window [title="blueberry.py"] floating enable
+for_window [class="zoom"] floating enable
+
 

@@ -165,8 +165,8 @@ window#waybar {
 
 #custom-powerprofile {
   padding: 0 8px;
-  border-radius: 6px;
   font-weight: 600;
+  border-bottom: 2px solid #d3869b;
 }
 
 /* Color by class */

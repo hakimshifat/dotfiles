@@ -1,6 +1,6 @@
 {
     "label" : "lock",
-    "action" : "swaylock -C ~/.config/swaylock/config -d",
+    "action" : "systemctl lock",
     "text" : "Lock",
     "keybind" : "l"
 }
