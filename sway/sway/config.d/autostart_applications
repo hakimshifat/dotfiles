@@ -39,5 +39,5 @@ exec sleep 2 && firewall-applet
 # exec_always nwg-drawer -r -c 7 -is 90 -mb 10 -ml 50 -mr 50 -mt 10
 
 exec swww-daemon
-exec swww img ~/Pictures/wall/1yessirSupra-VSThemesORG-girls-09.jpeg --transition-fps 60 --transition-type outer --transition-duration 0.8
+exec swww img ~/Pictures/wall/1057864.jpg --transition-fps 60 --transition-type outer --transition-duration 0.8
 
