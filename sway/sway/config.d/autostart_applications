@@ -1,14 +1,16 @@
 # Auth with polkit-gnome:
-exec /usr/lib/polkit-kde-authentication-agent-1
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
 # Import environment variables for user systemd service manager
 exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
 # Update dbus environments with display variables
-# exec hash dbus-update-activation-environment 2>/dev/null && \
-#      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
-#swayidle
-exec_always --no-startup-id swayidle -w -C ~/.config/sway/swayidle.conf
+# Idle configuration
+exec swayidle idlehint 1
+exec_always swayidle -w before-sleep "gtklock -d"
 
 # Desktop notifications
 exec mako
@@ -36,8 +38,8 @@ exec sleep 2 && firewall-applet
 # exec python3 ~/.config/sway/scripts/swayfader.py
 
 # nwg-drawer
-# exec_always nwg-drawer -r -c 7 -is 90 -mb 10 -ml 50 -mr 50 -mt 10
+exec_always nwg-drawer -r -c 7 -is 90 -mb 10 -ml 50 -mr 50 -mt 10
 
 exec swww-daemon
-exec swww img ~/Pictures/wall/1057864.jpg --transition-fps 60 --transition-type outer --transition-duration 0.8
+exec swww img ~/Pictures/wall/858077.jpg --transition-fps 60 --transition-type outer --transition-duration 0.8
 

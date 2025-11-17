@@ -1,7 +1,6 @@
 # Logo key. Use Mod1 for Alt.
 set $mod Mod1
 
-
 # Add Vim key support
 set $left h
 set $down j
@@ -12,13 +11,14 @@ set $right l
 set $term footclient
 
 # Application launcher
-# set $launcher fuzzel
+set $launcher fuzzel
 
 # Application menu
-# Power Menset
-set $menu tofi-drun -c ~/.config/tofi/configA --drun-launch=true
-# set $powermenu ~/.config/sway/scripts/power_menu.sh
+# set $menu nwg-drawer
+
+# Power Menu
 focus_follows_mouse yes
+
 
 ### Key bindings
 #
@@ -28,23 +28,16 @@ focus_follows_mouse yes
     bindsym $mod+Return exec $term
 
     # Open the power menu
-    # bindsym $mod+Shift+e exec $powermenu
+    bindsym $mod+Shift+e exec $powermenu
 
     # Kill focused window
     bindsym $mod+q kill
 
     # Start your launcher
-    # bindsym $mod+d exec $launcher
-
-    # Menu
-    bindsym $mod+space exec $menu
+    bindsym $mod+space exec $launcher
 
     # Lock screen
-    # bindsym $mod+f1 exec gtklock
-      bindsym SUPER+L exec pamixer --toggle-mute && swaylock -C ~/.config/swaylock/config -d
-
-    # Activities
-    # bindsym $mod+p exec ~/.config/sway/scripts/window_switcher.sh
+    bindsym SUPER+L exec pamixer --toggle-mute && gtklock -d
 
     # Move windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -83,11 +76,11 @@ focus_follows_mouse yes
 
 #
 # Workspaces:
-# bindsym $mod+w exec '~/.config/hypr/scripts/WallpaperSelect.sh'  # keep your script path
 #
     # Workspace bindings are using bindcode instead of bindsym for better Azerty compatibility.
     # https://github.com/EndeavourOS-Community-Editions/sway/pull/81
     # Use wev to find keycodes for setting up other bindings this way.
+
     bindsym $mod+Tab workspace next
     bindsym $mod+Shift+Tab workspace prev
 
@@ -127,8 +120,8 @@ focus_follows_mouse yes
     # bindsym $mod+v splitv
     # # Split the window horizontally
     # bindsym $mod+b splith
-    #
-    # # Switch the current container between different layout styles
+
+    # Switch the current container between different layout styles
     # bindsym $mod+s layout stacking
     # bindsym $mod+w layout tabbed
     # bindsym $mod+e layout toggle split
@@ -189,8 +182,8 @@ focus_follows_mouse yes
 #
     bindsym {
         # Volume
-        XF86AudioRaiseVolume exec pamixer -i 5 && notify-send "Volume: $(pamixer --get-volume)%" -h int:value:$(pamixer --get-volume) -h string:x-canonical-private-synchronous:volume
-        XF86AudioLowerVolume exec pamixer -d 5 && notify-send "Volume: $(pamixer --get-volume)%" -h int:value:$(pamixer --get-volume) -h string:x-canonical-private-synchronous:volume
+        XF86AudioRaiseVolume exec pamixer -ui 2
+        XF86AudioLowerVolume exec pamixer -ud 2
         XF86AudioMute exec pamixer --toggle-mute
 
         # Player
@@ -199,36 +192,32 @@ focus_follows_mouse yes
         XF86AudioPrev exec playerctl previous
 
         # Backlight
-        XF86MonBrightnessUp exec brightnessctl s +1% && notify-send "Brightness: $(( $(brightnessctl g) * 100 / $(brightnessctl m) ))%" -h int:value:$(( $(brightnessctl g) * 100 / $(brightnessctl m) )) -h string:x-canonical-private-synchronous:brightness
-        XF86MonBrightnessDown exec brightnessctl s 1%- && notify-send "Brightness: $(( $(brightnessctl g) * 100 / $(brightnessctl m) ))%" -h int:value:$(( $(brightnessctl g) * 100 / $(brightnessctl m) )) -h string:x-canonical-private-synchronous:brightness
+        XF86MonBrightnessUp exec brightnessctl -c backlight set +5%
+        XF86MonBrightnessDown exec brightnessctl -c backlight set 5%-
     }
 
 #
 # App shortcuts
 #
     # Launch the file explorer
-    bindsym $mod+n exec nemo
-    # bindsym $mod+w exec '~/.config/sway/scripts/WallpaperSelect.sh'  # keep your script path
-
+    bindsym $mod+n exec thunar
     bindsym SUPER+Escape exec wlogout
-    # bindsym Ctrl+Escape exec 'killall waybar || waybar'
-    # bindsym Ctrl+Escape exec 'swaymsg bar mybar mode invisible'
-  #   bindsym Ctrl+Escape exec 'm=$(swaymsg -t get_bar_config mybar | jq -r .mode); \
-  # [ "$m" = dock ] && swaymsg bar mybar mode invisible || swaymsg bar mybar mode dock'
-    # Toggle Waybar visibility without killing/spawning a new process
-    # bindsym Ctrl+Escape exec pkill -USR1 waybar
 
-    bindsym $mod+w exec '/home/sifat/.config/sway/scripts/WallpaperSelect.sh'  # keep your script path
-    bindsym $mod+p exec '/home/sifat/.config/sway/scripts/WallpaperSelectVideo.sh'
-    bindsym Ctrl+Alt+v exec 'cliphist list | tofi -c ~/.config/tofi/configV | cliphist decode | wl-copy'
     bindsym $mod+m exec 'pamixer --default-source -t && if [ "$(pamixer --default-source --get-mute)" = true ]; then notify-send "Microphone: Muted" -i mic-off -h string:x-canonical-private-synchronous:mic; else notify-send "Microphone: On" -i mic-on -h string:x-canonical-private-synchronous:mic; fi'
+
+
+    # Launch the browser
+    # bindsym $mod+o exec firefox
+
+    # Launch the clipboard manager
+    bindsym $mod+Ctrl+v exec cliphist list | fuzzel -d -w 90 -l 30 -p "Select an entry to copy it to your clipboard buffer:"| cliphist decode | wl-copy
+    # Delete an entry from the clipboard manager
+    bindsym $mod+Ctrl+x exec cliphist list | fuzzel -d -w 90 -l 30 -t cc9393ff -S cc9393ff -p "Select an entry to delete it from cliphist:"| cliphist delete
+    # Note: you can clear all cliphist entries by running `cliphist wipe`
 
 #
 # Screenshots
 #
-# ~/.config/sway/config
-
-# Directory to save screenshots
 set $shot_dir /home/sifat/Pictures/
 set $ts $(date +'%Y-%m-%d_%H-%M-%S')
 
@@ -237,3 +226,4 @@ bindsym --release Print exec grim "$shot_dir/screenshot_$ts.png" # && notify-sen
 # Ctrl+Print = region select: save + copy + notify
 bindsym --release Ctrl+Print exec grim -g "$(slurp)" "$shot_dir/screenshot_$ts.png" && wl-copy < "$shot_dir/screenshot_$ts.png" && notify-send "ScreenCUT captured"
 
+bindsym Shift+Print exec '~/.config/sway/scripts/screenshot_window.sh'

@@ -13,7 +13,6 @@ font pango:Noto Sans Regular 10
 
 # Thin borders:
 smart_borders on
-# smart_corner_radius on
 
 # Set wallpaper:
 # exec ~/.azotebg
@@ -34,14 +33,8 @@ client.background       #F8F8F2
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
-# bar {
-#       swaybar_command waybar
-# }
-
 bar {
     id mybar
     swaybar_command waybar
 }
-# Toggle visibility without spawning a new Waybar
 bindsym Ctrl+Escape exec pkill -USR1 waybar
-

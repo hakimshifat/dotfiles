@@ -30,3 +30,4 @@ for_window [title="blueberry.py"] floating enable
 for_window [class="zoom"] floating enable
 
 
+
