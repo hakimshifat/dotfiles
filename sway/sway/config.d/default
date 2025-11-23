@@ -46,6 +46,7 @@ focus_follows_mouse yes
 
     # Reload the configuration file
     bindsym $mod+Shift+r reload
+    bindsym $mod+w exec '$HOME/.config/sway/scripts/WallpaperSelect.sh'
 
 #
 # Moving around:
@@ -192,8 +193,8 @@ focus_follows_mouse yes
         XF86AudioPrev exec playerctl previous
 
         # Backlight
-        XF86MonBrightnessUp exec brightnessctl -c backlight set +5%
-        XF86MonBrightnessDown exec brightnessctl -c backlight set 5%-
+        XF86MonBrightnessUp exec brightnessctl -c backlight set +1%
+        XF86MonBrightnessDown exec brightnessctl -c backlight set 1%-
     }
 
 #

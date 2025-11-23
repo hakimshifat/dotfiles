@@ -1,0 +1,13 @@
+[Unit]
+Description=Force NVIDIA GPU to Sleep
+# Wait until the GUI/Display Manager is fully loaded
+After=graphical.target
+
+[Service]
+Type=oneshot
+# A tiny sleep ensures the driver isn't "busy" initializing the screen right when we try to sleep it
+ExecStart=/bin/sh -c "sleep 5; echo auto > /sys/bus/pci/devices/0000:01:00.0/power/control"
+
+[Install]
+# This attaches it to the END of the boot process, fixing the loop
+WantedBy=graphical.target
