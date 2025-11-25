@@ -2,7 +2,7 @@
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 "$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
 
-[mgr]
+[manager]
 
 keymap = [
 	{ on = "<Esc>", run = "escape",             desc = "Exit visual mode, clear selected, or cancel search" },
@@ -366,18 +366,18 @@ keymap = [
 # --- Custom Keybindings ---
 
 # 1. Clump Script (Mapped to Shift+C)
-[[mgr.prepend_keymap]]
+[[manager.prepend_keymap]]
 on   = [ "C" ]
 run  = 'shell "clump \"$@\"" --confirm'
 desc = "Clump selected files into a folder"
 
 # 2. Smart Enter Plugin (Enter directory or open file)
-[[mgr.prepend_keymap]]
+[[manager.prepend_keymap]]
 on   = [ "l" ]
 run  = "plugin smart-enter"
 desc = "Enter the child directory, or open the file"
 
-[[mgr.prepend_keymap]]
+[[manager.prepend_keymap]]
 on   = [ "<Right>" ]
 run  = "plugin smart-enter"
 desc = "Enter the child directory, or open the file"
