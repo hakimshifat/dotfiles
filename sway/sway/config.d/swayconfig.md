@@ -1,3 +1,81 @@
+# Custom windowing rules
+for_window [class="Yad" instance="yad"] floating enable
+for_window [app_id="yad"] floating enable
+for_window [app_id="blueman-manager"] floating enable,  resize set width 40 ppt height 30 ppt
+for_window [app_id="pavucontrol" ] floating enable, resize set width 40 ppt height 30 ppt
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+for_window [window_role="About"] floating enable
+for_window [title="File Operation Progress"] floating enable, border pixel 1, sticky enable, resize set width 40 ppt height 30 ppt
+for_window [app_id="floating_shell_portrait"] floating enable, border pixel 1, sticky enable, resize set width 30 ppt height 40 ppt
+for_window [title="Picture in picture"] floating enable, sticky enable
+for_window [title="waybar_htop"] floating enable, resize set width 70 ppt height 70 ppt
+for_window [title="waybar_nmtui"] floating enable
+for_window [title="Save File"] floating enable
+for_window [app_id="firefox" title="Firefox — Sharing Indicator"] kill
+
+# Inhibit idle
+for_window [app_id="firefox"] inhibit_idle fullscreen
+for_window [app_id="Chromium"] inhibit_idle fullscreen
+for_window [title=".*Picture-in-Picture.*"] sticky enable, floating enable
+for_window [app_id=".*"] inhibit_idle fullscreen
+for_window [class="emu8086.exe"] floating enable
+for_window [app_id="com.usebottles.bottles"] floating enable
+for_window [title="^emu8086"] floating enable
+for_window [title="blueberry.py"] floating enable
+for_window [class="zoom"] floating enable
+
+
+
+# Auth with polkit-gnome:
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# Import environment variables for user systemd service manager
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
+# Update dbus environments with display variables
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
+# Idle configuration
+exec swayidle idlehint 1
+exec_always swayidle -w before-sleep "gtklock -d"
+
+# Desktop notifications
+exec mako
+
+# Start foot server
+exec_always --no-startup-id foot --server
+
+# Autotiling
+exec autotiling
+
+# cliphist
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
+     
+# Network Applet
+# exec nm-applet --indicator
+
+# Firewall Applet
+exec sleep 2 && firewall-applet
+
+# Welcome App
+# exec eos-welcome --startdelay=3
+
+# Sway Fader
+# exec python3 ~/.config/sway/scripts/swayfader.py
+
+# nwg-drawer
+exec_always nwg-drawer -r -c 7 -is 90 -mb 10 -ml 50 -mr 50 -mt 10
+
+exec swww-daemon
+exec swww img ~/Pictures/wall/858077.jpg --transition-fps 60 --transition-type outer --transition-duration 0.8
+
 # Logo key. Use Mod1 for Alt.
 set $mod Mod1
 
@@ -37,7 +115,7 @@ focus_follows_mouse yes
     bindsym $mod+space exec $launcher
 
     # Lock screen
-    bindsym SUPER+L exec pamixer --mute && gtklock -d
+    bindsym SUPER+L exec pamixer --toggle-mute && gtklock -d
 
     # Move windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -228,3 +306,94 @@ bindsym --release Print exec grim "$shot_dir/screenshot_$ts.png" # && notify-sen
 bindsym --release Ctrl+Print exec grim -g "$(slurp)" "$shot_dir/screenshot_$ts.png" && wl-copy < "$shot_dir/screenshot_$ts.png" && notify-send "ScreenCUT captured"
 
 bindsym Shift+Print exec '~/.config/sway/scripts/screenshot_window.sh'
+### Input configuration
+#
+# Read `man 5 sway-input` for more information about this section.
+
+# Touchpad configuration
+input type:touchpad {
+    drag_lock disabled
+    dwt enabled
+    tap enabled
+    # natural_scroll enabled
+}
+bindgesture swipe:right workspace prev
+bindgesture swipe:left workspace next
+
+
+# Enable numlock by default
+input type:keyboard xkb_numlock enabled
+
+# Set keyboard layout and variant based on current system settings
+exec_always {
+    'swaymsg input type:keyboard xkb_layout "$(localectl status | grep "X11 Layout" | sed -e "s/^.*X11 Layout://")"'
+    'swaymsg input type:keyboard xkb_variant "$(localectl status | grep "X11 Variant" | sed -e "s/^.*X11 Variant://")"'
+}
+
+# # Toggle between keyboard layouts. This example has the "us" and "gb"
+# # keyboard layouts, and uses Alt+Shift to toggle between them.
+# input "type:keyboard" {
+#     xkb_layout "us,gb"
+#     xkb_options "grp:alt_shift_toggle"
+# }
+# # Assign the same binding to "pkill -RTMIN+1 waybar" to send signal to
+# # the Waybar keyboard module (so the module shows the updated layout).
+# # This example uses Alt + left Shift.
+# bindsym Alt+Shift_L exec "pkill -RTMIN+1 waybar"
+### Output configuration
+#
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+#
+# You can also bind workspaces 1,2,3 to specific outputs
+#
+# workspace 1 output eDP-2
+# workspace 2 output HDMI-A-1
+# workspace 3 output DP-1
+#
+# Wacom Tablet - Example
+#   input "1386:884:Wacom_Intuos_S_Pad" map_to_output HDMI-A-1
+#   input "1386:884:Wacom_Intuos_S_Pen" map_to_output HDMI-A-1
+# Apply gtk theming
+exec_always ~/.config/sway/scripts/import-gsettings
+
+# Set inner/outer gaps
+gaps inner 4
+gaps outer 4
+
+# Hide titlebar on windows:
+default_border pixel 1
+
+# Default Font
+font pango:Noto Sans Regular 10
+
+# Thin borders:
+smart_borders on
+
+# Set wallpaper:
+# exec ~/.azotebg
+
+# Title format for windows
+for_window [shell="xdg_shell"] title_format "%title (%app_id)"
+for_window [shell="x_wayland"] title_format "%class - %title"
+
+# class                 border  bground text    indicator child_border
+client.focused          #6272A4 #6272A4 #F8F8F2 #6272A4   #6272A4
+client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
+client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
+client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
+client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
+client.background       #F8F8F2
+
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    id mybar
+    swaybar_command waybar
+}
+bindsym Ctrl+Escape exec pkill -USR1 waybar
