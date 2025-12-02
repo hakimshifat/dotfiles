@@ -1,6 +1,9 @@
 Dotfiles Contains
 - hyprland
 - aria2
+- hyprlock
+- sway
+- niri <-- Currently Using
 - SDDMtheme
 - Yazi
 ### Setting Up Git On Linux

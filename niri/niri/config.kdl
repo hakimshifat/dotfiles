@@ -1,0 +1,200 @@
+// --- Input Configuration ---
+input {
+    keyboard {
+        xkb {
+            layout "us" // Change this to your preferred layout if not US
+            options "caps:escape" // Optional: Map caps to escape (remove if unwanted)
+        }
+    }
+
+    touchpad {
+        tap
+        dwt
+        natural-scroll
+    }
+
+    // Mouse focus behavior (similar to focus_follows_mouse yes)
+    focus-follows-mouse
+}
+
+// --- Layout & Visuals ---
+layout {
+    // Sway: gaps inner 4, outer 4
+    gaps 4
+    
+    // Sway: smart_borders on (Niri hides borders when only one window is visible by default? 
+    // No, but you can set width).
+    border {
+        width 1
+        active-color "#6272A4"
+        inactive-color "#282A36"
+    }
+
+    // Niri specific: How much of the next window to show
+    center-focused-column "never"
+}
+
+// --- Startup Applications (Translated from Sway exec) ---
+spawn-at-startup "xwayland-satellite" // Required for X11 apps
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "DISPLAY" "WAYLAND_DISPLAY" "SWAYSOCK" "XDG_CURRENT_DESKTOP"
+spawn-at-startup "mako"
+spawn-at-startup "foot" "--server"
+spawn-at-startup "waybar"
+spawn-at-startup "swww-daemon" 
+spawn-at-startup "swww" "img" "~/Pictures/wall/858077.jpg" "--transition-fps" "60" "--transition-type" "outer" "--transition-duration" "0.8"
+
+// Niri-specific formatting for complex commands (pipes)
+spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"
+spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
+// spawn-at-startup "sh" "-c" "sleep 2 && firewall-applet"
+spawn-at-startup "nwg-drawer" "-r" "-c" "7" "-is" "90" "-mb" "10" "-ml" "50" "-mr" "50" "-mt" "10"
+
+// Idle Daemon
+spawn-at-startup "swayidle" "-w" \
+    "timeout" "300" "gtklock -d" \
+    "before-sleep" "gtklock -d"
+
+// --- Window Rules (Floating & Fixes) ---
+window-rule {
+    match app-id="^yad$"
+    match app-id="blueman-manager"
+    match app-id="pavucontrol"
+    match app-id=".*pop-up.*"
+    match app-id=".*bubble.*"
+    match app-id=".*task_dialog.*"
+    match app-id=".*Preferences.*"
+    match app-id=".*dialog.*"
+    match app-id=".*menu.*"
+    match app-id=".*About.*"
+    match title="File Operation Progress"
+    match title="Picture in picture"
+    match title="Save File"
+    match title="waybar_htop"
+    match title="waybar_nmtui"
+    
+    open-floating true
+}
+
+window-rule {
+    // Inhibit idle (keep screen on) for browsers/fullscreen
+    match app-id="firefox"
+    match app-id="Chromium"
+    // match is-fullscreen=true
+    
+    // block-out-from "screen-idle"
+}
+
+// --- Key Bindings ---
+binds {
+    Alt+M { 
+        spawn "sh" "-c" "pamixer --default-source -t && if [ \"$(pamixer --default-source --get-mute)\" = true ]; then notify-send \"Microphone: Muted\" -i mic-off -h string:x-canonical-private-synchronous:mic; else notify-send \"Microphone: On\" -i mic-on -h string:x-canonical-private-synchronous:mic; fi"; 
+    }
+    // Show Niri Help (Essential!)
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    // Basics
+    Alt+Return { spawn "footclient"; }
+    Alt+Q { close-window; }
+    Alt+Space { spawn "fuzzel"; }
+    // Niri doesn't have a specific "reload config" bind by default for user, 
+    // it hot-reloads on save usually, but you can force it:
+    // Alt+Shift+R { quit; } // WARNING: This quits the session. Niri has no "reload".
+
+    // Power / Lock
+    Super+L { spawn "sh" "-c" "pamixer --mute && gtklock -d"; }
+    Super+Escape { spawn "wlogout"; }
+
+
+
+
+    // --- Movement (Vim & Arrows) ---
+    // Niri uses "Columns" (horizontal) and "Windows" (vertical stack in column)
+    
+    // Focus
+    Alt+Left  { focus-column-left; }
+    Alt+Right { focus-column-right; }
+    Alt+Down  { focus-window-down; }
+    Alt+Up    { focus-window-up; }
+    
+    Alt+H     { focus-column-left; }
+    Alt+L     { focus-column-right; }
+    Alt+J     { focus-window-down; }
+    Alt+K     { focus-window-up; }
+
+    // Move Window
+    Alt+Shift+Left  { move-column-left; }
+    Alt+Shift+Right { move-column-right; }
+    Alt+Shift+Down  { move-window-down; }
+    Alt+Shift+Up    { move-window-up; }
+
+    Alt+Shift+H     { move-column-left; }
+    Alt+Shift+L     { move-column-right; }
+    Alt+Shift+J     { move-window-down; }
+    Alt+Shift+K     { move-window-up; }
+
+    // Layout Manipulation
+    Alt+F { fullscreen-window; }
+    Alt+Shift+Space { toggle-window-floating; }
+    Alt+C { center-column; } // Niri special: center current window
+
+    // --- Workspaces (1-9) ---
+    // Note: Niri creates workspaces dynamically.
+    Alt+1 { focus-workspace 1; }
+    Alt+2 { focus-workspace 2; }
+    Alt+3 { focus-workspace 3; }
+    Alt+4 { focus-workspace 4; }
+    Alt+5 { focus-workspace 5; }
+    Alt+6 { focus-workspace 6; }
+    Alt+7 { focus-workspace 7; }
+    Alt+8 { focus-workspace 8; }
+    Alt+9 { focus-workspace 9; }
+
+    Alt+Shift+1 { move-column-to-workspace 1; }
+    Alt+Shift+2 { move-column-to-workspace 2; }
+    Alt+Shift+3 { move-column-to-workspace 3; }
+    Alt+Shift+4 { move-column-to-workspace 4; }
+    Alt+Shift+5 { move-column-to-workspace 5; }
+    Alt+Shift+6 { move-column-to-workspace 6; }
+    Alt+Shift+7 { move-column-to-workspace 7; }
+    Alt+Shift+8 { move-column-to-workspace 8; }
+    Alt+Shift+9 { move-column-to-workspace 9; }
+
+    // --- Resizing ---
+    // Niri handles resizing differently. You usually set width/height.
+    Alt+Ctrl+Left  { set-column-width "-10%"; }
+    Alt+Ctrl+Right { set-column-width "+10%"; }
+    Alt+Ctrl+Up    { set-window-height "+10%"; }
+    Alt+Ctrl+Down  { set-window-height "-10%"; }
+    
+    // --- Media Keys ---
+    XF86AudioRaiseVolume { spawn "pamixer" "-ui" "2"; }
+    XF86AudioLowerVolume { spawn "pamixer" "-ud" "2"; }
+    XF86AudioMute        { spawn "pamixer" "--toggle-mute"; }
+    XF86AudioPlay        { spawn "playerctl" "play-pause"; }
+    XF86AudioNext        { spawn "playerctl" "next"; }
+    XF86AudioPrev        { spawn "playerctl" "previous"; }
+    XF86MonBrightnessUp  { spawn "brightnessctl" "-c" "backlight" "set" "+1%"; }
+    XF86MonBrightnessDown { spawn "brightnessctl" "-c" "backlight" "set" "1%-"; }
+
+    // --- Screenshots ---
+    // Fullscreen
+    Print { spawn "sh" "-c" "grim ~/Pictures/screenshot_$(date +'%Y-%m-%d_%H-%M-%S').png"; }
+    // Region (Slurp) + Copy
+    Ctrl+Print { spawn "sh" "-c" "grim -g \"$(slurp)\" - | wl-copy"; }
+    Shift+Print { spawn "sh" "-c" "/home/sifat/.config/scripts/screenshot_window.sh"; }
+    Alt+w { spawn "sh" "-c" "/home/sifat/.config/scripts/WallpaperSelect.sh"; }
+
+
+    // --- Apps ---
+    Alt+N { spawn "thunar"; }
+    
+    // Clipboard Manager (Complex pipes need sh -c)
+    Alt+Ctrl+V { spawn "sh" "-c" "cliphist list | fuzzel -d -w 90 -l 30 -p 'Copy:' | cliphist decode | wl-copy"; }
+    Alt+Ctrl+X { spawn "sh" "-c" "cliphist list | fuzzel -d -w 90 -l 30 -p 'Delete:' | cliphist delete"; }
+}
+
+// Debug / GPU settings (Since you have Hybrid GPU)
+debug {
+    render-drm-device "/dev/dri/by-path/pci-0000:00:02.0-render"
+}
