@@ -3,9 +3,9 @@
     "position": "top",
     "height": 20,
     "spacing": 4,
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-left": ["sway/workspaces", ""],
     "modules-center": ["clock"],
-    "modules-right": ["tray","idle_inhibitor","pulseaudio", "pulseaudio#microphone",  "network","custom/powerprofile","battery"],
+    "modules-right": ["tray","idle_inhibitor","pulseaudio", "pulseaudio#microphone",  "network","battery"],
     
        "sway/workspaces": {
         "disable-scroll": true,
@@ -92,6 +92,12 @@
     "on-scroll-down": "pamixer --default-source -d 5",
     "scroll-step": 5,
   },
+
+      "custom/launcher": {
+        "format":"<span size='x-large'></span>",
+        "on-click": "exec nwg-drawer",
+        "tooltip": false
+    },
 
 
 

@@ -196,7 +196,7 @@ binds {
     Alt+Ctrl+X { spawn "sh" "-c" "cliphist list | fuzzel -d -w 90 -l 30 -p 'Delete:' | cliphist delete"; }
 }
 
-// Debug / GPU settings (Since you have Hybrid GPU)
 debug {
-    render-drm-device "/dev/dri/by-path/pci-0000:00:02.0-render"
+    render-drm-device "/dev/dri/renderD128"
 }
+
