@@ -3,7 +3,7 @@
     "position": "top",
     "height": 20,
     "spacing": 4,
-    "modules-left": ["sway/workspaces", ""],
+    "modules-left": ["custom/launcher"],
     "modules-center": ["clock"],
     "modules-right": ["tray","idle_inhibitor","pulseaudio", "pulseaudio#microphone",  "network","battery"],
     
@@ -73,11 +73,12 @@
 
     "network": {
     "tooltip": true,
-    "format-wifi": "  {essid}",
+//    "format-wifi": "  {essid}",
+    "format-wifi": "  Online",
     "format-ethernet": "󰈀 ",
     "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
     "format-linked": "󰈀 {ifname} (No IP)",
-    "format-disconnected": "󰖪 ",
+    "format-disconnected": "Offline",
     "tooltip-format-disconnected": "Disconnected",
     "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>",
     "interval": 2,
