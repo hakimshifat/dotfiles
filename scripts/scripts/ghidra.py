@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/home/sifat/ctf/bin/python
 
 import os
 import sys

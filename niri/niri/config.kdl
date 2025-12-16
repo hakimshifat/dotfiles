@@ -1,9 +1,11 @@
+include "dms/binds.kdl"
+
 // --- Input Configuration ---
 input {
     keyboard {
         xkb {
-            layout "us" // Change this to your preferred layout if not US
-            options "caps:escape" // Optional: Map caps to escape (remove if unwanted)
+            layout "us"
+            options "caps:escape"
         }
     }
 
@@ -14,52 +16,67 @@ input {
         scroll-method "two-finger"
         scroll-factor horizontal=1.0 vertical=1.0
     }
-
-    // Mouse focus behavior (similar to focus_follows_mouse yes)
     focus-follows-mouse
 }
 
-
-
 // --- Layout & Visuals ---
 layout {
-    // Sway: gaps inner 4, outer 4
-    gaps 4
+    gaps 2
     
-    // Sway: smart_borders on (Niri hides borders when only one window is visible by default? 
-    // No, but you can set width).
+    // DMS often draws its own decorations or expects specific border settings.
+    // You might want to disable borders if DMS provides a "smart" look, 
+    // but keeping them minimal is safe.
     border {
-        width 1
+        width 0.5
         active-color "#6272A4"
         inactive-color "#282A36"
     }
 
-    // Niri specific: How much of the next window to show
-    center-focused-column "never"
+    always-center-single-column
 }
 
-// --- Startup Applications (Translated from Sway exec) ---
-spawn-at-startup "xwayland-satellite" // Required for X11 apps
-spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+// --- Startup Applications ---
+// 1. Core Services
+// Keep xwayland-satellite unless you are sure DMS starts it (usually it doesn't).
+spawn-at-startup "xwayland-satellite" 
 spawn-at-startup "dbus-update-activation-environment" "--systemd" "DISPLAY" "WAYLAND_DISPLAY" "SWAYSOCK" "XDG_CURRENT_DESKTOP"
-spawn-at-startup "mako"
-spawn-at-startup "foot" "--server"
-spawn-at-startup "waybar"
-spawn-at-startup "swww-daemon" 
-spawn-at-startup "swww" "img" "~/Pictures/wall/858077.jpg" "--transition-fps" "60" "--transition-type" "outer" "--transition-duration" "0.8"
 
-// Niri-specific formatting for complex commands (pipes)
+// 2. Start DMS (The "Dark Knight" / DankMaterialShell)
+// This single command replaces the bar, wallpaper, notifications, and idle daemon.
+// REPLACE THIS:
+// spawn-at-startup "dms"
+
+// WITH THIS:
+spawn-at-startup "dms" "run" "--session"
+//--- DISABLED SERVICES (Replaced by DMS) ---
+// spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1" // REPLACED: DMS has its own Polkit agent
+// spawn-at-startup "mako" // REPLACED: DMS has its own Notification Center
+// spawn-at-startup "waybar" // REPLACED: DMS has the "OMEGA Bar"
+// spawn-at-startup "swww-daemon" // REPLACED: DMS handles Wallpapers & Theming
+// spawn-at-startup "swww" "img" "~/Pictures/wall/858077.jpg" ... 
+// spawn-at-startup "nwg-drawer" ... // REPLACED: DMS has an App Drawer
+
+// Clipboard is usually fine to keep separate, though DMS has clipboard widgets.
+// If DMS complains or you see double history, comment these out.
 spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"
 spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
-// spawn-at-startup "sh" "-c" "sleep 2 && firewall-applet"
-spawn-at-startup "nwg-drawer" "-r" "-c" "7" "-is" "90" "-mb" "10" "-ml" "50" "-mr" "50" "-mt" "10"
 
-// Idle Daemon
-spawn-at-startup "swayidle" "-w" \
-    "timeout" "300" "gtklock -d" \
-    "before-sleep" "gtklock -d"
+// Idle Daemon - DMS usually handles idle/lock logic internally or via config
+// 
+// spawn-at-startup "swayidle" "-w" \
+//     "timeout" "300" "gtklock -d" \
+//     "before-sleep" "gtklock -d"
 
-// --- Window Rules (Floating & Fixes) ---
+
+
+
+// --- Window Rules ---
+window-rule {
+    // DMS specific rules (prevents the shell itself from being tiled)
+    match app-id="^dms$"
+    open-floating true
+}
+
 window-rule {
     match app-id="^yad$"
     match app-id="blueman-manager"
@@ -74,46 +91,34 @@ window-rule {
     match title="File Operation Progress"
     match title="Picture in picture"
     match title="Save File"
-    match title="waybar_htop"
-    match title="waybar_nmtui"
     
     open-floating true
 }
 
-window-rule {
-    // Inhibit idle (keep screen on) for browsers/fullscreen
-    match app-id="firefox"
-    match app-id="Chromium"
-    // match is-fullscreen=true
-    
-    // block-out-from "screen-idle"
-}
-
 // --- Key Bindings ---
 binds {
-    Alt+M { 
-        spawn "sh" "-c" "pamixer --default-source -t && if [ \"$(pamixer --default-source --get-mute)\" = true ]; then notify-send \"Microphone: Muted\" -i mic-off -h string:x-canonical-private-synchronous:mic; else notify-send \"Microphone: On\" -i mic-on -h string:x-canonical-private-synchronous:mic; fi"; 
-    }
-    // Show Niri Help (Essential!)
-    Mod+Shift+Slash { show-hotkey-overlay; }
+    // Show Niri Help
+    SUPER+Shift+Slash { show-hotkey-overlay; }
 
     // Basics
-    Alt+Return { spawn "footclient"; }
+    Alt+Return { spawn "foot"; }
     Alt+Q { close-window; }
-    Alt+Space { spawn "fuzzel"; }
-    // Niri doesn't have a specific "reload config" bind by default for user, 
-    // it hot-reloads on save usually, but you can force it:
-    // Alt+Shift+R { quit; } // WARNING: This quits the session. Niri has no "reload".
+
+    // --- DMS Launchers ---
+    // Replaces "fuzzel". DMS usually listens for global shortcuts, but if not:
+    // Check 'dms --help' for specific IPC commands. Commonly:
+    // REPLACE THIS:
+// Alt+Space { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
+
+// WITH THIS:
+    // Alt+D { spawn "dms" "ipc" "call" "launcher" "toggle"; }
 
     // Power / Lock
-    Super+L { spawn "sh" "-c" "pamixer --mute && gtklock -d"; }
+    // DMS likely has a built-in lock screen command (check docs), 
+    // but keeping your old one is a safe fallback for now.
     Super+Escape { spawn "wlogout"; }
 
-
-    // --- Movement (Vim & Arrows) ---
-    // Niri uses "Columns" (horizontal) and "Windows" (vertical stack in column)
-    
-    // Focus
+    // --- Movement (Standard Niri) ---
     Alt+Left  { focus-column-left; }
     Alt+Right { focus-column-right; }
     Alt+Down  { focus-window-down; }
@@ -124,7 +129,6 @@ binds {
     Alt+J     { focus-window-down; }
     Alt+K     { focus-window-up; }
 
-    // Move Window
     Alt+Shift+Left  { move-column-left; }
     Alt+Shift+Right { move-column-right; }
     Alt+Shift+Down  { move-window-down; }
@@ -135,13 +139,11 @@ binds {
     Alt+Shift+J     { move-window-down; }
     Alt+Shift+K     { move-window-up; }
 
-    // Layout Manipulation
     Alt+F { fullscreen-window; }
     Alt+Shift+Space { toggle-window-floating; }
-    Alt+C { center-column; } // Niri special: center current window
+    Alt+C { center-column; }
 
     // --- Workspaces (1-9) ---
-    // Note: Niri creates workspaces dynamically.
     Alt+1 { focus-workspace 1; }
     Alt+2 { focus-workspace 2; }
     Alt+3 { focus-workspace 3; }
@@ -163,13 +165,15 @@ binds {
     Alt+Shift+9 { move-column-to-workspace 9; }
 
     // --- Resizing ---
-    // Niri handles resizing differently. You usually set width/height.
     Alt+Ctrl+Left  { set-column-width "-10%"; }
     Alt+Ctrl+Right { set-column-width "+10%"; }
     Alt+Ctrl+Up    { set-window-height "+10%"; }
     Alt+Ctrl+Down  { set-window-height "-10%"; }
     
     // --- Media Keys ---
+    // DMS normally has an OSD (On Screen Display) for this.
+    // If these keys double-trigger (DMS shows one + you spawn pamixer),
+    // you might need to remove the 'spawn' commands and let DMS handle it.
     XF86AudioRaiseVolume { spawn "pamixer" "-ui" "2"; }
     XF86AudioLowerVolume { spawn "pamixer" "-ud" "2"; }
     XF86AudioMute        { spawn "pamixer" "--toggle-mute"; }
@@ -180,18 +184,18 @@ binds {
     XF86MonBrightnessDown { spawn "brightnessctl" "-c" "backlight" "set" "1%-"; }
 
     // --- Screenshots ---
-    // Fullscreen
+    // DMS has a screenshot tool, but your custom grim/slurp scripts are fine to keep.
     Print { spawn "sh" "-c" "grim ~/Pictures/screenshot_$(date +'%Y-%m-%d_%H-%M-%S').png"; }
-    // Region (Slurp) + Copy
-    Ctrl+Print { spawn "sh" "-c" "grim -g \"$(slurp)\" - | wl-copy"; }
+    Ctrl+Print { spawn "sh" "-c" "grim -g \"$(slurp)\" - | tee ~/Pictures/Screenshots/$(date +'%Y-%m-%d-%H-%M-%S').png | wl-copy";}
     Shift+Print { spawn "sh" "-c" "/home/sifat/.config/scripts/screenshot_window.sh"; }
-    Alt+w { spawn "sh" "-c" "/home/sifat/.config/scripts/WallpaperSelect.sh"; }
-
+    
+    // Alt+w { spawn "sh" "-c" "/home/sifat/.config/scripts/WallpaperSelect.sh"; } // Replaced by DMS Wallpaper settings
 
     // --- Apps ---
     Alt+N { spawn "thunar"; }
     
-    // Clipboard Manager (Complex pipes need sh -c)
+    // DMS Clipboard Manager Integration
+    // If you want to use DMS's UI instead of fuzzel, check DMS docs for the clipboard command.
     Alt+Ctrl+V { spawn "sh" "-c" "cliphist list | fuzzel -d -w 90 -l 30 -p 'Copy:' | cliphist decode | wl-copy"; }
     Alt+Ctrl+X { spawn "sh" "-c" "cliphist list | fuzzel -d -w 90 -l 30 -p 'Delete:' | cliphist delete"; }
 }
@@ -199,4 +203,3 @@ binds {
 debug {
     render-drm-device "/dev/dri/renderD128"
 }
-
