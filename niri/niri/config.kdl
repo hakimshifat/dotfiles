@@ -70,6 +70,7 @@ spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
 
 
 
+
 // --- Window Rules ---
 window-rule {
     // DMS specific rules (prevents the shell itself from being tiled)
@@ -92,6 +93,13 @@ window-rule {
     match title="Picture in picture"
     match title="Save File"
     
+    open-floating true
+}
+
+window-rule {
+    match app-id="^zoom$"
+    match title=".*Zoom.*"
+    match title=".*zoom.*"
     open-floating true
 }
 
@@ -202,4 +210,5 @@ binds {
 
 debug {
     render-drm-device "/dev/dri/renderD128"
+
 }
