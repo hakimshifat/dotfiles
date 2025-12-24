@@ -5,4 +5,5 @@ binds{
     Alt+m { spawn "dms" "ipc" "call" "audio" "micmute"; }
     SUPER+m { spawn "dms" "ipc" "call" "audio" "mute"; }
     Alt+w { spawn "dms" "ipc" "call" "wallpaper" "next"; }
+    Ctrl+Alt+v { spawn "dms" "ipc" "call" "clipboard" "toggle"; }
   }

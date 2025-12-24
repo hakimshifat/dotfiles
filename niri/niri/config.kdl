@@ -1,7 +1,9 @@
-include "dms/binds.kdl"
-
-// --- Input Configuration ---
+// =====================================================
+//                    INPUT CONFIG
+// =====================================================
 input {
+
+    // ---------- Keyboard ----------
     keyboard {
         xkb {
             layout "us"
@@ -9,23 +11,29 @@ input {
         }
     }
 
+    // ---------- Touchpad ----------
     touchpad {
         tap
         dwt
         natural-scroll
         scroll-method "two-finger"
         scroll-factor horizontal=1.0 vertical=1.0
+        accel-speed 0.3
+        accel-profile "adaptive"
     }
+
     focus-follows-mouse
 }
 
-// --- Layout & Visuals ---
+
+
+// =====================================================
+//                LAYOUT & VISUALS
+// =====================================================
 layout {
+
     gaps 2
-    
-    // DMS often draws its own decorations or expects specific border settings.
-    // You might want to disable borders if DMS provides a "smart" look, 
-    // but keeping them minimal is safe.
+
     border {
         width 0.5
         active-color "#6272A4"
@@ -35,49 +43,76 @@ layout {
     always-center-single-column
 }
 
-// --- Startup Applications ---
-// 1. Core Services
-// Keep xwayland-satellite unless you are sure DMS starts it (usually it doesn't).
-spawn-at-startup "xwayland-satellite" 
+
+
+// =====================================================
+//               STARTUP APPLICATIONS
+// =====================================================
+
+// ---------- Core Services ----------
+spawn-at-startup "xwayland-satellite"
+
 spawn-at-startup "dbus-update-activation-environment" "--systemd" "DISPLAY" "WAYLAND_DISPLAY" "SWAYSOCK" "XDG_CURRENT_DESKTOP"
 
-// 2. Start DMS (The "Dark Knight" / DankMaterialShell)
-// This single command replaces the bar, wallpaper, notifications, and idle daemon.
-// REPLACE THIS:
-// spawn-at-startup "dms"
 
-// WITH THIS:
+// ---------- DMS ----------
 spawn-at-startup "dms" "run" "--session"
-//--- DISABLED SERVICES (Replaced by DMS) ---
-// spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1" // REPLACED: DMS has its own Polkit agent
-// spawn-at-startup "mako" // REPLACED: DMS has its own Notification Center
-// spawn-at-startup "waybar" // REPLACED: DMS has the "OMEGA Bar"
-// spawn-at-startup "swww-daemon" // REPLACED: DMS handles Wallpapers & Theming
-// spawn-at-startup "swww" "img" "~/Pictures/wall/858077.jpg" ... 
-// spawn-at-startup "nwg-drawer" ... // REPLACED: DMS has an App Drawer
 
-// Clipboard is usually fine to keep separate, though DMS has clipboard widgets.
-// If DMS complains or you see double history, comment these out.
+
+// ---------- Clipboard ----------
 spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"
 spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
 
-// Idle Daemon - DMS usually handles idle/lock logic internally or via config
-// 
-// spawn-at-startup "swayidle" "-w" \
-//     "timeout" "300" "gtklock -d" \
-//     "before-sleep" "gtklock -d"
 
 
+// =====================================================
+//                   WINDOW RULES
+// =====================================================
 
-
-
-// --- Window Rules ---
+// ---------- Focus Ring ----------
 window-rule {
-    // DMS specific rules (prevents the shell itself from being tiled)
+    focus-ring {
+        off
+        width 5
+        active-color "#000000"
+        inactive-color "#505050"
+        urgent-color "#9b0000"
+    }
+
+    }
+
+
+// ---------- DMS Shell ----------
+window-rule {
     match app-id="^dms$"
     open-floating true
 }
 
+
+// ---------- Global Defaults ----------
+window-rule {
+    open-maximized true
+    draw-border-with-background false
+    clip-to-geometry true
+    tiled-state true
+}
+
+
+// ---------- Firefox ----------
+window-rule {
+    match title="Firefox"
+    opacity 1.0
+}
+
+
+// ---------- Firefox Extension ----------
+window-rule {
+    match app-id="firefox" title="Extension: (Aria2 Download Manager Integration) - Download Panel — Mozilla Firefox"
+    open-floating true
+}
+
+
+// ---------- Dialogs ----------
 window-rule {
     match app-id="^yad$"
     match app-id="blueman-manager"
@@ -92,10 +127,18 @@ window-rule {
     match title="File Operation Progress"
     match title="Picture in picture"
     match title="Save File"
-    
     open-floating true
 }
 
+
+// ---------- Firefox PiP ----------
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+
+// ---------- Zoom ----------
 window-rule {
     match app-id="^zoom$"
     match title=".*Zoom.*"
@@ -103,55 +146,57 @@ window-rule {
     open-floating true
 }
 
-// --- Key Bindings ---
+
+
+// =====================================================
+//                   KEY BINDINGS
+// =====================================================
 binds {
-    // Show Niri Help
+
+    // ---------- Help ----------
     SUPER+Shift+Slash { show-hotkey-overlay; }
 
-    // Basics
+
+    // ---------- Basics ----------
     Alt+Return { spawn "foot"; }
     Alt+Q { close-window; }
 
-    // --- DMS Launchers ---
-    // Replaces "fuzzel". DMS usually listens for global shortcuts, but if not:
-    // Check 'dms --help' for specific IPC commands. Commonly:
-    // REPLACE THIS:
-// Alt+Space { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
 
-// WITH THIS:
-    // Alt+D { spawn "dms" "ipc" "call" "launcher" "toggle"; }
-
-    // Power / Lock
-    // DMS likely has a built-in lock screen command (check docs), 
-    // but keeping your old one is a safe fallback for now.
+    // ---------- Power ----------
     Super+Escape { spawn "wlogout"; }
 
-    // --- Movement (Standard Niri) ---
+
+    // ---------- Navigation ----------
     Alt+Left  { focus-column-left; }
     Alt+Right { focus-column-right; }
     Alt+Down  { focus-window-down; }
     Alt+Up    { focus-window-up; }
-    
-    Alt+H     { focus-column-left; }
-    Alt+L     { focus-column-right; }
-    Alt+J     { focus-window-down; }
-    Alt+K     { focus-window-up; }
 
+    Alt+H { focus-column-left; }
+    Alt+L { focus-column-right; }
+    Alt+J { focus-window-down; }
+    Alt+K { focus-window-up; }
+
+
+    // ---------- Move ----------
     Alt+Shift+Left  { move-column-left; }
     Alt+Shift+Right { move-column-right; }
     Alt+Shift+Down  { move-window-down; }
     Alt+Shift+Up    { move-window-up; }
 
-    Alt+Shift+H     { move-column-left; }
-    Alt+Shift+L     { move-column-right; }
-    Alt+Shift+J     { move-window-down; }
-    Alt+Shift+K     { move-window-up; }
+    Alt+Shift+H { move-column-left; }
+    Alt+Shift+L { move-column-right; }
+    Alt+Shift+J { move-window-down; }
+    Alt+Shift+K { move-window-up; }
 
+
+    // ---------- Layout ----------
     Alt+F { fullscreen-window; }
     Alt+Shift+Space { toggle-window-floating; }
     Alt+C { center-column; }
 
-    // --- Workspaces (1-9) ---
+
+    // ---------- Workspaces ----------
     Alt+1 { focus-workspace 1; }
     Alt+2 { focus-workspace 2; }
     Alt+3 { focus-workspace 3; }
@@ -172,43 +217,56 @@ binds {
     Alt+Shift+8 { move-column-to-workspace 8; }
     Alt+Shift+9 { move-column-to-workspace 9; }
 
-    // --- Resizing ---
+
+    // ---------- Resize ----------
     Alt+Ctrl+Left  { set-column-width "-10%"; }
     Alt+Ctrl+Right { set-column-width "+10%"; }
     Alt+Ctrl+Up    { set-window-height "+10%"; }
     Alt+Ctrl+Down  { set-window-height "-10%"; }
-    
-    // --- Media Keys ---
-    // DMS normally has an OSD (On Screen Display) for this.
-    // If these keys double-trigger (DMS shows one + you spawn pamixer),
-    // you might need to remove the 'spawn' commands and let DMS handle it.
+
+
+    // ---------- Media ----------
     XF86AudioRaiseVolume { spawn "pamixer" "-ui" "2"; }
     XF86AudioLowerVolume { spawn "pamixer" "-ud" "2"; }
-    XF86AudioMute        { spawn "pamixer" "--toggle-mute"; }
-    XF86AudioPlay        { spawn "playerctl" "play-pause"; }
-    XF86AudioNext        { spawn "playerctl" "next"; }
-    XF86AudioPrev        { spawn "playerctl" "previous"; }
-    XF86MonBrightnessUp  { spawn "brightnessctl" "-c" "backlight" "set" "+1%"; }
+    XF86AudioMute { spawn "pamixer" "--toggle-mute"; }
+    XF86AudioPlay { spawn "playerctl" "play-pause"; }
+    XF86AudioNext { spawn "playerctl" "next"; }
+    XF86AudioPrev { spawn "playerctl" "previous"; }
+
+    XF86MonBrightnessUp { spawn "brightnessctl" "-c" "backlight" "set" "+1%"; }
     XF86MonBrightnessDown { spawn "brightnessctl" "-c" "backlight" "set" "1%-"; }
 
-    // --- Screenshots ---
-    // DMS has a screenshot tool, but your custom grim/slurp scripts are fine to keep.
-    Print { spawn "sh" "-c" "grim ~/Pictures/screenshot_$(date +'%Y-%m-%d_%H-%M-%S').png"; }
-    Ctrl+Print { spawn "sh" "-c" "grim -g \"$(slurp)\" - | tee ~/Pictures/Screenshots/$(date +'%Y-%m-%d-%H-%M-%S').png | wl-copy";}
-    Shift+Print { spawn "sh" "-c" "/home/sifat/.config/scripts/screenshot_window.sh"; }
-    
-    // Alt+w { spawn "sh" "-c" "/home/sifat/.config/scripts/WallpaperSelect.sh"; } // Replaced by DMS Wallpaper settings
 
-    // --- Apps ---
+    // ---------- Screenshots ----------
+    Print {
+        spawn "sh" "-c" "grim ~/Pictures/screenshot_$(date +'%Y-%m-%d_%H-%M-%S').png"
+    }
+
+    Ctrl+Print {
+        spawn "sh" "-c" "grim -g \"$(slurp)\" - | tee ~/Pictures/Screenshots/$(date +'%Y-%m-%d-%H-%M-%S').png | wl-copy"
+    }
+
+    Shift+Print {
+        spawn "sh" "-c" "/home/sifat/.config/scripts/screenshot_window.sh"
+    }
+
+
+    // ---------- Apps ----------
     Alt+N { spawn "thunar"; }
-    
-    // DMS Clipboard Manager Integration
-    // If you want to use DMS's UI instead of fuzzel, check DMS docs for the clipboard command.
-    Alt+Ctrl+V { spawn "sh" "-c" "cliphist list | fuzzel -d -w 90 -l 30 -p 'Copy:' | cliphist decode | wl-copy"; }
-    Alt+Ctrl+X { spawn "sh" "-c" "cliphist list | fuzzel -d -w 90 -l 30 -p 'Delete:' | cliphist delete"; }
 }
 
+
+
+// =====================================================
+//                   DEBUG
+// =====================================================
 debug {
     render-drm-device "/dev/dri/renderD128"
-
 }
+
+
+// =====================================================
+//              DMS EXTRA KEYBINDS
+// =====================================================
+include "dms/binds.kdl"
+
