@@ -1,6 +1,7 @@
 // =====================================================
 //                    INPUT CONFIG
 // =====================================================
+prefer-no-csd
 input {
 
     // ---------- Keyboard ----------
@@ -51,7 +52,6 @@ layout {
 
 // ---------- Core Services ----------
 spawn-at-startup "xwayland-satellite"
-
 spawn-at-startup "dbus-update-activation-environment" "--systemd" "DISPLAY" "WAYLAND_DISPLAY" "SWAYSOCK" "XDG_CURRENT_DESKTOP"
 
 
@@ -88,7 +88,6 @@ window-rule {
     open-floating true
 }
 
-
 // ---------- Global Defaults ----------
 window-rule {
     open-maximized true
@@ -109,8 +108,8 @@ window-rule {
 window-rule {
     match app-id="firefox" title="Extension: (Aria2 Download Manager Integration) - Download Panel — Mozilla Firefox"
     open-floating true
+    open-maximized false
 }
-
 
 // ---------- Dialogs ----------
 window-rule {
@@ -147,6 +146,23 @@ window-rule {
 }
 
 
+// ---------- Bitwarden Extension ----------
+window-rule {
+    match app-id="firefox" title="Extension: (Bitwarden Password Manager) - Bitwarden — Mozilla Firefox"
+    open-floating true
+    open-maximized false
+}
+
+// ---------- Firefox Popups & Extensions ----------
+window-rule {
+    // Matches any Firefox window that starts with "Extension:" or contains "pop-up" or "dialog"
+    match app-id="firefox" title=r#"^Extension:.*"#
+    match app-id="firefox" title=r#".*pop-up.*"#
+    match app-id="firefox" title=r#".*dialog.*"#
+    
+    open-floating true
+    open-maximized false
+}
 
 // =====================================================
 //                   KEY BINDINGS
@@ -154,7 +170,7 @@ window-rule {
 binds {
 
     // ---------- Help ----------
-    SUPER+Shift+Slash { show-hotkey-overlay; }
+    // SUPER+Shift+Slash { show-hotkey-overlay; }
 
 
     // ---------- Basics ----------
@@ -163,7 +179,7 @@ binds {
 
 
     // ---------- Power ----------
-    Super+Escape { spawn "wlogout"; }
+    // Super+Escape { spawn "wlogout"; }
 
 
     // ---------- Navigation ----------
@@ -260,9 +276,10 @@ binds {
 // =====================================================
 //                   DEBUG
 // =====================================================
-debug {
-    render-drm-device "/dev/dri/renderD128"
-}
+// debug {
+ //   render-drm-device "/dev/dri/renderD128"
+ //   ignore-drm-device "/dev/dri/renderD129"
+// }
 
 
 // =====================================================
