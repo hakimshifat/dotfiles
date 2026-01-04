@@ -90,7 +90,7 @@ window-rule {
 
 // ---------- Global Defaults ----------
 window-rule {
-    open-maximized true
+    // open-maximized true
     draw-border-with-background false
     clip-to-geometry true
     tiled-state true
@@ -237,8 +237,8 @@ binds {
     // ---------- Resize ----------
     Alt+Ctrl+Left  { set-column-width "-10%"; }
     Alt+Ctrl+Right { set-column-width "+10%"; }
-    Alt+Ctrl+Up    { set-window-height "+10%"; }
-    Alt+Ctrl+Down  { set-window-height "-10%"; }
+    Alt+Ctrl+Down    { set-window-height "+10%"; }
+    Alt+Ctrl+Up  { set-window-height "-10%"; }
 
 
     // ---------- Media ----------
