@@ -22,7 +22,6 @@ input {
         accel-speed 0.3
         accel-profile "adaptive"
     }
-
     focus-follows-mouse
 }
 
@@ -56,6 +55,7 @@ spawn-at-startup "dbus-update-activation-environment" "--systemd" "DISPLAY" "WAY
 
 
 // ---------- DMS ----------
+// spawn-at-startup "nice" "-n 19" "dms" "run" "--session"
 spawn-at-startup "dms" "run" "--session"
 
 
@@ -286,4 +286,5 @@ binds {
 //              DMS EXTRA KEYBINDS
 // =====================================================
 include "dms/binds.kdl"
-
+include "dms/cursor.kdl"
+include "dms/outputs.kdl"
