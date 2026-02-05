@@ -271,6 +271,14 @@ binds {
     Alt+N { spawn "thunar"; }
 }
 
+switch-events {
+    lid-close { spawn "systemctl" "suspend"; }
+}
+
+debug {
+    // This forces Niri to use the Intel i915 node
+    render-drm-device "/dev/dri/renderD129"
+}
 
 
 // =====================================================
