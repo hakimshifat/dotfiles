@@ -1,0 +1,37 @@
+pkgname=inir-audio
+pkgver=1.0
+pkgrel=1
+pkgdesc='illogical-impulse on Niri - Audio Dependencies'
+arch=(any)
+license=(MIT)
+depends=(
+  # PipeWire audio stack
+  pipewire
+  pipewire-pulse
+  pipewire-alsa
+  wireplumber
+
+  # Media control
+  playerctl
+  libdbusmenu-gtk3
+  pavucontrol
+
+  # Audio visualizer
+  cava
+
+  # Audio effects
+  easyeffects
+
+  # Media playback
+  mpv
+  mpv-mpris
+  yt-dlp
+  socat
+)
+optdepends=(
+  'nodejs: JavaScript runtime for yt-dlp extractors (recommended)'
+  'pipewire-jack: JACK compatibility layer for PipeWire'
+  'jack2: Standalone JACK audio server (conflicts with pipewire-jack)'
+  'plasma-browser-integration: Browser media integration for KDE'
+)
+
