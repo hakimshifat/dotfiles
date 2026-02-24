@@ -1,4 +1,4 @@
-#!/home/sifat/ctf/bin/python
+#!/home/sifat/sage-venv/bin/python
 
 import os
 import sys
