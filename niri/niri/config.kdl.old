@@ -1,12 +1,11 @@
 // ============================================================================
-// NIRI CONFIGURATION - Base for iNiR (ii)
+// NIRI CONFIGURATION - Base for illogical-impulse (ii)
 // ============================================================================
 // Minimal base config - customize to your needs
 // Wiki: https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
 // ============================================================================
 
 prefer-no-csd
-
 hotkey-overlay {
     skip-at-startup
 }
@@ -17,9 +16,9 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 // Run `niri msg outputs` inside a niri session to see connector names and modes.
 // Then edit and uncomment this block to pin a specific monitor layout.
 
-// output "eDP-1" {
-//     mode "1920x1080@60"
-//     scale 1
+// -output "eDP-1" {
+    // mode "1920x1080@60"
+    // scale 1
     // transform "normal"
     // position x=0 y=0
 // }
@@ -41,16 +40,18 @@ input {
         dwt
         natural-scroll
         scroll-method "two-finger"
+        // tap-button-map "left-middle-right"
         scroll-factor horizontal=1.0 vertical=1.0
         accel-speed 0.3
         accel-profile "adaptive"
+
     }
     focus-follows-mouse
     mouse {
         accel-profile "flat"
     }
 
-    mod-key "Alt"
+    mod-key "ALT"
     mod-key-nested "SUPER"
 }
 
@@ -59,7 +60,7 @@ input {
 // ============================================================================
 
 layout {
-    gaps 5 
+    gaps 5
     background-color "transparent"
     center-focused-column "never"
     
@@ -75,7 +76,7 @@ layout {
     
     border {
         off
-        width 2
+        width 4
         active-color   "#707070"
         inactive-color "#d0d0d0"
         urgent-color   "#cc4444"
@@ -89,7 +90,7 @@ layout {
     }
     
     shadow {
-        off
+       // off
         softness 30
         spread 5
         offset x=0 y=5
@@ -112,7 +113,7 @@ cursor {
 }
 
 overview {
-    zoom 0.75
+    zoom 0.55
 
     // Uncomment to give the overview a solid backdrop between workspaces.
     //backdrop-color "#777777"
@@ -128,20 +129,14 @@ overview {
 // ============================================================================
 
 window-rule {
-    match app-id="kitty"
-    opacity 0.85
-}
-window-rule {
     geometry-corner-radius 16
     clip-to-geometry true
 }
 
-// window-rule {
-//     match is-active=false
-//     opacity 0.9
-// }
-
-// Foot terminal transparency
+window-rule { 
+    match is-active=false
+    opacity 0.9
+}
 
 // ============================================================================
 // ANIMATIONS
@@ -202,13 +197,11 @@ animations {
 
 environment {
     XDG_CURRENT_DESKTOP "niri"
-    XDG_MENU_PREFIX "plasma-"  // Required for Dolphin/KDE app file associations
     QT_QPA_PLATFORM "wayland"
     ELECTRON_OZONE_PLATFORM_HINT "auto"
     QT_LOGGING_RULES "quickshell.dbus.properties=false"
     
-    // Qt theming: kde platform reads colors from kdeglobals (requires plasma-integration pkg)
-    // The installer falls back to qt6ct only if plasma-integration is not installed
+    // Qt theming: use kde platform for kdeglobals colors, Darkly for widget style
     QT_QPA_PLATFORMTHEME "kde"
     QT_STYLE_OVERRIDE "Darkly"
     
@@ -220,12 +213,11 @@ environment {
 // STARTUP
 // ============================================================================
 
-// Import XDG_MENU_PREFIX to systemd for Dolphin/KDE app file associations
-spawn-at-startup "bash" "-c" "systemctl --user import-environment XDG_MENU_PREFIX && kbuildsycoca6"
-
+// spawn-at-startup "xwayland-satellite"
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
-spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+// spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 spawn-at-startup "qs" "-c" "ii"
+
 
 // ============================================================================
 // KEYBINDINGS
@@ -233,16 +225,19 @@ spawn-at-startup "qs" "-c" "ii"
 
 binds {
     // System
-    SUPER+Tab repeat=false { toggle-overview; }
+    // SUPER+Tab repeat=false { toggle-overview; }
     Mod+Shift+E { quit; }
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
-    SUPER+left {spawn "qs" "-c" "ii" "ipc" "call" "sidebarLeft" "toggle";}
-    SUPER+right {spawn "qs" "-c" "ii" "ipc" "call" "sidebarRight" "toggle";}
+    // SUPER+Escape { spawn "qs" "-c" "ii" "ipc" "call" "session" "toggle"; }
     
     // ii Window Switcher (Alt+Tab)
     // SUPER+Tab { spawn "qs" "-c" "ii" "ipc" "call" "altSwitcher" "next"; }
-    // SUPER+Shift+Tab { spawn "qs" "-c" "ii" "ipc" "call" "altSwitcher" "previous"; }
+    // Alt+Tab { spawn "qs" "-c" "ii" "ipc" "call" "altSwitcher" "next"; }
+    // Alt+Shift+Tab { spawn "qs" "-c" "ii" "ipc" "call" "altSwitcher" "previous"; }
     
+    SUPER+m { spawn "qs" "-c" "ii" "ipc" "call" "audio" "mute"; }
+    ALt+m { spawn "qs" "-c" "ii" "ipc" "call" "audio" "micMute"; }
+    SUPER+Escape { spawn "qs" "-c" "ii" "ipc" "call" "session" "toggle"; }
     // ii Overlay
     Super+G { spawn "qs" "-c" "ii" "ipc" "call" "overlay" "toggle"; }
 
@@ -250,8 +245,7 @@ binds {
     Mod+Space repeat=false { spawn "qs" "-c" "ii" "ipc" "call" "overview" "toggle"; }
     
     // ii Clipboard
-    Control+Alt+v { spawn "qs" "-c" "ii" "ipc" "call" "clipboard" "toggle"; }
-    
+    Control+Alt+V { spawn "qs" "-c" "ii" "ipc" "call" "clipboard" "toggle"; }
     // ii Lock screen
     SUPER+L allow-when-locked=true { spawn "qs" "-c" "ii" "ipc" "call" "lock" "activate"; }
     
@@ -274,16 +268,14 @@ binds {
     
     // Applications (uses configured terminal from Settings)
     Mod+T { spawn "bash" "-c" "$HOME/.config/quickshell/ii/scripts/launch-terminal.sh"; }
-    // Mod+Return { spawn "bash" "-c" "$HOME/.config/quickshell/ii/scripts/launch-terminal.sh"; }
-    Mod+Return { spawn "bash" "-c" "foot"; }
-    Super+E { spawn "thunar"; }
-    Super+W { spawn "bash" "-c" "xdg-open https://"; }
+    Mod+Return { spawn "bash" "-c" "$HOME/.config/quickshell/ii/scripts/launch-terminal.sh"; }
+    Alt+N { spawn "thunar"; }
     
     // Window management
     Mod+Q repeat=false { spawn "bash" "-c" "$HOME/.config/quickshell/ii/scripts/close-window.sh"; }
     Mod+D { maximize-column; }
     Mod+F { fullscreen-window; }
-    Alt+Shift+Space { toggle-window-floating; }
+    Mod+A { toggle-window-floating; }
 
     // Focus
     Mod+Left { focus-column-left; }
@@ -304,11 +296,6 @@ binds {
     Mod+Shift+J { move-window-down; }
     Mod+Shift+K { move-window-up; }
     Mod+Shift+L { move-column-right; }
-
-    Alt+Ctrl+Left  { set-column-width "-10%"; }
-    Alt+Ctrl+Right { set-column-width "+10%"; }
-    Alt+Ctrl+Down    { set-window-height "+10%"; }
-    Alt+Ctrl+Up  { set-window-height "-10%"; }
     
     // Workspaces
     Mod+1 { focus-workspace 1; }
@@ -326,46 +313,35 @@ binds {
     Mod+Shift+3 { move-column-to-workspace 3; }
     Mod+Shift+4 { move-column-to-workspace 4; }
     Mod+Shift+5 { move-column-to-workspace 5; }
+
+    Alt+Ctrl+Left  { set-column-width "-10%"; }
+    Alt+Ctrl+Right { set-column-width "+10%"; }
+    Alt+Ctrl+Down    { set-window-height "+10%"; }
+    Alt+Ctrl+Up  { set-window-height "-10%"; }
+
     
     // Screenshots (native)
     Print { screenshot; }
     Ctrl+Print { screenshot-screen; }
-    SUPER+Print { screenshot-window; }
+    Alt+Print { screenshot-window; }
     
-    // ========================================================================
-    // HARDWARE KEYS - Audio, Brightness, Media
-    // ========================================================================
-    // These use ii IPC so the OSD (On Screen Display) shows feedback
-    
-    // Volume (hardware keys)
+    // Media keys
     XF86AudioRaiseVolume allow-when-locked=true { spawn "qs" "-c" "ii" "ipc" "call" "audio" "volumeUp"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn "qs" "-c" "ii" "ipc" "call" "audio" "volumeDown"; }
     XF86AudioMute allow-when-locked=true { spawn "qs" "-c" "ii" "ipc" "call" "audio" "mute"; }
     XF86AudioMicMute allow-when-locked=true { spawn "qs" "-c" "ii" "ipc" "call" "audio" "micMute"; }
-    
-    // Brightness (hardware keys)
-    // XF86MonBrightnessUp allow-when-locked=true { spawn "qs" "-c" "ii" "ipc" "call" "brightness" "increment"; }
-    // XF86MonBrightnessDown allow-when-locked=true { spawn "qs" "-c" "ii" "ipc" "call" "brightness" "decrement"; }
     XF86MonBrightnessUp { spawn "brightnessctl" "-c" "backlight" "set" "+1%"; }
     XF86MonBrightnessDown { spawn "brightnessctl" "-c" "backlight" "set" "1%-"; }
-    
-    // Media playback (hardware keys)
-    XF86AudioPlay { spawn "qs" "-c" "ii" "ipc" "call" "mpris" "playPause"; }
-    XF86AudioPause { spawn "qs" "-c" "ii" "ipc" "call" "mpris" "playPause"; }
-    XF86AudioNext { spawn "qs" "-c" "ii" "ipc" "call" "mpris" "next"; }
-    XF86AudioPrev { spawn "qs" "-c" "ii" "ipc" "call" "mpris" "previous"; }
-    
-    // Music control (keyboard alternatives for keyboards without media keys)
+    Alt+Shift+Space { toggle-window-floating; }
+
+
+
+    // Music control (uses MPRIS - works with YtMusic and other players)
     Ctrl+SUPER+Space { spawn "qs" "-c" "ii" "ipc" "call" "mpris" "playPause"; }
     Ctrl+SUPER+right { spawn "qs" "-c" "ii" "ipc" "call" "mpris" "next"; }
     Ctrl+SUPER+left { spawn "qs" "-c" "ii" "ipc" "call" "mpris" "previous"; }
-    
-    SUPER+M { spawn "qs" "-c" "ii" "ipc" "call" "audio" "mute"; }
-    ALt+m { spawn "qs" "-c" "ii" "ipc" "call" "audio" "micMute"; }
-
-    // Power / Session
-    SUPER+Escape { spawn "qs" "-c" "ii" "ipc" "call" "session" "toggle"; }
 }
+
 
 // Layer rules for ii backdrop visibility during Niri overview
 layer-rule {

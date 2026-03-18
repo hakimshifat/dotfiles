@@ -1,0 +1,290 @@
+// =====================================================
+//                    INPUT CONFIG
+// =====================================================
+prefer-no-csd
+input {
+
+    // ---------- Keyboard ----------
+    keyboard {
+        xkb {
+            layout "us"
+            options "caps:escape"
+        }
+    }
+
+    // ---------- Touchpad ----------
+    touchpad {
+        tap
+        dwt
+        natural-scroll
+        scroll-method "two-finger"
+        scroll-factor horizontal=1.0 vertical=1.0
+        accel-speed 0.3
+        accel-profile "adaptive"
+    }
+    focus-follows-mouse
+}
+
+
+
+// =====================================================
+//                LAYOUT & VISUALS
+// =====================================================
+layout {
+
+    gaps 2
+
+    border {
+        width 0.5
+        active-color "#6272A4"
+        inactive-color "#282A36"
+    }
+
+    always-center-single-column
+}
+
+
+
+// =====================================================
+//               STARTUP APPLICATIONS
+// =====================================================
+
+// ---------- Core Services ----------
+spawn-at-startup "xwayland-satellite"
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "DISPLAY" "WAYLAND_DISPLAY" "SWAYSOCK" "XDG_CURRENT_DESKTOP"
+
+
+// ---------- DMS ----------
+spawn-at-startup "dms" "run" "--session"
+
+
+// ---------- Clipboard ----------
+spawn-at-startup "sh" "-c" "wl-paste --type text --watch cliphist store"
+spawn-at-startup "sh" "-c" "wl-paste --type image --watch cliphist store"
+
+
+
+// =====================================================
+//                   WINDOW RULES
+// =====================================================
+
+// ---------- Focus Ring ----------
+window-rule {
+    focus-ring {
+        off
+        width 5
+        active-color "#000000"
+        inactive-color "#505050"
+        urgent-color "#9b0000"
+    }
+
+    }
+
+
+// ---------- DMS Shell ----------
+window-rule {
+    match app-id="^dms$"
+    open-floating true
+}
+
+// ---------- Global Defaults ----------
+window-rule {
+    // open-maximized true
+    draw-border-with-background false
+    clip-to-geometry true
+    tiled-state true
+}
+
+
+// ---------- Firefox ----------
+window-rule {
+    match title="Firefox"
+    opacity 1.0
+}
+
+
+// ---------- Firefox Extension ----------
+window-rule {
+    match app-id="firefox" title="Extension: (Aria2 Download Manager Integration) - Download Panel — Mozilla Firefox"
+    open-floating true
+    open-maximized false
+}
+
+// ---------- Dialogs ----------
+window-rule {
+    match app-id="^yad$"
+    match app-id="blueman-manager"
+    match app-id="pavucontrol"
+    match app-id=".*pop-up.*"
+    match app-id=".*bubble.*"
+    match app-id=".*task_dialog.*"
+    match app-id=".*Preferences.*"
+    match app-id=".*dialog.*"
+    match app-id=".*menu.*"
+    match app-id=".*About.*"
+    match title="File Operation Progress"
+    match title="Picture in picture"
+    match title="Save File"
+    open-floating true
+}
+
+
+// ---------- Firefox PiP ----------
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+
+// ---------- Zoom ----------
+window-rule {
+    match app-id="^zoom$"
+    match title=".*Zoom.*"
+    match title=".*zoom.*"
+    open-floating true
+}
+
+
+// ---------- Bitwarden Extension ----------
+window-rule {
+    match app-id="firefox" title="Extension: (Bitwarden Password Manager) - Bitwarden — Mozilla Firefox"
+    open-floating true
+    open-maximized false
+}
+
+// ---------- Firefox Popups & Extensions ----------
+window-rule {
+    // Matches any Firefox window that starts with "Extension:" or contains "pop-up" or "dialog"
+    match app-id="firefox" title=r#"^Extension:.*"#
+    match app-id="firefox" title=r#".*pop-up.*"#
+    match app-id="firefox" title=r#".*dialog.*"#
+    
+    open-floating true
+    open-maximized false
+}
+
+// =====================================================
+//                   KEY BINDINGS
+// =====================================================
+binds {
+
+    // ---------- Help ----------
+    // SUPER+Shift+Slash { show-hotkey-overlay; }
+
+
+    // ---------- Basics ----------
+    Alt+Return { spawn "foot"; }
+    Alt+Q { close-window; }
+
+
+    // ---------- Power ----------
+    // Super+Escape { spawn "wlogout"; }
+
+
+    // ---------- Navigation ----------
+    Alt+Left  { focus-column-left; }
+    Alt+Right { focus-column-right; }
+    Alt+Down  { focus-window-down; }
+    Alt+Up    { focus-window-up; }
+
+    Alt+H { focus-column-left; }
+    Alt+L { focus-column-right; }
+    Alt+J { focus-window-down; }
+    Alt+K { focus-window-up; }
+
+
+    // ---------- Move ----------
+    Alt+Shift+Left  { move-column-left; }
+    Alt+Shift+Right { move-column-right; }
+    Alt+Shift+Down  { move-window-down; }
+    Alt+Shift+Up    { move-window-up; }
+
+    Alt+Shift+H { move-column-left; }
+    Alt+Shift+L { move-column-right; }
+    Alt+Shift+J { move-window-down; }
+    Alt+Shift+K { move-window-up; }
+
+
+    // ---------- Layout ----------
+    Alt+F { fullscreen-window; }
+    Alt+Shift+Space { toggle-window-floating; }
+    Alt+C { center-column; }
+
+
+    // ---------- Workspaces ----------
+    Alt+1 { focus-workspace 1; }
+    Alt+2 { focus-workspace 2; }
+    Alt+3 { focus-workspace 3; }
+    Alt+4 { focus-workspace 4; }
+    Alt+5 { focus-workspace 5; }
+    Alt+6 { focus-workspace 6; }
+    Alt+7 { focus-workspace 7; }
+    Alt+8 { focus-workspace 8; }
+    Alt+9 { focus-workspace 9; }
+
+    Alt+Shift+1 { move-column-to-workspace 1; }
+    Alt+Shift+2 { move-column-to-workspace 2; }
+    Alt+Shift+3 { move-column-to-workspace 3; }
+    Alt+Shift+4 { move-column-to-workspace 4; }
+    Alt+Shift+5 { move-column-to-workspace 5; }
+    Alt+Shift+6 { move-column-to-workspace 6; }
+    Alt+Shift+7 { move-column-to-workspace 7; }
+    Alt+Shift+8 { move-column-to-workspace 8; }
+    Alt+Shift+9 { move-column-to-workspace 9; }
+
+
+    // ---------- Resize ----------
+    Alt+Ctrl+Left  { set-column-width "-10%"; }
+    Alt+Ctrl+Right { set-column-width "+10%"; }
+    Alt+Ctrl+Down    { set-window-height "+10%"; }
+    Alt+Ctrl+Up  { set-window-height "-10%"; }
+
+
+    // ---------- Media ----------
+    XF86AudioRaiseVolume { spawn "pamixer" "-ui" "2"; }
+    XF86AudioLowerVolume { spawn "pamixer" "-ud" "2"; }
+    XF86AudioMute { spawn "pamixer" "--toggle-mute"; }
+    XF86AudioPlay { spawn "playerctl" "play-pause"; }
+    XF86AudioNext { spawn "playerctl" "next"; }
+    XF86AudioPrev { spawn "playerctl" "previous"; }
+
+    XF86MonBrightnessUp { spawn "brightnessctl" "-c" "backlight" "set" "+1%"; }
+    XF86MonBrightnessDown { spawn "brightnessctl" "-c" "backlight" "set" "1%-"; }
+
+
+    // ---------- Screenshots ----------
+    Print {
+        spawn "sh" "-c" "grim ~/Pictures/screenshot_$(date +'%Y-%m-%d_%H-%M-%S').png"
+    }
+
+    Ctrl+Print {
+        spawn "sh" "-c" "grim -g \"$(slurp)\" - | tee ~/Pictures/Screenshots/$(date +'%Y-%m-%d-%H-%M-%S').png | wl-copy"
+    }
+
+    Shift+Print {
+        spawn "sh" "-c" "/home/sifat/.config/scripts/screenshot_window.sh"
+    }
+
+
+    // ---------- Apps ----------
+    Alt+N { spawn "thunar"; }
+}
+
+
+
+// =====================================================
+//                   DEBUG
+// =====================================================
+// debug {
+ //   render-drm-device "/dev/dri/renderD128"
+ //   ignore-drm-device "/dev/dri/renderD129"
+// }
+
+
+// =====================================================
+//              DMS EXTRA KEYBINDS
+// =====================================================
+include "dms/binds.kdl"
+
+
+include "dms/cursor.kdl"
