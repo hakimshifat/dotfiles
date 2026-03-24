@@ -128,7 +128,7 @@ overview {
 // ============================================================================
 
 window-rule {
-    match app-id="kitty"
+    match app-id="ghostty"
     opacity 0.85
 }
 window-rule {
@@ -274,10 +274,11 @@ binds {
     
     // Applications (uses configured terminal from Settings)
     Mod+T { spawn "bash" "-c" "$HOME/.config/quickshell/ii/scripts/launch-terminal.sh"; }
-    // Mod+Return { spawn "bash" "-c" "$HOME/.config/quickshell/ii/scripts/launch-terminal.sh"; }
-    Mod+Return { spawn "bash" "-c" "foot"; }
+    Mod+Return { spawn "bash" "-c" "$HOME/.config/quickshell/ii/scripts/launch-terminal.sh"; }
+    // Mod+Return { spawn "bash" "-c" "ghostty"; }
     Super+E { spawn "thunar"; }
-    Super+W { spawn "bash" "-c" "xdg-open https://"; }
+    Super+b { spawn "firefox";}
+    Super+c { spawn "codium";}
     
     // Window management
     Mod+Q repeat=false { spawn "bash" "-c" "$HOME/.config/quickshell/ii/scripts/close-window.sh"; }
@@ -328,9 +329,9 @@ binds {
     Mod+Shift+5 { move-column-to-workspace 5; }
     
     // Screenshots (native)
-    Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    SUPER+Print { screenshot-window; }
+    Shift+Print { screenshot; }
+    Ctrl+Print {spawn-sh "$HOME/.config/scripts/screenshot_window.sh"; }
+    Print {screenshot-screen; }
     
     // ========================================================================
     // HARDWARE KEYS - Audio, Brightness, Media
