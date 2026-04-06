@@ -3,7 +3,7 @@ Dotfiles Contains
 - aria2
 - hyprlock
 - sway
-- niri <-- Currently Using
+- niri                    <-- Currently Using
 - SDDMtheme
 - Yazi
 ### Setting Up Git On Linux
