@@ -104,7 +104,8 @@ layout {
     struts {
     }
 }
-spawn-at-startup "qs" "-c" "noctalia-shell"
+spawn-at-startup "nice" "-n" "10" "qs" "-c" "noctalia-shell"
+spawn-at-startup "miri" "service" "start"
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
@@ -312,10 +313,19 @@ binds {
 
     // noctalia shell IPC calls
     SUPER+l {spawn-sh "qs -c noctalia-shell ipc call lockScreen lock";}
+    SUPER+b {spawn-sh "firefox";}
+    SUPER+n {spawn-sh "thunar";}
     MOD+Space {spawn-sh "qs -c noctalia-shell ipc call launcher toggle";}
     Ctrl+Alt+v {spawn-sh "qs -c noctalia-shell ipc call launcher clipboard";}
     SUPER+Space {spawn-sh "qs -c noctalia-shell ipc call plugin:music launcher";}
     Alt+w {spawn-sh "qs -c noctalia-shell ipc call wallpaper random";}
     Alt+m {spawn-sh "qs -c noctalia-shell ipc call volume muteInput";}
     SUPER+m {spawn-sh "qs -c noctalia-shell ipc call volume muteOutput";}
+    SUPER+Escape {spawn-sh "qs -c noctalia-shell ipc call sessionMenu toggle";}
 }
+
+switch-events {
+    lid-close { spawn "qs -c noctalia-shell ipc call sessionMenu lockAndSuspend"; }
+    lid-open { spawn "notify-send" "Welcome Sir"; }
+}
+
