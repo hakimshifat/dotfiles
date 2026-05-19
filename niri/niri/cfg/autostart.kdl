@@ -3,3 +3,5 @@
 
     spawn-sh-at-startup "qs -c noctalia-shell"
     spawn-sh-at-startup "wl-paste --watch cliphist store"
+    spawn-sh-at-startup "foot --server"
+
