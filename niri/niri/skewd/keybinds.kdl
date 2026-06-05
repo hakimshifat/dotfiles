@@ -6,38 +6,50 @@ binds {
     // ─── noctalia-shell keybinds ───
     // https://docs.noctalia.dev/getting-started/keybinds/
 
-    Mod+Shift+ESCAPE                     { show-hotkey-overlay; }
+    Mod+Space        { spawn "skwd" "launcher" "toggle"; }
+    Mod+B            { spawn "skwd" "bar" "toggle"; }
+    Mod+Comma        { spawn "skwd" "settings" "toggle"; }
+    SUPER+Escape       { spawn "skwd" "power" "toggle"; }
+    // Alt+w hotkey-overlay-title="Skwd-wall" { spawn "skwd wall toggle"; }
+    Mod+w {spawn-sh "skwd wall toggle";}
 
+    Alt+Tab          { spawn "skwd" "switch" "open"; }
+    Alt+Shift+Tab    { spawn "skwd" "switch" "prev"; }
+    // Alt+Return       { spawn "skwd" "switch" "confirm"; }
+    // Alt+Escape       { spawn "skwd" "switch" "cancel"; } // closes the switcher without selecting
+    // Alt+C            { spawn "skwd" "switch" "close"; } // quits the currently selected program
+
+
+    Mod+Shift+ESCAPE                     { show-hotkey-overlay; }
     // ─── Applications ───
-    Mod+Return                          hotkey-overlay-title="Open Terminal: Alacritty" { spawn "footclient"; }
-    Mod+Space                     hotkey-overlay-title="Open App Launcher: noctalia launcher" { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
+    ALT+Return                          hotkey-overlay-title="Open Terminal: Alacritty" { spawn "footclient"; }
+    // Mod+Space                     hotkey-overlay-title="Open App Launcher: noctalia launcher" { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
     SUPER+B                               hotkey-overlay-title="Open Browser: firefox" { spawn "firefox"; }
-    SUPER+L                           hotkey-overlay-title="Lock Screen: noctalia lock" { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
-    SUPER+Escape                        hotkey-overlay-title="Session Menu: noctalia sessionMenu" { spawn-sh "qs -c noctalia-shell ipc call sessionMenu toggle"; }
-    SUPER+Space {spawn-sh "qs -c noctalia-shell ipc call plugin:music launcher";}
+    // SUPER+L                           hotkey-overlay-title="Lock Screen: noctalia lock" { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
+    // SUPER+Escape                        hotkey-overlay-title="Session Menu: noctalia sessionMenu" { spawn-sh "qs -c noctalia-shell ipc call sessionMenu toggle"; }
+    // SUPER+Space {spawn-sh "qs -c noctalia-shell ipc call plugin:music launcher";}
 
     // Please choose your own file manager.
-    Mod+E                               hotkey-overlay-title="File Manager: Nautilus" { spawn "nautilus"; }
+    SUPER+E                               hotkey-overlay-title="File Manager: Dolphin" { spawn "dolphin"; }
 
     // ─── Media Controls ───
-    XF86AudioRaiseVolume                allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call volume increase"; }
-    XF86AudioLowerVolume                allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call volume decrease"; }
-    XF86AudioMute                       allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call volume muteOutput"; }
+    // XF86AudioRaiseVolume                allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call volume increase"; }
+    // XF86AudioLowerVolume                allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call volume decrease"; }
+    // XF86AudioMute                       allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call volume muteOutput"; }
     // XF86AudioMicMute                    allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call volume muteInput"; }
-    XF86AudioNext                       allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call media next"; }
-    XF86AudioPrev                       allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call media previous"; }
-    XF86AudioPlay                       allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call media playPause"; }
-    XF86AudioPause                      allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call media playPause"; }
-    Alt+m {spawn-sh "qs -c noctalia-shell ipc call volume muteInput";}
-    SUPER+m {spawn-sh "qs -c noctalia-shell ipc call volume muteOutput";}
-    Ctrl+Alt+v {spawn-sh "qs -c noctalia-shell ipc call launcher clipboard";}
+    // XF86AudioNext                       allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call media next"; }
+    // XF86AudioPrev                       allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call media previous"; }
+    // XF86AudioPlay                       allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call media playPause"; }
+    // XF86AudioPause                      allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call media playPause"; }
+    // Alt+m {spawn-sh "qs -c noctalia-shell ipc call volume muteInput";}
+    // SUPER+m {spawn-sh "qs -c noctalia-shell ipc call volume muteOutput";}
+    // Ctrl+Alt+v {spawn-sh "qs -c noctalia-shell ipc call launcher clipboard";}
 
 
 
     // ─── Brightness Controls ───
-    XF86MonBrightnessUp                 allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call brightness increase"; }
-    XF86MonBrightnessDown               allow-when-locked=true { spawn-sh "qs -c noctalia-shell ipc call brightness decrease"; }
-
+     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+1%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "1%-"; }
     // ─── Window Movement and Focus ───
     Mod+Q                               { close-window; }
 
@@ -140,7 +152,7 @@ binds {
     // ─── Modes ───
     Mod+T                               { toggle-window-floating; }
     Mod+F                               { fullscreen-window; }
-    Mod+W                               { toggle-column-tabbed-display; }
+    // Mod+W                               { toggle-column-tabbed-display; }
 
     // ─── Screenshots ───
     Print                       { screenshot; }

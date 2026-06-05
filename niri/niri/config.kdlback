@@ -1,0 +1,8 @@
+include "./skewd/animation.kdl"
+include "./skewd/autostart.kdl"
+include "./skewd/keybinds.kdl"
+include "./skewd/input.kdl"
+include "./skewd/display.kdl"
+include "./skewd/layout.kdl"
+include "./skewd/rules.kdl"
+include "./skewd/misc.kdl"

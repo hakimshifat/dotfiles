@@ -1,7 +1,9 @@
 // ────────────── Startup Applications ──────────────
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Miscellaneous#spawn-sh-at-startup
 
-    spawn-sh-at-startup "qs -c noctalia-shell"
+    spawn-at-startup "skwd-daemon"
+    spawn-at-startup "sh" "-c" "skwd bar toggle"
+
     spawn-sh-at-startup "wl-paste --watch cliphist store"
     spawn-sh-at-startup "foot --server"
 
