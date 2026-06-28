@@ -1,5 +1,5 @@
     prefer-no-csd
-    screenshot-path null
+    screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
     environment {
         ELECTRON_OZONE_PLATFORM_HINT "auto"
@@ -22,4 +22,18 @@
 
     hotkey-overlay {
        skip-at-startup
+    }
+
+ switch-events {
+        // # When the laptop lid is closed, run the system suspend command.
+        lid-close {
+            // # “spawn” executes a program; the first argument is the binary,
+            // # the following arguments are its parameters.
+            spawn "systemctl" "suspend";
+        }
+    
+        // # Optional – you may also want a notification when the lid opens.
+        lid-open {
+            spawn "notify-send" "Welcome Boss";
+        }
     }

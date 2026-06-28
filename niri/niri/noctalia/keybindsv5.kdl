@@ -19,6 +19,8 @@ binds {
     SUPER+L hotkey-overlay-title="Lock Screen: noctalia lock" {
         spawn "noctalia" "msg" "session" "lock";
     }
+    Alt+w { spawn-sh "noctalia msg wallpaper-random"; }
+
 
     SUPER+Escape hotkey-overlay-title="Session Menu: noctalia session" {
         spawn "noctalia" "msg" "panel-toggle" "session";
@@ -27,7 +29,7 @@ binds {
     // removed old music panel (no longer exists)
 
     // Please choose your own file manager.
-    SUPER+E                               hotkey-overlay-title="File Manager: Dolphin" { spawn "dolphin"; }
+    SUPER+E                               hotkey-overlay-title="File Manager: Dolphin" { spawn "nemo"; }
 
     // ─── Media Controls ───
     XF86AudioRaiseVolume allow-when-locked=true {
@@ -177,9 +179,9 @@ binds {
     Mod+W { toggle-column-tabbed-display; }
 
     // ─── Screenshots ───
-    Print { screenshot; }
-    Shift+Print { screenshot-screen; }
-    Ctrl+Print { spawn-sh "$HOME/.config/scripts/screenshot_window.sh"; }
+    Print { screenshot-screen; }
+    Shift+Print { screenshot; }
+    // Ctrl+Print { spawn-sh "$HOME/.config/scripts/screenshot_window.sh"; }
 
     // ─── Exit / Power ───
     CTRL+ALT+Delete { quit; }
