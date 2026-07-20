@@ -20,8 +20,7 @@
 - [Repo Structure](#repo-structure)
 - [Highlights](#highlights)
   - [Window Manager — Niri](#window-manager--niri)
-  - [Status Bar — Waybar](#status-bar--waybar)
-  - [Launchers — Rofi & Tofi](#launchers--rofi--tofi)
+  - [Desktop Shell — Noctalia](#desktop-shell--noctalia)
   - [Terminal & Shell](#terminal--shell)
   - [File Manager — Yazi](#file-manager--yazi)
   - [Media — mpv](#media--mpv)
@@ -42,8 +41,7 @@ This repository is my personal Linux configuration — the result of continuousl
 
 It's not a "framework" meant for others to install blindly — it's a living config. Feel free to fork it, steal pieces, or use it as a reference for building your own Niri setup.
 
-> 🪟 **Currently active:** [`niri`](#window-manager--niri) — a scrollable-tiling Wayland compositor.
-> Older Hyprland and Sway setups are kept in the repo for reference/rollback — see [Legacy Configs](#legacy-configs).
+> 🪟 **Currently active:** [`niri`](#window-manager--niri) as the compositor, with [**Noctalia**](https://noctalia.dev/) (v5) running the entire desktop shell on top — bar, launcher, notifications, wallpaper, lock screen, and session/control center, all in one. No manual Waybar/Rofi/Mako/wlogout setup is needed day-to-day; those configs are kept only as a legacy fallback — see [Legacy Configs](#legacy-configs).
 
 ---
 
@@ -52,22 +50,18 @@ It's not a "framework" meant for others to install blindly — it's a living con
 | Layer | Tool |
 |---|---|
 | Compositor / WM | [Niri](https://github.com/YaLTeR/niri) *(scrollable tiling)* — with [Hyprland](https://hyprland.org/) & [Sway](https://swaywm.org/) kept as legacy alternatives |
-| Shell UI / Panel | [Noctalia](https://github.com/noctalia-dev/noctalia-shell) *(bar, launcher, notifications, session, lock)* |
-| Status Bar | [Waybar](https://github.com/Alexays/Waybar) |
-| App Launcher | [Rofi](https://github.com/davatorium/rofi) / [Tofi](https://github.com/philj56/tofi) |
-| Notifications | [Mako](https://github.com/emersion/mako) |
+| Desktop Shell | [**Noctalia**](https://noctalia.dev/) v5 *(bar, launcher, notifications, wallpaper, control center, lock & session screens — the whole UI layer)* |
 | Terminal | [foot](https://codeberg.org/dnkl/foot) |
 | Shell | Zsh + [zsh4humans](https://github.com/romkatv/zsh4humans) + Powerlevel10k |
 | File Manager (TUI) | [Yazi](https://github.com/sxyazi/yazi) |
 | File Manager (GUI) | Nemo |
 | Multiplexer | [tmux](https://github.com/tmux/tmux) |
 | Media Player | [mpv](https://mpv.io/) *(w/ thumbfast, custom audio visualizer, GIF/seek scripts)* |
-| Screen Lock | [swaylock](https://github.com/swaywm/swaylock) |
-| Session Menu | [wlogout](https://github.com/ArtsyMacaw/wlogout) |
 | Downloader | [aria2](https://aria2.github.io/) *(RPC daemon mode)* |
 | AUR Helper | [paru](https://github.com/Morganamilo/paru) |
 | Browsers | Firefox, Brave |
 | Reverse Engineering | Ghidra (with a custom `ghidra.py` launcher), jadx, IDA |
+| *Legacy shell components* | *Waybar, Rofi, Tofi, Mako, swaylock, wlogout — superseded by Noctalia, kept for fallback* |
 
 ---
 
@@ -75,15 +69,15 @@ It's not a "framework" meant for others to install blindly — it's a living con
 
 ```
 .
-├── niri/            # Active WM config (config.kdl + noctalia/*.kdl modules)
+├── niri/            # Active WM config (config.kdl + noctalia/*.kdl integration modules)
 ├── hyperland/        # Legacy Hyprland config (hyprland, hyprlock, hypridle)
 ├── sway/             # Legacy Sway config
-├── waybar/           # Status bar config, styles, and helper scripts
-├── mako/             # Notification daemon config
-├── rofi/              # Launcher themes (multiple KooL-style variants)
-├── tofi/              # Lightweight launcher config
-├── wlogout/           # Power/session menu layout
-├── swaylock/           # Lock screen config + wallpaper
+├── waybar/           # [legacy] Status bar config, styles, and helper scripts — replaced by Noctalia's bar
+├── mako/             # [legacy] Notification daemon config — replaced by Noctalia's notifications
+├── rofi/              # [legacy] Launcher themes (multiple KooL-style variants) — replaced by Noctalia's launcher
+├── tofi/              # [legacy] Lightweight launcher config — replaced by Noctalia's launcher
+├── wlogout/           # [legacy] Power/session menu layout — replaced by Noctalia's session screen
+├── swaylock/           # [legacy] Lock screen config + wallpaper — replaced by Noctalia's lock screen
 ├── tmux/               # tmux.conf
 ├── yazi/               # TUI file manager config
 ├── mpv/                # Media player config + Lua scripts
@@ -125,13 +119,22 @@ Notable bindings:
 
 Panel, launcher, session/lock screen, and volume/brightness/media controls are all routed through **Noctalia** (`noctalia msg ...`), which acts as the shell layer on top of Niri.
 
-### Status Bar — Waybar
+### Desktop Shell — Noctalia
 
-A slim top bar (`waybar/waybar/config` + `style.css`) showing tray, idle inhibitor, audio (with a dedicated mic module), network, and battery — plus a custom power-profile switcher backed by `scripts/powerprofile.sh`.
+[Noctalia](https://noctalia.dev/) v5 is the actual desktop shell in daily use — it replaces the bar, launcher, notification daemon, wallpaper manager, lock screen, and session/power menu with one cohesive UI, so none of those pieces need to be configured by hand anymore.
 
-### Launchers — Rofi & Tofi
+Niri talks to it directly through `noctalia msg <command>` calls wired into `niri/niri/noctalia/keybinds.kdl`:
 
-A full set of Rofi themes lives under `rofi/rofi/themes/` (KooL-style variants — fullscreen, vertical, Win11-style, dark/light) for different launcher moods, alongside dedicated configs for app search, emoji picker, and Waybar-matched styling. Tofi is kept as a lighter-weight alternative launcher.
+| Keybind | Action |
+|---|---|
+| *Alt + Space* | Toggle the app launcher panel |
+| `Alt + W` | Random wallpaper |
+| `Alt + N` | Toggle notes panel |
+| *(SUPER + L)* | `noctalia msg session lock` |
+| Volume / brightness / media keys | Routed through `noctalia msg volume-up/down`, `brightness-up/down`, `media next/previous/toggle`, etc. |
+| *(SUPER + v)* | Toggle clipboard history panel |
+
+Noctalia's own settings live outside this repo (in its own config location), so what you'll find here is just the Niri-side integration that wires keybinds and autostart into it — see `niri/niri/noctalia.kdl` and `niri/niri/noctalia/*.kdl`.
 
 ### Terminal & Shell
 
@@ -182,36 +185,21 @@ sudo cp battery-threshold.service nvidia-sleep.service /etc/systemd/system/
 sudo systemctl enable --now battery-threshold.service nvidia-sleep.service
 ```
 
----
-
 ## Installation
 
 > ⚠️ These configs assume an Arch-based distro (originally set up on EndeavourOS) with Wayland + Niri. Review each config before symlinking — some scripts contain hardcoded paths from my machine.
 
 ```bash
-git clone https://github.com/<username>/dotfiles.git
+git clone https://github.com/<your-username>/dotfiles.git
 cd dotfiles
 
-# Symlink individual configs into ~/.config as needed, e.g.:
+# Symlink the active configs into ~/.config
+stow -t ~/.config tmux
 
-> i use 'stow' for symlinking dotfiles of my config.
-
-```bash
-yay -S stow
+# Install Noctalia separately per https://noctalia.dev/ — it's not part of this repo
 ```
 
-```bash
-stow -t ~/.config/ tmux
-```
-
-replace tmux with whatever config you need to put on the config folder
-
-
-# Zsh config
-ln -s "$(pwd)/.zshrc" ~/.zshrc
-```
-
-Repeat for any other component folder you want. There's no `stow`/bootstrap script yet — everything is linked module-by-module on purpose, since not every machine needs every piece (e.g. legacy Hyprland/Sway configs are opt-in).
+Repeat for any other component folder you want (e.g. legacy `waybar/`, `rofi/`, `hyperland/`, `sway/` — all opt-in, none needed for the current Niri + Noctalia setup). There's no `stow`/bootstrap script yet — everything is linked module-by-module on purpose.
 
 ---
 
@@ -255,12 +243,21 @@ alias cc="cpb clone"
 
 ## Legacy Configs
 
-Two previous window manager setups are kept around for reference or in case of rollback:
+Kept around for reference or in case of rollback — not part of the active daily setup:
 
+**Previous window managers:**
 - **`hyperland/`** — Hyprland + Hyprlock + Hypridle configs
 - **`sway/`** — Sway config, split into `config.d/` fragments (theme, input, output, autostart, app defaults)
 
-These aren't actively maintained but are functional snapshots from before the switch to Niri.
+**Pre-Noctalia shell components** — manually configured before Noctalia took over the whole shell layer:
+- **`waybar/`** — status bar config + `style.css`, plus helper scripts (power-profile switcher, mako bridge, keyhint overlay)
+- **`rofi/`** — a full set of KooL-style launcher themes (fullscreen, vertical, Win11-style, dark/light) with dedicated configs for app search, emoji picker, and monitor selection
+- **`tofi/`** — lightweight alternative launcher config
+- **`mako/`** — notification daemon config
+- **`wlogout/`** — power/session menu layout
+- **`swaylock/`** — lock screen config + wallpaper
+
+None of these are actively maintained — they're functional snapshots from before the switch to Niri + Noctalia.
 
 ---
 
