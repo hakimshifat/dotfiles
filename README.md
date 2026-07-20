@@ -182,20 +182,6 @@ sudo cp battery-threshold.service nvidia-sleep.service /etc/systemd/system/
 sudo systemctl enable --now battery-threshold.service nvidia-sleep.service
 ```
 
-## Scheduled Tasks
-
-See `crontab.md` — cron jobs for periodic wallpaper rotation and lockscreen shuffling. Requires `cronie`:
-
-```bash
-sudo systemctl enable --now cronie
-crontab -e
-```
-
-```cron
-*/5 * * * * DISPLAY=:0 ~/.config/i3/scripts/randomWallpaper.sh
-0 * * * *   DISPLAY=:0 ~/.config/i3/scripts/shuffle_lockscreen.sh
-```
-
 ---
 
 ## Installation
@@ -203,17 +189,23 @@ crontab -e
 > ⚠️ These configs assume an Arch-based distro (originally set up on EndeavourOS) with Wayland + Niri. Review each config before symlinking — some scripts contain hardcoded paths from my machine.
 
 ```bash
-git clone https://github.com/<your-username>/dotfiles.git
+git clone https://github.com/<username>/dotfiles.git
 cd dotfiles
 
 # Symlink individual configs into ~/.config as needed, e.g.:
-ln -s "$(pwd)/niri/niri"     ~/.config/niri
-ln -s "$(pwd)/waybar/waybar" ~/.config/waybar
-ln -s "$(pwd)/mako/mako"     ~/.config/mako
-ln -s "$(pwd)/tmux/tmux"     ~/.config/tmux
-ln -s "$(pwd)/yazi/yazi"     ~/.config/yazi
-ln -s "$(pwd)/rofi/rofi"     ~/.config/rofi
-ln -s "$(pwd)/mpv/mpv"       ~/.config/mpv
+
+> i use 'stow' for symlinking dotfiles of my config.
+
+```bash
+yay -S stow
+```
+
+```bash
+stow -t ~/.config/ tmux
+```
+
+replace tmux with whatever config you need to put on the config folder
+
 
 # Zsh config
 ln -s "$(pwd)/.zshrc" ~/.zshrc
