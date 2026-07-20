@@ -26,7 +26,6 @@
   - [Media — mpv](#media--mpv)
   - [Utility Scripts](#utility-scripts)
 - [System Services](#system-services)
-- [Scheduled Tasks](#scheduled-tasks)
 - [Installation](#installation)
 - [Git Setup](#git-setup)
 - [Competitive Programming Environment](#competitive-programming-environment)
