@@ -8,9 +8,13 @@ binds {
     Mod+Shift+ESCAPE                     { show-hotkey-overlay; }
 
     // ─── Applications ───
-    Mod+Return                          hotkey-overlay-title="Open Terminal: foot" { spawn "footclient"; }
+    Mod+Return                          hotkey-overlay-title="Open Terminal: ghostty" { spawn "ghostty"; }
+
+    Mod+Shift+Return hotkey-overlay-title="Open Dropdown Terminal" {
+    spawn "ghostty" "--class=dropdown";
+}
     SUPER+Return hotkey-overlay-title="Open Yazi" {
-    spawn "footclient" "-e" "zsh" "-ic" "yy"
+    spawn "ghostty" "-e" "zsh" "-ic" "yy"
 }
     Mod+Space hotkey-overlay-title="Open App Launcher: noctalia launcher" {
         spawn "noctalia" "msg" "panel-toggle" "launcher";
@@ -155,16 +159,6 @@ binds {
 
     Mod+TAB { focus-workspace-previous; }
 
-    Mod+Shift+1 { move-column-to-workspace 1; }
-    Mod+Shift+2 { move-column-to-workspace 2; }
-    Mod+Shift+3 { move-column-to-workspace 3; }
-    Mod+Shift+4 { move-column-to-workspace 4; }
-    Mod+Shift+5 { move-column-to-workspace 5; }
-    Mod+Shift+6 { move-column-to-workspace 6; }
-    Mod+Shift+7 { move-column-to-workspace 7; }
-    Mod+Shift+8 { move-column-to-workspace 8; }
-    Mod+Shift+9 { move-column-to-workspace 9; }
-
     // ─── Layout Controls ───
     Mod+CTRL+F { expand-column-to-available-width; }
     Mod+C { center-column; }
@@ -179,7 +173,7 @@ binds {
     // ─── Modes ───
     Mod+T { toggle-window-floating; }
     Mod+F { fullscreen-window; }
-    Mod+W { toggle-column-tabbed-display; }
+    Mod+Shift+W { toggle-column-tabbed-display; }
 
     // ─── Screenshots ───
     Print { screenshot-screen; }

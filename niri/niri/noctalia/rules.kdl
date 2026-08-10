@@ -9,6 +9,10 @@
         exclude title=r#"^[Ss]team$"#
         open-floating true
     }
+    window-rule {
+        match app-id="com.mitchellh.ghostty"
+        open-maximized true
+    }
 window-rule {
     match app-id="firefox" title=r#".*Bitwarden.*Mozilla Firefox$"#
     open-floating true
@@ -17,6 +21,21 @@ window-rule {
        match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
        default-floating-position x=10 y=10 relative-to="bottom-right"
        open-focused false
+    }
+
+    window-rule {
+        match title="Picture in picture"
+        open-floating true
+        default-column-width { fixed 420; }
+        default-window-height { fixed 236; }
+    }
+
+    window-rule {
+        match app-id="^dropdown$"
+        open-floating true
+        default-column-width { fixed 520; }
+        default-window-height { fixed 320; }
+        default-floating-position x=32 y=32 relative-to="bottom-right"
     }
 
     layer-rule {
