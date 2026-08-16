@@ -3,6 +3,7 @@
 
     // spawn-sh-at-startup "qs -c noctalia-shell"
     spawn-sh-at-startup "noctalia"
+    spawn-sh-at-startup "musicpresence"
     spawn-sh-at-startup "wl-paste --watch cliphist store"
     // Export Wayland display and desktop session to D-Bus
     spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP=niri"

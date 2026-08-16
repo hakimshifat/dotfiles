@@ -13,11 +13,8 @@ zstyle ':z4h:' auto-update-days '28'
 # Keyboard type: 'mac' or 'pc'.
 zstyle ':z4h:bindkey' keyboard  'pc'
 
-# Start tmux if not already in tmux.
-zstyle ':z4h:' start-tmux command tmux -u new -A -D -t z4h
-
-# Whether to move prompt to the bottom when zsh starts and on Ctrl+L.
-zstyle ':z4h:' prompt-at-bottom 'no'
+# Start tmux automatically.
+zstyle ':z4h:' start-tmux  'system'
 
 # Mark up shell's output with semantic information.
 zstyle ':z4h:' term-shell-integration 'yes'
@@ -70,8 +67,8 @@ z4h source ~/.env.zsh
 # Use additional Git repositories pulled in with `z4h install`.
 #
 # This is just an example that you should delete. It does nothing useful.
-z4h source ohmyzsh/ohmyzsh/lib/diagnostics.zsh  # source an individual file
-z4h load   ohmyzsh/ohmyzsh/plugins/emoji-clock  # load a plugin
+# z4h source ohmyzsh/ohmyzsh/lib/diagnostics.zsh  # source an individual file
+# z4h load   ohmyzsh/ohmyzsh/plugins/emoji-clock  # load a plugin
 
 # Define key bindings.
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
@@ -100,10 +97,13 @@ alias tree='tree -a -I .git'
 
 # Add flags to existing aliases.
 alias ls="${aliases[ls]:-ls} -A"
+alias cd="z"
+alias e="exit"
 
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
+
 #================================================personal===============
 function yy() {
   local tmp="$(mktemp "${TMPDIR:-/tmp}/yazi-cwd.XXXXXX")" cwd
@@ -113,72 +113,51 @@ function yy() {
   fi
   rm -f -- "$tmp"
 }
+# Start aria2c in RPC daemon mode
+alias ar='aria2c --conf-path="$HOME/.config/aria2/aria2.conf" --enable-rpc --daemon=true &'
+MOZ_ENABLE_WAYLAND=1
+export HTB_TOKEN="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiOGM2YmVlMGEzYTMwNTRiMTdmOWUxYjdiYzI4NDA4MjcwYzE4N2VlYTU0YmM0Y2NiMWI4ZDllZjlmZDZlMDdhN2E3MTlkNDQ5Y2IzYmY2ZDQiLCJpYXQiOjE3Nzk2OTE2MDguNzg4Mzk3LCJuYmYiOjE3Nzk2OTE2MDguNzg4Mzk5LCJleHAiOjE4MTEyMjc2MDguNzgxNzAzLCJzdWIiOiIyMzkyNTIzIiwic2NvcGVzIjpbXX0.T_FL4UTlq-upYyOCC4rPW-_LkhZb9e1GD6iBQ9vci4G2KORixPGfsmMhKBtIGFsZbpfubjhTya2j_13_NGakSyZo2JVfdd_z8ii4yy6c-w1OX2y1CJcgyi_R6HZxAdMWt-ERoXjefaBBlh7ylEc-aF_i2jcgXG3V6_OXmkWIplC26MHDAZ9oc7AxBK_g8DbiLsOthW31MsDUhS_76oZ-jEDQlc6fwUf-AWL5BB-FBaHhysev4DLlTjUBX-LbIzt16ow7v43Bzyy-NB639VNthlK4eHJuSonAQF1IQSNPyyWVr4JKCL8u3RBdeKxVT8gcNEoydJ_3CbO52pOTBKBQZVkOjSzMng8fKFbUf6Rm1DkA5oqoA16NuO_rAKs-4odWWfzt-lyPlm5V1rbXr5XWp-sciI-T8t0YNpzjlKyLGjU0zBcv6CkyhI53dXVlu11gjlCJo8C7UU5RtTsoGIzlFvtiaRIDF4LIuqsdVBEXKSJrkHATHYlZUWHK2FJn2Da3fpKP4j6Ml_Ettt8QID30JTPDlVfFzdmLuiFty2PfhnL1ljGEZ6fcrwKCf_AgQPKNf7fZSeqm1kqP8CvEJ2VAUUMfn2nOc2aZanj3mK-6YsnY02gzoV9YqAre3mLORfoeQ47yAGGG04DwDwPVCvGfedHWO55vrQBoiSW4d4Vkp-8"
 
-# -------------------- Shell History Settings --------------------------
-HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh_history"
-HISTSIZE=1000000
-SAVEHIST=$HISTSIZE
-HISTORY_IGNORE="(ls|cd|pwd|exit|clear|bg|fg)"
-
-setopt APPEND_HISTORY
-setopt EXTENDED_HISTORY
-setopt INC_APPEND_HISTORY
-setopt SHARE_HISTORY
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_REDUCE_BLANKS
-setopt HIST_VERIFY
-
-export HISTTIMEFORMAT="%F %T "
-
-# -------------------- Environment Variables ---------------------------
-# For IDA and Ghidra to work properly under Wayland
 if [[ $XDG_SESSION_TYPE == "wayland" ]]; then
   export QT_QPA_PLATFORM=xcb
   export _JAVA_AWT_WM_NONREPARENTING=1
   export GDK_BACKEND=x11
 fi
+eval "$(zoxide init zsh)"
+source ~/.env
 
-# -------------------- Aliases -----------------------------------------
-alias ..="cd .."
-alias e="exit"
-alias history="history 1"
-alias timer="termdown"
-alias b="$HOME/.config/scripts/bluetooth.sh"
-alias pp="source ~/ctf/bin/activate"
-alias ga="$HOME/.config/scripts/ghidra.py"
-alias cc="cpb clone"
-export PATH="$HOME/.cargo/bin:$PATH"
-alias op="xdg-open"
-# function python() {
-#     /home/sifat/ctf/bin/python "$@"
-# }
+# export CLAUDE_CODE_USE_OPENAI=1
+# export OPENAI_API_KEY=sk-your-key-here
+# export OPENAI_API_KEY="freellmapi-ea8055f035f5d92415ca6df58cf2e2105fd4fa50e4a1f504"
+# Base URL
+# http://localhost:3001/v1
+# Chat
+# /v1/chat/completions
+# Responses
+# /v1/responses
+# Embeddings
+# /v1/embeddings — model: "auto" or a family from the Embeddings tab
+#
 
-# yt-dlp shortcuts
-alias ydl7='yt-dlp -f "bv[height=720]+ba/b[height=720]" -o "%(title)s.%(ext)s" --ignore-errors'
-alias ydl10='yt-dlp -f "bv[height=1080]+ba/b[height=1080]" -o "%(title)s.%(ext)s" --ignore-errors'
-
-# Start aria2c in RPC daemon mode
-alias ar='aria2c --conf-path="$HOME/.config/aria2/aria2.conf" --enable-rpc --daemon=true &'
-
-# -------------------- Powerlevel10k Theme -----------------------------
-[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-MOZ_ENABLE_WAYLAND=1
-
-#------------------------ android
-# source /etc/profile
-
-# -------------------- Notes / Reminders -------------------------------
-# Run on Android (Shizuku):
-# ./adb shell sh /storage/emulated/0/Android/data/moe.shizuku.privileged.api/start.sh
-
-# Decompile APK:
-# jadx -d hacker_app_java hacker_app.apk
-# sudo /opt/lampp/lampp start
-# sudo /opt/lampp/bin/mysql -u root -p
+# For Wayland sessions ($XDG_SESSION_TYPE is "wayland")
+# export GTK_IM_MODULE=wayland
+# export XMODIFIERS=@im=ibus
+# export QT_IM_MODULES=wayland;ibus
+# export QT_IM_MODULE=ibus
 
 
 
+
+
+alias phonecam='scrcpy \
+  --video-source=camera \
+  --camera-id=1 \
+  --camera-size=1280x720 \
+  --camera-fps=30 \
+  --video-codec=h264 \
+  --video-encoder=c2.mtk.avc.encoder \
+  --video-bit-rate=3M \
+  --v4l2-sink=/dev/video10 \
+  --no-playback \
+  --no-audio'
+# export PATH="/home/sifat/.local/bin:$PATH"

@@ -25,13 +25,6 @@
     }
 
  switch-events {
-        // # When the laptop lid is closed, run the system suspend command.
-        lid-close {
-            // # “spawn” executes a program; the first argument is the binary,
-            // # the following arguments are its parameters.
-            spawn "systemctl" "suspend";
-        }
-    
         // # Optional – you may also want a notification when the lid opens.
         lid-open {
             spawn "notify-send" "Welcome Boss";

@@ -38,6 +38,13 @@ window-rule {
         default-floating-position x=32 y=32 relative-to="bottom-right"
     }
 
+    window-rule {
+        match app-id="^ibus-ui-gtk3$"
+        open-floating true
+        default-column-width { fixed 320; }
+        default-window-height { fixed 64; }
+    }
+
     layer-rule {
         match namespace="^noctalia-wallpaper*"
         place-within-backdrop true
