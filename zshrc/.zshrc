@@ -149,15 +149,37 @@ source ~/.env
 
 
 
-alias phonecam='scrcpy \
-  --video-source=camera \
-  --camera-id=1 \
-  --camera-size=1280x720 \
-  --camera-fps=30 \
-  --video-codec=h264 \
-  --video-encoder=c2.mtk.avc.encoder \
-  --video-bit-rate=3M \
-  --v4l2-sink=/dev/video10 \
-  --no-playback \
-  --no-audio'
+# alias phonecam='scrcpy \
+#   --video-source=camera \
+#   --camera-id=1 \
+#   --camera-size=1280x720 \
+#   --camera-fps=30 \
+#   --video-codec=h264 \
+#   --video-encoder=c2.mtk.avc.encoder \
+#   --video-bit-rate=3M \
+#   --v4l2-sink=/dev/video10 \
+#   --no-playback \
+#   --no-audio'
 # export PATH="/home/sifat/.local/bin:$PATH"
+#
+
+phonecam() {
+    # Check if /dev/video10 exists. If not, load the module.
+    if [ ! -e /dev/video10 ]; then
+        echo "📷 Loading PhoneCam virtual device..."
+        sudo modprobe v4l2loopback video_nr=10 card_label="PhoneCam" exclusive_caps=1
+    fi
+    
+    # Run scrcpy (includes -s to prevent the "Multiple ADB devices" error)
+        scrcpy \
+      --video-source=camera \
+      --camera-id=1 \
+      --camera-size=1280x720 \
+      --camera-fps=30 \
+      --video-codec=h264 \
+      --video-encoder=c2.mtk.avc.encoder \
+      --video-bit-rate=3M \
+      --v4l2-sink=/dev/video10 \
+      --no-playback \
+      --no-audio
+}

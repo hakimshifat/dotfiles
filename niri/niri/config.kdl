@@ -6,8 +6,9 @@ include "./noctalia/display.kdl"
 include "./noctalia/layout.kdl"
 include "./noctalia/rules.kdl"
 include "./noctalia/misc.kdl"
-include "noctalia.kdl"
 
 // debug {
 //     render-drm-device "/dev/dri/renderD128"  // your Intel iGPU node
 // }
+
+include "noctalia.kdl"
