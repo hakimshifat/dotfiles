@@ -9,10 +9,10 @@
         exclude title=r#"^[Ss]team$"#
         open-floating true
     }
-    window-rule {
-        match app-id="com.mitchellh.ghostty"
-        open-maximized true
-    }
+    // window-rule {
+    //     match app-id="com.mitchellh.ghostty"
+    //     open-maximized false
+    // }
 window-rule {
     match app-id="firefox" title=r#".*Bitwarden.*Mozilla Firefox$"#
     open-floating true
@@ -24,12 +24,18 @@ window-rule {
     }
 
     window-rule {
-        match title="Picture in picture"
+        match app-id=r#"firefox$"# title="^Picture-in-Picture$"
         open-floating true
         default-column-width { fixed 420; }
         default-window-height { fixed 236; }
     }
 
+    window-rule {
+        match app-id=r#"brave$"# title="^Picture-in-Picture$"
+        open-floating true
+        default-column-width { fixed 420; }
+        default-window-height { fixed 236; }
+    }
     window-rule {
         match app-id="^dropdown$"
         open-floating true

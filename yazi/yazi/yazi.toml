@@ -11,7 +11,6 @@ show_hidden = false
 show_symlink = true
 scrolloff = 8
 mouse_events = ["click", "scroll", "touch", "move", "drag"]
-title_format = "Yazi: {cwd}"
 
 [preview]
 wrap = "yes"
@@ -24,23 +23,23 @@ image_quality = 75
 
 [opener]
 edit = [
-  { run = 'nvim "$@"', block = true, desc = "Neovim", for = "unix" }
+  { run = 'nvim %s', block = true, desc = "Neovim", for = "unix" }
 ]
 
 play = [
-  { run = 'mpv --force-window "$@"', orphan = true, desc = "mpv", for = "unix" }
+  { run = 'mpv --force-window %s', orphan = true, desc = "mpv", for = "unix" }
 ]
 
 open = [
-  { run = 'xdg-open "$1"', orphan = true, desc = "Open", for = "linux" }
+  { run = 'xdg-open %s1', orphan = true, desc = "Open", for = "linux" }
 ]
 
 reveal = [
-  { run = 'xdg-open "$(dirname "$1")"', orphan = true, desc = "Reveal", for = "linux" }
+  { run = 'xdg-open %d1', orphan = true, desc = "Reveal", for = "linux" }
 ]
 
 extract = [
-  { run = 'ya pub extract --list "$@"', desc = "Extract here", for = "unix" }
+  { run = 'ya pub extract --list %s', desc = "Extract here", for = "unix" }
 ]
 
 [open]
@@ -102,6 +101,7 @@ plugin_workers = 8
 fetch_workers = 8
 preload_workers = 8
 process_workers = 8
+bizarre_retry = 3
 suppress_preload = false
 image_alloc = 536870912
 image_bound = [0, 0]

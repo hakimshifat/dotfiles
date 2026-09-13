@@ -36,7 +36,7 @@ binds {
 
 
     // Please choose your own file manager.
-    SUPER+E                               hotkey-overlay-title="File Manager: nemo" { spawn "nemo"; }
+    SUPER+E                               hotkey-overlay-title="File Manager: Nautilus" { spawn "nautilus" "--new-window"; }
 
     // ─── Media Controls ───
     XF86AudioRaiseVolume allow-when-locked=true {
@@ -90,6 +90,12 @@ binds {
 
     // ─── Window Movement and Focus ───
     Mod+Q { close-window; }
+
+    // Traditional visual window switcher. Once open, Tab/Shift+Tab cycles,
+    // Enter selects, and Escape cancels.
+    Alt+Tab repeat=false hotkey-overlay-title="Window Switcher" {
+        spawn "noctalia" "msg" "window-switcher";
+    }
 
     Mod+Left { focus-column-left; }
     Mod+H { focus-column-left; }
