@@ -1,0 +1,24 @@
+# ~/.config/yazi/keymap.toml
+#
+# Only additions are declared here. Yazi still merges in every default
+# binding, so nothing is lost - see `prepend_keymap` in the docs.
+
+[mgr]
+prepend_keymap = [
+  # Compression: `c` prompts for an archive name, and the extension you type
+  # picks the format (.zip, .7z, .tar, .tar.gz, .tar.bz2, .tar.xz, .tar.zst).
+  { on = "c", run = "plugin compress",              desc = "Compress the selection into an archive" },
+
+  # Same, but AES-256 encrypted - prompts for a password after the name.
+  { on = "C", run = "plugin compress -- --password", desc = "Compress with a password (AES-256)" },
+
+  # `c` used to be the prefix for Yazi's default copy commands. Since a
+  # single-key binding always wins over a chord prefix, those are moved to
+  # <C-y> - same second key, so they're only one muscle-memory change away.
+  { on = [ "<C-y>", "c" ], run = "copy path",             desc = "Copy file path" },
+  { on = [ "<C-y>", "C" ], run = "copy url",              desc = "Copy file URL" },
+  { on = [ "<C-y>", "d" ], run = "copy dirpath",          desc = "Copy directory path" },
+  { on = [ "<C-y>", "D" ], run = "copy dirurl",           desc = "Copy directory URL" },
+  { on = [ "<C-y>", "f" ], run = "copy filename",         desc = "Copy filename" },
+  { on = [ "<C-y>", "n" ], run = "copy name_without_ext", desc = "Copy filename without extension" },
+]

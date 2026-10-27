@@ -3,6 +3,13 @@
         clip-to-geometry true
     }
 
+    gestures {
+    hot-corners {
+        // top-left
+         off
+    }
+}
+
      // if you use steam you will probably like these
     window-rule {
         match app-id="steam"
@@ -23,15 +30,29 @@ window-rule {
        open-focused false
     }
 
+    // window-rule {
+    //     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    //     open-floating true
+    //     default-column-width { fixed 420; }
+    //     default-window-height { fixed 236; }
+    // }
     window-rule {
-        match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match title="^Picture-in-Picture$"
+
+    open-floating true
+    default-column-width { fixed 480; }
+    default-window-height { fixed 270; }
+    default-floating-position x=32 y=32 relative-to="bottom-right"
+}
+
+    window-rule {
+        match app-id=r#"brave$"# title="^Picture-in-Picture$"
         open-floating true
         default-column-width { fixed 420; }
         default-window-height { fixed 236; }
     }
-
     window-rule {
-        match app-id=r#"brave$"# title="^Picture-in-Picture$"
+        match app-id=r#"$"# title="^Picture in Picture$"
         open-floating true
         default-column-width { fixed 420; }
         default-window-height { fixed 236; }

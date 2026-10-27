@@ -12,6 +12,7 @@
 
         struts {}
 	focus-ring {
-	off
+    width 0.1
+	// off
 	}
     }

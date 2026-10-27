@@ -8,7 +8,8 @@ binds {
     Mod+Shift+ESCAPE                     { show-hotkey-overlay; }
 
     // ─── Applications ───
-    Mod+Return                          hotkey-overlay-title="Open Terminal: ghostty" { spawn "ghostty"; }
+    // Mod+Return                          hotkey-overlay-title="Open Terminal: ghostty" { spawn "ghostty"; }
+    Mod+Return                          hotkey-overlay-title="Open Terminal: ghostty" { spawn "kitty"; }
 
     Mod+Shift+Return hotkey-overlay-title="Open Dropdown Terminal" {
     spawn "ghostty" "--class=dropdown";
@@ -18,6 +19,9 @@ binds {
 }
     Mod+Space hotkey-overlay-title="Open App Launcher: noctalia launcher" {
         spawn "noctalia" "msg" "panel-toggle" "launcher";
+    }
+        Mod+Shift+T { 
+        spawn "niri-float-sticky" "-ipc" "toggle_sticky"; 
     }
 
     SUPER+B                               hotkey-overlay-title="Open Browser: firefox" { spawn "firefox"; }
@@ -93,9 +97,9 @@ binds {
 
     // Traditional visual window switcher. Once open, Tab/Shift+Tab cycles,
     // Enter selects, and Escape cancels.
-    Alt+Tab repeat=false hotkey-overlay-title="Window Switcher" {
-        spawn "noctalia" "msg" "window-switcher";
-    }
+    // Alt+Tab repeat=false hotkey-overlay-title="Window Switcher" {
+    //     spawn "noctalia" "msg" "window-switcher";
+    // }
 
     Mod+Left { focus-column-left; }
     Mod+H { focus-column-left; }
@@ -184,7 +188,7 @@ binds {
     // ─── Screenshots ───
     Print { screenshot-screen; }
     Shift+Print { screenshot; }
-    // Ctrl+Print { spawn-sh "$HOME/.config/scripts/screenshot_window.sh"; }
+    SUPER+Space { spawn-sh "noctalia msg panel-toggle aabidk20/yt-music:panel"; }
 
     // ─── Exit / Power ───
     CTRL+ALT+Delete { quit; }
