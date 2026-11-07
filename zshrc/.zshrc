@@ -36,23 +36,10 @@ zstyle ':z4h:direnv'         enable 'yes'
 # Show "loading" and "unloading" notifications from direnv.
 zstyle ':z4h:direnv:success' notify 'yes'
 
-# Enable ('yes') or disable ('no') automatic teleportation of z4h over
-# SSH when connecting to these hosts.
-zstyle ':z4h:ssh:example-hostname1'   enable 'yes'
-zstyle ':z4h:ssh:*.example-hostname2' enable 'no'
-# The default value if none of the overrides above match the hostname.
-zstyle ':z4h:ssh:*'                   enable 'no'
-
-# Send these files over to the remote host when connecting over SSH to the
-# enabled hosts.
-zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
-
-# Clone additional Git repositories from GitHub.
-#
-# This doesn't do anything apart from cloning the repository and keeping it
-# up-to-date. Cloned files can be used after `z4h init`. This is just an
-# example. If you don't plan to use Oh My Zsh, delete this line.
-z4h install ohmyzsh/ohmyzsh || return
+# SSH teleportation is disabled for every host (this is the default). To enable
+# it for a host add `zstyle ':z4h:ssh:<host>' enable 'yes'`; extra files can be
+# sent with `zstyle ':z4h:ssh:*' send-extra-files <files>...`.
+zstyle ':z4h:ssh:*' enable 'no'
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
@@ -60,22 +47,17 @@ z4h install ohmyzsh/ohmyzsh || return
 # perform network I/O must be done above. Everything else is best done below.
 z4h init || return
 
-# Extend PATH.
-path=(~/.local/bin $path)
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-export PATH="$PATH":"$HOME/go/bin"
+# Extend PATH. zsh4humans keeps the `path` array unique (`typeset -aUT`), so
+# listing an entry twice is harmless.
+path=(~/.kilo/bin ~/.opencode/bin ~/.local/bin $path)
+path+=("$HOME/.pub-cache/bin" "$HOME/go/bin")
 
-# Export environment variables.
-export GPG_TTY=$TTY
+# Export environment variables. GPG needs the real terminal device, not $TTY
+# (which is usually empty), or pinentry/commit signing fails.
+[[ -t 0 ]] && export GPG_TTY=$(tty)
 
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
-
-# Use additional Git repositories pulled in with `z4h install`.
-#
-# This is just an example that you should delete. It does nothing useful.
-z4h source ohmyzsh/ohmyzsh/lib/diagnostics.zsh  # source an individual file
-z4h load   ohmyzsh/ohmyzsh/plugins/emoji-clock  # load a plugin
 
 # Define key bindings.
 z4h bindkey z4h-backward-kill-word  Ctrl+Backspace     Ctrl+H
@@ -93,17 +75,23 @@ z4h bindkey z4h-cd-down    Alt+Down   # cd into a child directory
 autoload -Uz zmv
 
 # Define functions and completions.
-function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
+md() {
+  emulate -L zsh
+  [[ $# -eq 1 ]] || { print -u2 -- 'usage: md <directory>'; return 1 }
+  mkdir -p -- "$1" && cd -- "$1"
+}
 compdef _directories md
 
 # Define named directories: ~w <=> Windows home directory on WSL.
-[[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
+[[ -z $z4h_win_home ]] || hash -d w="$z4h_win_home"
 
 # Define aliases.
 alias tree=' tree -a -I .git'
+alias op='xdg-open'  # open a file, directory or URL with the default app
 
-# Add flags to existing aliases.
-alias ls=" ${aliases[ls]:-ls} -A"
+# Add flags to existing aliases. The guard keeps this idempotent when the file
+# is sourced more than once (e.g. `source ~/.zshrc`).
+[[ ${aliases[ls]} == *" -A"* ]] || alias ls=" ${aliases[ls]:-ls} -A"
 alias e=" exit"
 
 # Launch agent CLIs from their project directory.
@@ -112,70 +100,70 @@ alias e=" exit"
 # codex() { builtin cd -- /home/sifat/workstation/agent/codex/ && command codex "$@" }
 # opencode() { builtin cd -- /home/sifat/workstation/agent/opencode/ && command opencode "$@" }
 
-# No `alias cd=" z"` here on purpose. zoxide's `z` jumps to frecused
-# directories, so routing `cd` through it breaks `cd -` and turns typos into
-# silent jumps to some other directory. Type `z <dir>` when you want a jump.
-
-function yy() {
-  local tmp="$(mktemp "${TMPDIR:-/tmp}/yazi-cwd.XXXXXX")" cwd
+yy() {
+  emulate -L zsh
+  local tmp cwd
+  tmp=$(mktemp "${TMPDIR:-/tmp}/yazi-cwd.XXXXXX") || return
   yazi "$@" --cwd-file="$tmp"
-  if cwd="$(< "$tmp")" && [[ -n "$cwd" && "$cwd" != "$PWD" ]]; then
+  if cwd=$(< "$tmp") && [[ -n $cwd && $cwd != $PWD ]]; then
     builtin cd -- "$cwd"
   fi
   rm -f -- "$tmp"
 }
+
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
-# eval "$(mise activate zsh)"
-eval "$(zoxide init zsh --cmd cd)"
 
+# `zoxide init` defines `z` and `zi` only; `cd` stays the builtin. Do not use
+# `--cmd cd`: fuzzy-jumping from `cd` turns typos into silent jumps and shadows
+# `cd -`. Type `z <dir>` when you want to jump.
+# eval "$(mise activate zsh)"
+(( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
 
 # ==============================================================================
 # Auto-activate / Auto-deactivate Python Virtual Environments
 # ==============================================================================
-auto_python_venv() {
-  local venv_dir
-  local check_dir="$PWD"
+# Set only when this hook performed the activation, so a virtualenv started by
+# hand outside a project is never torn down behind your back.
+typeset -g _auto_venv=
 
-  # Walk up the directory tree to find .venv or venv
-  # (Keeps virtualenv active when navigating into subdirectories)
-  while [[ "$check_dir" != "/" ]]; do
-    if [[ -d "$check_dir/.venv" ]]; then
-      venv_dir="$check_dir/.venv"
+auto_python_venv() {
+  emulate -L zsh
+  local dir=$PWD venv=
+
+  # Walk up the directory tree to find .venv or venv. Walking up keeps the
+  # environment active while navigating inside the project.
+  while [[ -n $dir ]]; do
+    if [[ -d $dir/.venv ]]; then
+      venv=$dir/.venv
       break
-    elif [[ -d "$check_dir/venv" ]]; then
-      venv_dir="$check_dir/venv"
+    elif [[ -d $dir/venv ]]; then
+      venv=$dir/venv
       break
     fi
-    check_dir="$(dirname "$check_dir")"
+    [[ $dir == / ]] && break
+    dir=${dir:h}  # parent directory, no fork
   done
 
-  # Process activation/deactivation logic
-  if [[ -n "$venv_dir" ]]; then
-    # If in a different virtualenv, deactivate it first
-    if [[ -n "$VIRTUAL_ENV" && "$VIRTUAL_ENV" != "$venv_dir" ]]; then
+  if [[ -n $venv ]]; then
+    # A different environment is active: leave it before activating the target.
+    if [[ -n $VIRTUAL_ENV && ${VIRTUAL_ENV:A} != ${venv:A} ]]; then
       deactivate 2>/dev/null
+      _auto_venv=
     fi
-    # Activate target environment if not active
-    if [[ -z "$VIRTUAL_ENV" ]]; then
-      source "$venv_dir/bin/activate"
+    if [[ -z $VIRTUAL_ENV && -f $venv/bin/activate ]]; then
+      source -- "$venv/bin/activate"
+      _auto_venv=1
     fi
-  else
-    # Left the project directory tree; deactivate
-    if [[ -n "$VIRTUAL_ENV" ]]; then
-      deactivate 2>/dev/null
-    fi
+  elif [[ -n $VIRTUAL_ENV && -n $_auto_venv ]]; then
+    # Left the project tree: only undo what this hook did.
+    deactivate 2>/dev/null
+    _auto_venv=
   fi
 }
 
-# Attach function to Zsh directory change hook array safely
-autoload -U add-zsh-hook
-
-# ---------------------------------------------------------------------------
-# Ghidra: fix blank/white window under non-parenting Wayland compositors
-# (niri, Sway). Ghidra ships this fix commented out in support/launch.properties.
-# See ~/.local/bin/ghidra-fixed for the full explanation.
-# ---------------------------------------------------------------------------
-alias op='xdg-open'
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd auto_python_venv
+auto_python_venv  # the shell may start inside a project
 
