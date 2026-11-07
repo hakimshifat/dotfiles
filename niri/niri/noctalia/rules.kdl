@@ -5,8 +5,8 @@
 
     gestures {
     hot-corners {
-        // top-left
-         off
+        top-left
+         // off
     }
 }
 
@@ -76,3 +76,19 @@ window-rule {
         match namespace="^noctalia-wallpaper*"
         place-within-backdrop true
     }
+
+    // Xwayland Video Bridge runs an invisible helper window for XWayland
+    // screen sharing. Shrink it to 1x1, float it, and make it transparent so
+    // it doesn't show up as a black tile or eat clicks.
+    window-rule {
+        match app-id=r#"^xwaylandvideobridge$"#
+        open-floating true
+        open-focused false
+        default-column-width { fixed 1; }
+        default-window-height { fixed 1; }
+        opacity 0.0
+        focus-ring { off; }
+        border { off; }
+        shadow { off; }
+    }
+

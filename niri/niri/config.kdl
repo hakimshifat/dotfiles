@@ -11,9 +11,11 @@ include "./noctalia/layout.kdl"
 include "./noctalia/rules.kdl"
 include "./noctalia/misc.kdl"
 
-// debug {
-//     render-drm-device "/dev/dri/renderD128"  // your Intel iGPU node
-// }
+debug {
+    // Force niri rendering onto the Intel HD 620 (primary/boot GPU).
+    // Use the by-path link so this stays correct if renderD* numbering changes.
+    render-drm-device "/dev/dri/by-path/pci-0000:00:02.0-render"
+}
 
 include "noctalia.kdl"
 

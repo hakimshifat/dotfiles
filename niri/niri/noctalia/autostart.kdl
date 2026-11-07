@@ -3,9 +3,6 @@
 
     // spawn-sh-at-startup "qs -c noctalia-shell"
     spawn-at-startup "noctalia"
-    spawn-at-startup "niri-float-sticky"
+//    spawn-at-startup "niri-float-sticky"
 
     // spawn-sh-at-startup "musicpresence"
-
-    // Hot corner that toggles the overview, works over fullscreen too.
-    spawn-at-startup "waycorner"

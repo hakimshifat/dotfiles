@@ -8,20 +8,13 @@ binds {
     Mod+Shift+ESCAPE                     { show-hotkey-overlay; }
 
     // ─── Applications ───
-    // Mod+Return                          hotkey-overlay-title="Open Terminal: ghostty" { spawn "ghostty"; }
-    Mod+Return                          hotkey-overlay-title="Open Terminal: ghostty" { spawn "kitty"; }
+    Mod+Return                          hotkey-overlay-title="Open Terminal: kitty" { spawn "konsole"; }
 
-    Mod+Shift+Return hotkey-overlay-title="Open Dropdown Terminal" {
-    spawn "ghostty" "--class=dropdown";
-}
-    SUPER+Return hotkey-overlay-title="Open Yazi" {
-    spawn "ghostty" "-e" "zsh" "-ic" "yy"
-}
+//     Mod+Shift+Return hotkey-overlay-title="Open Dropdown Terminal" {
+// }
+
     Mod+Space hotkey-overlay-title="Open App Launcher: noctalia launcher" {
         spawn "noctalia" "msg" "panel-toggle" "launcher";
-    }
-        Mod+Shift+T { 
-        spawn "niri-float-sticky" "-ipc" "toggle_sticky"; 
     }
 
     SUPER+B                               hotkey-overlay-title="Open Browser: firefox" { spawn "firefox"; }

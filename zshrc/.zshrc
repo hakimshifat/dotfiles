@@ -105,13 +105,11 @@ alias tree=' tree -a -I .git'
 # Add flags to existing aliases.
 alias ls=" ${aliases[ls]:-ls} -A"
 alias e=" exit"
-alias vi=" nvim"
-alias zz=" zellij"
 
 # Launch agent CLIs from their project directory.
 # These must be functions, not aliases. An alias body that ends with the alias
 # name is re-expanded at the `&&`, so `codex` recursed into itself forever.
-codex() { builtin cd -- /home/sifat/workstation/agent/codex/ && command codex "$@" }
+# codex() { builtin cd -- /home/sifat/workstation/agent/codex/ && command codex "$@" }
 # opencode() { builtin cd -- /home/sifat/workstation/agent/opencode/ && command opencode "$@" }
 
 # No `alias cd=" z"` here on purpose. zoxide's `z` jumps to frecused
@@ -129,7 +127,7 @@ function yy() {
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
-eval "$(mise activate zsh)"
+# eval "$(mise activate zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 
 
@@ -173,18 +171,11 @@ auto_python_venv() {
 
 # Attach function to Zsh directory change hook array safely
 autoload -U add-zsh-hook
-add-zsh-hook chpwd auto_python_venv
-
-# Run once on shell startup in case terminal opens inside a project
-auto_python_venv
-
 
 # ---------------------------------------------------------------------------
 # Ghidra: fix blank/white window under non-parenting Wayland compositors
 # (niri, Sway). Ghidra ships this fix commented out in support/launch.properties.
 # See ~/.local/bin/ghidra-fixed for the full explanation.
 # ---------------------------------------------------------------------------
-alias ghidra='ghidra-fixed'
-alias ghidra-debug='ghidra-fixed --debug'
 alias op='xdg-open'
 
