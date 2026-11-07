@@ -119,7 +119,7 @@ setopt no_auto_menu  # require an extra TAB press to open the completion menu
 # `--cmd cd`: fuzzy-jumping from `cd` turns typos into silent jumps and shadows
 # `cd -`. Type `z <dir>` when you want to jump.
 # eval "$(mise activate zsh)"
-(( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
+(( $+commands[zoxide] )) && eval "$(zoxide init zsh --cmd cd)"
 
 # ==============================================================================
 # Auto-activate / Auto-deactivate Python Virtual Environments
