@@ -179,7 +179,7 @@ binds {
     Mod+Shift+W { toggle-column-tabbed-display; }
 
     // ─── Screenshots ───
-    Print { screenshot-screen; }
+    Print { spawn "noctalia" "msg" "screenshot-annotate" "--copy-to-clipboard" "--close-on-copy"; }
     Shift+Print { screenshot; }
     SUPER+Space { spawn-sh "noctalia msg panel-toggle aabidk20/yt-music:panel"; }
 
