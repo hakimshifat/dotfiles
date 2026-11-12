@@ -17,7 +17,6 @@ debug {
     render-drm-device "/dev/dri/by-path/pci-0000:00:02.0-render"
 }
 
-include "noctalia.kdl"
 
 // Managed by the Noctalia cursor plugin - edits here are overwritten.
 include "cursor.kdl"
@@ -29,3 +28,5 @@ window-rule {
     match app-id="jadx-gui-JadxGUI"
     open-floating true
 }
+
+include "noctalia.kdl"

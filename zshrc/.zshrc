@@ -166,5 +166,4 @@ auto_python_venv() {
 autoload -Uz add-zsh-hook
 add-zsh-hook chpwd auto_python_venv
 auto_python_venv  # the shell may start inside a project
-export at="ctfd_46d3c05a41701709d5735dbfce2ff546269b777ce2d6b821fc40a5ee6abbe6bb"
-
+export BW_SESSION="tvRE3pzhI7ZG0JOFkebBAT3DFSvAxwcLNlGDin/W6WgIi8LM4p1tDdGn72T6Uj4+r4qvp5fyKOoLPOT6mLId8g=="

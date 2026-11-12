@@ -1,0 +1,16 @@
+[Desktop Entry]
+DefaultProfile=Comfortable.profile
+
+[General]
+ConfigVersion=1
+
+[Notification Messages]
+CloseAllTabs=true
+
+[TabBar]
+TabBarPosition=Top
+TabBarStyleSheet=QTabBar { background: #1e1e2e; } QTabBar::tab { background: #313244; color: #cdd6f4; border: 0; border-radius: 8px; padding: 5px 12px; margin: 4px 3px; } QTabBar::tab:selected { background: #cba6f7; color: #1e1e2e; } QTabBar::tab:hover:!selected { background: #45475a; }
+TabBarVisibility=AlwaysShowTabBar
+
+[UiSettings]
+ColorScheme=
