@@ -30,3 +30,5 @@ window-rule {
 }
 
 include "noctalia.kdl"
+// Per-workspace wallpapers (Noctalia).
+spawn-at-startup "/home/sifat/.local/bin/paper-no-wall" "--compositor" "niri"

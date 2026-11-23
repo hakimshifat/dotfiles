@@ -1,10 +1,14 @@
-# Ported from ~/.config/niri/noctalia/keybinds.kdl; Niri remains unchanged.
+# Personal scrolling layout and Noctalia shortcuts.
+# Tuned for i5-7200U / Intel HD 620 / 1920x1080 at 60.027 Hz.
+# Official reference: https://docs.noctalia.dev/umbriel/
+# Optional settings stay commented; change the active value before enabling alternatives.
 [general]
 mod_key = "Alt"
 autostart = ["noctalia"]
-xwayland = true
-xwayland_native_resolution = false
-xwayland_xsettings = true
+# Built-in defaults; Xwayland starts lazily when an X11 app needs it.
+# xwayland = true
+# xwayland_native_resolution = false
+# xwayland_xsettings = true
 show_cheatsheet = false
 
 [environment]
@@ -28,7 +32,7 @@ tap = true
 natural_scroll = true
 
 [input.focus]
-follows_mouse = true
+follows_mouse = "always"
 
 [input.cursor]
 theme = "Bibata-Modern-Ice"
@@ -37,14 +41,74 @@ size = 24
 [workspaces]
 back_and_forth = true
 
+# HDMI is currently disconnected. Uncomment this whole section when needed.
+# Confirm modes with `umbriel outputs` after connecting it.
+# [output.HDMI-A-2]
+# mode = "2560x1440@60"
+# # Alternative only if advertised by the connected monitor:
+# # mode = "1920x1080@120"
+# scale = 1.0
+# position = [0, 0]
+# # Original policy: vrr = "always". Try fullscreen only on a VRR-capable monitor.
+# vrr = "fullscreen"
+
 [output.eDP-1]
+mode = "1920x1080@60.027"
 workspaces = "dynamic"
 min_workspaces = 9
 scale = 1.0
+# Original dual-monitor position; restore when using HDMI above the laptop.
+# position = [320, 1440]
+position = [0, 0]
+# Keep upstream defaults: eligible fullscreen clients bypass composition;
+# ordinary presentation remains synchronized. No VRR is assumed for this panel.
+# direct_scanout = true
+# tearing = false
+# vrr = "disabled"
+# hdr = "off"
+# bit_depth = 8
+# If fullscreen flickers, test direct_scanout = false as a driver workaround.
+
+# Blur is enabled by default even when no appearance section is present.
+# Disable it to reduce HD 620 GPU work and avoid the observed blur-buffer errors.
+[appearance.blur]
+enabled = false
+# To try the official starter's lighter blur, change enabled to true:
+# radius = 3
+# passes = 2
+# optimized = true
+
+[appearance.shadow]
+enabled = false
+# Change enabled to true to restore upstream shadows.
+# softness = 10
+
+# Keep built-in spring movement, resize, workspace and overview transitions.
+# Fade-only opening/closing avoids scaling the entire window during these effects.
+# https://docs.noctalia.dev/umbriel/animation/
+[animation.windows_in]
+style = "fade"
+
+[animation.windows_out]
+style = "fade"
+
+# Optional alternatives: uncomment each table together with its values.
+# [animation]
+# enabled = false # Minimum animation work; transitions become immediate.
+#
+# [animation.layers]
+# enabled = true # Extra panel animations; off by default.
+#
+# [animation.windows_drag]
+# physics = true # Extra drag deformation; off by default.
+#
+# Persistent shader effects remain off by default; they can prevent direct scanout.
+# [appearance.title_bar]
+# mode = "on" # Optional server-side title bars; off by default.
 
 [keybinds]
 "Mod+Shift+Escape" = { action = "cheatsheet-toggle", repeat = false }
-"Mod+Return" = { action = "spawn konsole", repeat = false }
+"Mod+Return" = { action = "spawn foot", repeat = false }
 "Mod+Space" = { action = "spawn noctalia msg panel-toggle launcher", repeat = false }
 "Super+B" = { action = "spawn brave-origin", repeat = false }
 "Alt+B" = { action = "spawn brave-origin", repeat = false }
@@ -116,6 +180,7 @@ scale = 1.0
 "Mod+Ctrl+8" = { action = "column-move-to-workspace 8" }
 "Mod+Ctrl+9" = { action = "column-move-to-workspace 9" }
 "Mod+Tab" = { action = "workspace-focus-last" }
+"Mod+Shift+Tab" = { action = "spawn noctalia msg window-switcher" }
 "Mod+Ctrl+F" = { action = "window-toggle-maximize", repeat = false }
 "Mod+C" = { action = "column-center" }
 "Mod+Ctrl+C" = { action = "column-center" }

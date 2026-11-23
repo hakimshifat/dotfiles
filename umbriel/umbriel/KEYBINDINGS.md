@@ -25,7 +25,7 @@ The repository /etc/yum.repos.d/umbriel-terra.repo is restricted to Umbriel and 
 | Shortcut | Umbriel action |
 | --- | --- |
 | Mod+Shift+Escape | `cheatsheet-toggle` |
-| Mod+Return | `spawn konsole` |
+| Mod+Return | `spawn foot` |
 | Mod+Space | `spawn noctalia msg panel-toggle launcher` |
 | Super+B | `spawn brave-origin` |
 | Alt+B | `spawn brave-origin` |

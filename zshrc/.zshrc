@@ -166,4 +166,10 @@ auto_python_venv() {
 autoload -Uz add-zsh-hook
 add-zsh-hook chpwd auto_python_venv
 auto_python_venv  # the shell may start inside a project
-export BW_SESSION="tvRE3pzhI7ZG0JOFkebBAT3DFSvAxwcLNlGDin/W6WgIi8LM4p1tDdGn72T6Uj4+r4qvp5fyKOoLPOT6mLId8g=="
+# Local secrets live in ~/.env (gitignored, stowed from zshrc/.env).
+# `set -a` exports every assignment sourced from it.
+if [[ -r ~/.env ]]; then
+  set -a
+  source ~/.env
+  set +a
+fi

@@ -8,7 +8,7 @@ binds {
     Mod+Shift+ESCAPE                     { show-hotkey-overlay; }
 
     // ─── Applications ───
-    Mod+Return                          hotkey-overlay-title="Open Terminal: kitty" { spawn "konsole"; }
+    Mod+Return                          hotkey-overlay-title="Open Terminal: Foot" { spawn "foot"; }
 
 //     Mod+Shift+Return hotkey-overlay-title="Open Dropdown Terminal" {
 // }
@@ -33,7 +33,7 @@ binds {
 
 
     // Please choose your own file manager.
-    SUPER+E                               hotkey-overlay-title="File Manager: Nautilus" { spawn "nautilus" "--new-window"; }
+    SUPER+E                               hotkey-overlay-title="File Manager: Nautilus" { spawn "env" "GSK_RENDERER=gl" "/usr/bin/nautilus" "--new-window"; }
 
     // ─── Media Controls ───
     XF86AudioRaiseVolume allow-when-locked=true {
@@ -160,7 +160,8 @@ binds {
     Mod+CTRL+8 { move-column-to-workspace 8; }
     Mod+CTRL+9 { move-column-to-workspace 9; }
 
-    Mod+TAB { focus-workspace-previous; }
+    // Mod+TAB { focus-workspace-previous; }
+    Mod+TAB { spawn-sh "noctalia msg window-switcher hold"; }
 
     // ─── Layout Controls ───
     Mod+CTRL+F { expand-column-to-available-width; }

@@ -17,3 +17,6 @@ mpv/mpv/shaders/cache/
 
 # Tmux plugins (installed via TPM, not tracked in git)
 tmux/tmux/plugins/
+
+# Local secrets (stowed to ~/.env, never commit)
+zshrc/.env
