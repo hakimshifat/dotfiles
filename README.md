@@ -198,6 +198,27 @@ sudo cp battery-threshold.service nvidia-sleep.service /etc/systemd/system/
 sudo systemctl enable --now battery-threshold.service nvidia-sleep.service
 ```
 
+### Deep sleep on the ASUS X510UQ
+
+If the laptop intermittently hangs with a black screen during deep sleep, try
+running device suspend and resume callbacks in sequence. This keeps the existing
+sleep mode and may make sleep and wake a little slower. Two lid close tests
+completed successfully with this setting on the ASUS X510UQ.
+
+From this repository, install and apply the setting on Fedora or another
+systemd-based system that exposes `/sys/power/pm_async`:
+
+```sh
+pkexec install -m 644 deep-sleep.conf /etc/tmpfiles.d/deep-sleep.conf
+pkexec systemd-tmpfiles --create /etc/tmpfiles.d/deep-sleep.conf
+cat /sys/power/mem_sleep /sys/power/pm_async
+```
+
+On the X510UQ, expect `s2idle [deep]` followed by `0`. The brackets show
+the selected sleep mode. On other hardware, the available modes and default may differ.
+Systemd reapplies the setting at boot. To undo it, remove
+`/etc/tmpfiles.d/deep-sleep.conf` and reboot.
+
 ## Installation
 
 > ⚠️ Currently used on Fedora; some older configs and scripts come from Arch/EndeavourOS. Review local paths and hardware settings before linking on another machine.
