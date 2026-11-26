@@ -27,6 +27,8 @@
   - [File Manager — Yazi](#file-manager--yazi)
   - [Media — mpv](#media--mpv)
   - [Utility Scripts](#utility-scripts)
+- [Bangla typing with Avro](#bangla-typing-with-avro)
+- [Niri and Umbriel troubleshooting](#niri-and-umbriel-troubleshooting)
 - [System Services](#system-services)
 - [Installation](#installation)
 - [Git Setup](#git-setup)
@@ -52,7 +54,8 @@ It's not a "framework" meant for others to install blindly — it's a living con
 |---|---|
 | Compositor / WM | Umbriel and [Niri](https://github.com/YaLTeR/niri) *(scrollable tiling)* — with [Sway](https://swaywm.org/) kept as a legacy alternative |
 | Desktop Shell | [**Noctalia**](https://noctalia.dev/) v5 *(bar, launcher, notifications, wallpaper, control center, lock & session screens — the whole UI layer)* |
-| Terminal | Konsole and [Kitty](https://sw.kovidgoyal.net/kitty/) |
+| Terminal | Foot by default, with Konsole and [Kitty](https://sw.kovidgoyal.net/kitty/) configs available |
+| Bangla input | IBus Avro Phonetic with a keyboard toggle on Umbriel |
 | Shell | Zsh + [zsh4humans](https://github.com/romkatv/zsh4humans) + Powerlevel10k |
 | File Manager (TUI) | [Yazi](https://github.com/sxyazi/yazi) |
 | File Manager (GUI) | Nautilus |
@@ -72,7 +75,7 @@ It's not a "framework" meant for others to install blindly — it's a living con
 ├── umbriel/             # Compositor config and keybinding reference
 ├── niri/                # Modular compositor config + Noctalia integration
 ├── fontconfig/          # Bengali font fallback preferences
-├── env/                 # environment.d cursor settings
+├── env/                 # environment.d cursor and session settings
 ├── konsole/             # Konsole settings
 ├── konsole-profiles/    # Terminal profiles and color schemes
 ├── kitty/               # Wayland terminal config
@@ -90,6 +93,7 @@ It's not a "framework" meant for others to install blindly — it's a living con
 ├── subl.md               # Sublime Text C++ build notes
 ├── docs.zip              # Documentation archive
 ├── battery-threshold.service # Optional laptop charging unit
+├── deep-sleep.conf           # ASUS X510UQ suspend workaround
 ├── nvidia-sleep.service       # Optional GPU power management unit
 └── LICENSE                   # GPLv3
 ```
@@ -100,7 +104,7 @@ It's not a "framework" meant for others to install blindly — it's a living con
 
 ### Window Manager — Umbriel
 
-Umbriel's config lives in `umbriel/umbriel/config.toml`, with a `KEYBINDINGS.md` reference alongside it. It includes scrolling layouts, scratchpad bindings, window rules, and Noctalia integration. `Mod + Return` opens Konsole; `Super + E` opens Nautilus.
+The [Umbriel config](umbriel/umbriel/config.toml) uses Alt as Mod and starts Noctalia. **Alt+Enter** opens Foot, **Alt+Tab** opens the Noctalia window switcher in hold mode, and **Super+E** opens Nautilus. **Alt+Y** toggles the scratchpad. **Alt+Shift+Esc** opens the compositor's shortcut cheatsheet.
 
 ### Window Manager — Niri
 
@@ -115,10 +119,11 @@ Notable bindings:
 
 | Keybind | Action |
 |---|---|
-| `Mod + Return` | Open terminal (`konsole`) |
+| `Mod + Return` | Open Foot |
 | `Super + B` | Firefox |
 | `Alt + B` | Brave |
-| `Super + E` | Nautilus (file manager) |
+| `Super + E` | Open Nautilus with `GSK_RENDERER=gl` |
+| `Mod + Tab` | Noctalia window switcher in hold mode |
 | `Alt + W` | Random wallpaper |
 | `Alt + N` | Notes panel |
 
@@ -183,6 +188,137 @@ Beyond the base `mpv.conf`/`input.conf`, this includes several bundled Lua scrip
 | `publish.py` | Publishes a note (or folder of notes) from a private Obsidian vault to a public GitHub repo — rewrites image links, copies attachments, commits, and pushes automatically |
 
 ---
+
+## Bangla typing with Avro
+
+On Umbriel, press **Super+Shift+Space**, type `ami` in a text field, then press **Space** to commit `আমি`. Press **Super+Shift+Space** again for English. The binding is in the [Umbriel config](umbriel/umbriel/config.toml). **Ctrl+Space** is reserved for the [tmux prefix](tmux/tmux/tmux.conf).
+
+Avro Phonetic is an IBus engine, so look for it under **Bengali** in IBus Preferences (`ibus-setup`). On the Umbriel setup below, open preferences with `IBUS_ADDRESS="$(env -u WAYLAND_DISPLAY ibus address)" ibus-setup` to reach the existing daemon. The floating English/Avro buttons we previously used came from a separate `avro-switcher.service`. The IBus candidate panel shows spelling suggestions while you type. [Avro Phonetic project](https://github.com/sarim/ibus-avro)
+
+### Install Avro
+
+On Debian or Ubuntu, install `ibus-avro` from the distro repository. On Arch, the upstream project points to `ibus-avro-git` in the AUR. On this Fedora workstation Avro is installed per user, with engine files in `~/.local/share/ibus-avro`, a component file in `~/.local/share/ibus/component/ibus-avro.xml`, and a GSettings schema in `~/.local/share/glib-2.0/schemas/`. For a fresh Fedora setup, build the upstream source into `~/.local`. [Upstream installation instructions](https://github.com/sarim/ibus-avro#installation)
+
+```sh
+sudo dnf install git gcc make automake autoconf pkgconf-pkg-config ibus-devel ibus ibus-panel ibus-gtk3 gjs
+git clone https://github.com/sarim/ibus-avro.git
+cd ibus-avro
+# Optional if you want the tagged maintenance release
+# git checkout 1.2
+git rev-parse --short HEAD
+autoreconf -fi
+./configure --prefix="$HOME/.local"
+make
+make install
+```
+
+If the generated component's `<exec>` includes ` > /dev/null`, remove that suffix from the XML. IBus launches the command directly and the local configuration uses `gjs --include-path=… main-gjs.js --ibus` without shell redirection. The workstation also removes the debug `print` that logs every key event in `main-gjs.js`.
+
+The installed runtime matched upstream `dd521a1` during the investigation, apart from generated paths and the removed key-event logging. That commit is newer than the tagged **1.2** release, but the upstream component XML still reports **1.1**. Use the Git commit to identify a source install. [Source snapshot](https://github.com/sarim/ibus-avro/tree/dd521a139af0b4bb64eaeeca44fef03f5fb770cf) · [1.2 release](https://github.com/sarim/ibus-avro/releases/tag/1.2)
+
+### Connect IBus to Umbriel
+
+The initial setup only ran the IBus panel under X11. Switching to Avro worked at the daemon, but native Wayland Brave did not receive the resulting text. Umbriel exposes Wayland text-input v3 and input-method v2. Enabling the IBus Wayland frontend let Brave receive Bengali composition text without replacing the browser or closing its tabs. The following two per-user units reproduce the setup on the Fedora workstation with IBus 1.5.35. [IBus Wayland desktop setup](https://github.com/ibus/ibus/wiki/WaylandDesktop)
+
+Create `~/.config/systemd/user/ibus-avro.service` for the local component directory. This setup uses the daemon's X11-addressed IBus socket while the separate panel connects to Umbriel over Wayland.
+
+```ini
+[Unit]
+Description=IBus input service with Avro Phonetic
+PartOf=graphical-session.target
+
+[Service]
+Environment=IBUS_COMPONENT_PATH=%h/.local/share/ibus/component:/usr/share/ibus/component
+UnsetEnvironment=WAYLAND_DISPLAY
+ExecStart=/usr/bin/ibus-daemon --replace --xim --desktop=umbriel --cache=none --panel=disable
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target
+```
+
+Create `~/.config/systemd/user/ibus-candidate-panel.service` for the native Wayland frontend. On this workstation the equivalent `[Service]` changes are installed as a drop-in at `ibus-candidate-panel.service.d/wayland.conf`. If you already have a candidate-panel unit, edit it or override it rather than starting a second frontend. In a drop-in, clear the old `ExecStart` with an empty `ExecStart=` line first.
+
+```ini
+[Unit]
+Description=IBus Wayland input frontend and candidate panel
+Requires=ibus-avro.service
+After=ibus-avro.service umbriel.service
+PartOf=ibus-avro.service graphical-session.target
+
+[Service]
+Environment=GDK_BACKEND=wayland
+ExecStart=/bin/sh -c 'IBUS_ADDRESS=$$(/usr/bin/env -u WAYLAND_DISPLAY /usr/bin/ibus address); case "$$IBUS_ADDRESS" in unix:*) export IBUS_ADDRESS; exec /usr/libexec/ibus-ui-gtk3 --enable-wayland-im ;; *) exit 1 ;; esac'
+Restart=on-failure
+RestartSec=1s
+
+[Install]
+WantedBy=umbriel-session.target
+```
+
+From an Umbriel session, reload systemd and enable the services. On an existing setup use `systemctl --user restart ibus-avro.service ibus-candidate-panel.service` after changing an engine or unit. If you previously installed the floating switcher, disable it separately with `systemctl --user disable --now avro-switcher.service`.
+
+```sh
+systemctl --user daemon-reload
+systemctl --user enable --now ibus-avro.service ibus-candidate-panel.service
+umbriel config validate
+umbriel msg config-reload
+env -u WAYLAND_DISPLAY ibus list-engine --name-only | grep -Fx ibus-avro
+env -u WAYLAND_DISPLAY ibus engine xkb:us::eng
+```
+
+For the keyboard-only setup, the configured IBus input list contains English (US), and the compositor shortcut explicitly selects Avro when needed. To use this convention, set both `preload-engines` and `engines-order` in `org.freedesktop.ibus.general` to `['xkb:us::eng']`. To keep **Ctrl+Space** for tmux, remove `<Control>space` from the `triggers` setting and `Control+space` from the legacy `trigger` setting in `org.freedesktop.ibus.general.hotkey`. Preserve any other IBus shortcuts you use. Setting English as the only preloaded engine replaces the list used by the IBus input menu.
+
+### Test in Brave and Google Docs
+
+1. Focus an ordinary text field in Brave. Press **Super+Shift+Space** and type `ami` followed by **Space**.
+2. Repeat in the Google Docs editing area. Click into the document first and confirm you are in **Editing** mode.
+3. If you still get Latin letters, run `env -u WAYLAND_DISPLAY ibus engine` after turning on Avro. Expect `ibus-avro` while Avro is active and `xkb:us::eng` in English mode.
+4. If the engine toggles but a browser field still receives Latin text, check `systemctl --user status ibus-candidate-panel.service` and `journalctl --user -u ibus-candidate-panel.service -b`. Check that the frontend runs with `--enable-wayland-im` and can reach the same daemon. The plain `ibus` command in this particular setup looks up a different socket when `WAYLAND_DISPLAY` is set.
+5. If Bengali is committed but displays as boxes, check the installed Bangla fonts with `fc-list ':lang=bn' family` and see the [font fallback config](fontconfig/fontconfig/conf.d/65-bangla-bd.conf).
+
+The shortcut was tested in both directions and Brave received Bengali preedit text through Wayland. The Google Docs editor itself was outside that test.
+
+### Niri setup
+
+Use the [IBus instructions for Niri](https://github.com/ibus/ibus/wiki/WaylandDesktop#niri-desktop-environment) for that session. With IBus 1.5.32 or newer, upstream documents `ibus start --type wayland` and recommends XDG desktop autostart for Niri. For a source install under `~/.local`, pass `IBUS_COMPONENT_PATH="$HOME/.local/share/ibus/component:/usr/share/ibus/component"` to the launch command if the session cannot discover Avro. Add **Avro Phonetic** through IBus Preferences and choose a shortcut that does not overlap with the compositor or tmux. The [Niri bindings](niri/niri/noctalia/keybinds.kdl) currently have no Avro toggle. The Umbriel-specific keybinding and service wiring above were tested on Umbriel.
+
+## Niri and Umbriel troubleshooting
+
+### Screen sharing and audio
+
+For a missing picker or black stream in Vesktop, first check the user portal and PipeWire services. The packaged Niri portal config uses the GNOME backend for screen capture with GTK fallbacks. Umbriel ships a compositor-specific backend. Keep the backend selection scoped to the desktop session you log in to.
+
+```sh
+systemctl --user status xdg-desktop-portal pipewire wireplumber
+# Run the line for your active session.
+systemctl --user status xdg-desktop-portal-gnome
+systemctl --user status xdg-desktop-portal-umbriel
+wpctl status
+```
+
+- **Niri and Vesktop.** An earlier workaround waited for the Mutter ScreenCast interface and killed the GNOME portal to make it restart. The Vesktop and audio cleanup removed that startup hook and the manual D-Bus environment export. Use the packaged Niri session and check the portal journal if capture fails. If Xwayland Video Bridge appears as a black tile, the current window rule floats its helper at 1×1, makes it transparent, and keeps it from taking focus. [Cleanup commit](../../commit/92f9526) · [Niri window rules](niri/niri/noctalia/rules.kdl)
+- **Stream audio.** If video shares but audio is missing, use `wpctl status` while a stream is active to check the playback node and default sink. The historical cleanup does not ship a custom WirePlumber routing policy.
+- **Brave credential prompts after changing sessions.** The Umbriel setup uses `--password-store=gnome-libsecret` in the launchers for consistent keyring storage. Check the launcher's arguments and whether your session has an unlocked keyring before changing Brave's password store. [Umbriel setup notes](umbriel/umbriel/KEYBINDINGS.md)
+
+### Graphics, windows, and workspaces
+
+| Symptom or goal | Current setup |
+|---|---|
+| Umbriel blur-buffer errors or slow effects on Intel HD 620 | Blur and shadows are disabled. Opening and closing use fades, while movement keeps the built-in spring animations. The overview disables its wallpaper and blur and uses transparent workspace backgrounds. See the [Umbriel appearance config](umbriel/umbriel/config.toml). |
+| Fullscreen flicker or an external monitor with a different refresh rate | Run `umbriel outputs` or `niri msg outputs` for the advertised output names and modes. The checked-in `eDP-1` mode is `1920x1080@60.027` at scale 1. Umbriel has commented HDMI and VRR examples. Test `direct_scanout = false` on the affected Umbriel output if fullscreen flickers. |
+| Niri renders on the wrong GPU on this laptop | The Niri config pins rendering to the Intel device using the stable `/dev/dri/by-path/pci-0000:00:02.0-render` link. Find the equivalent path under `/dev/dri/by-path/` or remove the override on other hardware. See the [Niri config](niri/niri/config.kdl). |
+| JADX under Xwayland leaves white space when tiled | Both configs float `jadx-gui-JadxGUI`. Its Swing window could paint at its previous size after a compositor resize. See the [Niri rule](niri/niri/config.kdl) and [Umbriel rule](umbriel/umbriel/config.toml). |
+| Video Picture-in-Picture takes up a tile in Niri | The [Niri rules](niri/niri/noctalia/rules.kdl) match the browser's PiP title and open it as a small floating window. Use `niri msg windows` to check the exact title and app ID if a browser changes them. |
+| Switching between Niri and Umbriel feels different | Both use Noctalia's hold-mode window switcher on **Mod+Tab** and Foot on **Mod+Enter**. Umbriel holds four dynamic workspaces open on `eDP-1`, with workspace bindings through nine. **Alt+Ctrl+C** centers the focused column and **Alt+Ctrl+F** toggles its full width. See the [active Umbriel bindings](umbriel/umbriel/config.toml). |
+| Per-workspace wallpaper does not change | The separate `paper-no-wall` helper listens to compositor events and changes Noctalia's wallpaper. Niri starts it from `config.kdl` with `--compositor niri` and an absolute local path. On this Umbriel machine a user unit starts it after `umbriel.service`. Install the helper and set the wallpaper directory using the [paper-no-wall setup instructions](https://github.com/hakimshifat/paper-no-wall). |
+| ASUS X510UQ hangs at a black screen on sleep | See the tested [deep-sleep workaround](#deep-sleep-on-the-asus-x510uq) below. |
+
+Run `niri validate` or `umbriel config validate` after changing compositor files. The active config takes precedence over older keybinding notes.
+
+### Lock-state detection in Niri
+
+On the tested Niri 26.04 session, the freedesktop ScreenSaver interface offered `Inhibit` and `UnInhibit`, and `GetActive` returned `UnknownMethod`. That matters for software that expects lock-state events through the ScreenSaver interface. To inspect the session independently, use `loginctl list-sessions` and then `loginctl show-session <id> -p Type -p LockedHint` with the graphical session ID. This investigation identified an interface gap. Application auto-lock behavior was outside the test, and there is no config fix recorded here. [Niri issue #4753](https://github.com/niri-wm/niri/issues/4753)
 
 ## System Services
 

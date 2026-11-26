@@ -15,8 +15,8 @@ zstyle ':z4h:bindkey' keyboard  'pc'
 
 # Keep terminal and console shells independent. Start or attach to tmux
 # explicitly with `tmux` when a persistent session is wanted.
-# zstyle ':z4h:' start-tmux 'system'
-zstyle ':z4h:' start-tmux 'no'
+zstyle ':z4h:' start-tmux 'system'
+# zstyle ':z4h:' start-tmux 'no'
 
 # Whether to move prompt to the bottom when zsh starts and on Ctrl+L.
 zstyle ':z4h:' prompt-at-bottom 'no'

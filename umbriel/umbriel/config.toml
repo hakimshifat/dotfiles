@@ -115,6 +115,7 @@ style = "fade"
 # mode = "on" # Optional server-side title bars; off by default.
 
 [keybinds]
+"Super+Shift+Space" = { action = 'spawn if [ "$(env -u WAYLAND_DISPLAY /usr/bin/ibus engine)" = ibus-avro ]; then env -u WAYLAND_DISPLAY /usr/bin/ibus engine xkb:us::eng; else env -u WAYLAND_DISPLAY /usr/bin/ibus engine ibus-avro; fi', repeat = false }
 "Mod+Shift+Escape" = { action = "cheatsheet-toggle", repeat = false }
 "Mod+Return" = { action = "spawn foot", repeat = false }
 "Mod+Space" = { action = "spawn noctalia msg panel-toggle launcher", repeat = false }
